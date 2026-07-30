@@ -1,0 +1,206 @@
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { getCopy } from '@/lib/i18n/copy'
+import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
+import { href } from '@/lib/paths'
+import { INVENTORY, fromCodepoint } from '@/lib/rules/inventory'
+
+export function generateStaticParams() {
+  return localeParams()
+}
+
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale: Locale = isLocale(params.locale) ? params.locale : 'id'
+  return { title: getCopy(locale).aksara.title, description: getCopy(locale).aksara.lead }
+}
+
+const DOTTED_CIRCLE = '◌'
+
+export default function AksaraPage({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) notFound()
+  const locale: Locale = params.locale
+  const copy = getCopy(locale)
+  const { columns } = copy.aksara
+
+  return (
+    <div className="mx-auto max-w-5xl px-5 py-10 space-y-10">
+      <header className="space-y-3">
+        <h1 className="text-3xl text-lontar">{copy.aksara.title}</h1>
+        <p className="max-w-3xl text-lontar/75">{copy.aksara.lead}</p>
+        <p className="max-w-3xl text-sm text-lontar/70">{copy.aksara.inherentVowel}</p>
+        <p className="font-anotasi text-xs text-lontar/50">
+          {INVENTORY.source.citation}
+        </p>
+        <Link
+          href={href(locale, 'aksara/konformansi')}
+          className="inline-block font-anotasi text-xs uppercase tracking-widest text-gold no-underline"
+        >
+          {copy.aksara.conformanceLink} →
+        </Link>
+      </header>
+
+      {/* No virama. This is the fact the whole project follows from, so it is
+          stated on the reference page and not only in the prose. */}
+      <aside className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
+        <h2 className="font-anotasi text-xs uppercase tracking-widest text-sabbe">
+          {locale === 'id' ? 'Tidak ada virama' : 'No virama'}
+        </h2>
+        <p className="mt-1 text-sm text-lontar/85">{INVENTORY.block.viramaNote}</p>
+      </aside>
+
+      <section className="space-y-4">
+        <h2 className="text-2xl text-lontar">{copy.aksara.consonants}</h2>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="border-b-2 border-gold/40 text-left">
+                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.glyph}
+                </th>
+                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.latin}
+                </th>
+                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.codepoint}
+                </th>
+                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.unicodeName}
+                </th>
+                <th className="py-2 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.note}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {INVENTORY.consonants.map((c) => (
+                <tr key={c.codepoint} className="border-b border-lontar/15">
+                  <td className="aksara py-2 pr-4 text-3xl text-lontar">
+                    {fromCodepoint(c.codepoint)}
+                  </td>
+                  <td className="py-2 pr-4 text-lontar">{`${c.onset}a`}</td>
+                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/60">{c.codepoint}</td>
+                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/60">
+                    {c.unicodeName}
+                  </td>
+                  <td className="py-2 text-xs text-lontar/70">
+                    {c.onset === ''
+                      ? locale === 'id'
+                        ? 'Pengusung vokal — vokal mandiri /a/.'
+                        : 'Vowel carrier — the independent vowel /a/.'
+                      : c.prenasal
+                        ? locale === 'id'
+                          ? 'Huruf pranasal — gugus nasal+hambat tertulis.'
+                          : 'Prenasal letter — a written nasal+stop cluster.'
+                        : ''}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-2xl text-lontar">{copy.aksara.vowelSigns}</h2>
+        <p className="max-w-3xl text-sm text-lontar/70">
+          {locale === 'id'
+            ? 'Setiap tanda ditampilkan pada lingkaran bertitik (U+25CC), supaya perilaku penggabungannya terlihat langsung dan tidak perlu dipercayai dari tabel.'
+            : 'Each sign is shown on a dotted circle (U+25CC), so its combining behaviour is visible directly rather than taken on trust from a table.'}
+        </p>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="border-b-2 border-gold/40 text-left">
+                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.glyph}
+                </th>
+                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  ka + {columns.glyph.toLowerCase()}
+                </th>
+                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.latin}
+                </th>
+                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.codepoint}
+                </th>
+                <th className="py-2 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.note}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {INVENTORY.vowelSigns.map((v) => (
+                <tr key={v.codepoint} className="border-b border-lontar/15">
+                  <td className="aksara py-2 pr-4 text-3xl text-lontar">
+                    {DOTTED_CIRCLE + fromCodepoint(v.codepoint)}
+                  </td>
+                  <td className="aksara py-2 pr-4 text-3xl text-lontar">
+                    {fromCodepoint('U+1A00') + fromCodepoint(v.codepoint)}
+                  </td>
+                  <td className="py-2 pr-4 text-lontar">{`k${v.latin}`}</td>
+                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/60">
+                    <div>{v.codepoint}</div>
+                    <div className="text-lontar/45">
+                      {v.generalCategory} · ccc {v.combiningClass}
+                    </div>
+                  </td>
+                  <td className="py-2 text-xs text-lontar/70">
+                    <div>{v.positionSource}</div>
+                    {v.latinNote ? (
+                      <div className="mt-1 text-gold/80">{v.latinNote}</div>
+                    ) : null}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-2xl text-lontar">{copy.aksara.punctuation}</h2>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="border-b-2 border-gold/40 text-left">
+                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.glyph}
+                </th>
+                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.codepoint}
+                </th>
+                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.unicodeName}
+                </th>
+                <th className="py-2 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                  {columns.latin}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {INVENTORY.punctuation.map((p) => (
+                <tr key={p.codepoint} className="border-b border-lontar/15">
+                  <td className="aksara py-2 pr-4 text-3xl text-lontar">
+                    {fromCodepoint(p.codepoint)}
+                  </td>
+                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/60">{p.codepoint}</td>
+                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/60">
+                    {p.unicodeName}
+                  </td>
+                  <td className="py-2 text-xs text-gold/80">
+                    {p.latin ?? copy.common.unverified}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="max-w-3xl text-sm text-lontar/70">
+          {locale === 'id'
+            ? 'Padanan Latin untuk kedua tanda ini belum dapat dirujuk di repositori ini, jadi dibiarkan kosong daripada ditebak. Lihat halaman Ejaan.'
+            : 'A Latin representation for either mark cannot yet be cited in this repository, so it is left blank rather than guessed. See the Ejaan page.'}
+        </p>
+      </section>
+    </div>
+  )
+}

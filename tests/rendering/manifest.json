@@ -1,0 +1,496 @@
+{
+  "$comment": "One row per hard-string case per device. Fill in status/checkedBy by hand after looking at the conformance page on that device — this is a by-eye check and there is no way to automate it honestly. A font version bump resets every row.",
+  "font": {
+    "face": "Noto Sans Buginese",
+    "version": "2.002",
+    "shipped": "public/fonts/noto-sans-buginese-subset.woff2",
+    "features": [
+      "liga",
+      "abvm",
+      "dist",
+      "mark"
+    ]
+  },
+  "rows": [
+    {
+      "case": "letter.ka.bare",
+      "device": "ios-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "letter.ka.bare",
+      "device": "android-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "letter.ka.bare",
+      "device": "desktop-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "letter.ka.bare",
+      "device": "desktop-firefox",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "letter.ka.bare",
+      "device": "desktop-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.i.above",
+      "device": "ios-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.i.above",
+      "device": "android-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.i.above",
+      "device": "desktop-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.i.above",
+      "device": "desktop-firefox",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.i.above",
+      "device": "desktop-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.u.below",
+      "device": "ios-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.u.below",
+      "device": "android-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.u.below",
+      "device": "desktop-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.u.below",
+      "device": "desktop-firefox",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.u.below",
+      "device": "desktop-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.e.spacing",
+      "device": "ios-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.e.spacing",
+      "device": "android-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.e.spacing",
+      "device": "desktop-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.e.spacing",
+      "device": "desktop-firefox",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.e.spacing",
+      "device": "desktop-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.o.spacing",
+      "device": "ios-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.o.spacing",
+      "device": "android-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.o.spacing",
+      "device": "desktop-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.o.spacing",
+      "device": "desktop-firefox",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.o.spacing",
+      "device": "desktop-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.ae.unpositioned",
+      "device": "ios-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.ae.unpositioned",
+      "device": "android-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.ae.unpositioned",
+      "device": "desktop-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.ae.unpositioned",
+      "device": "desktop-firefox",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.ae.unpositioned",
+      "device": "desktop-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.on.dotted.circle",
+      "device": "ios-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.on.dotted.circle",
+      "device": "android-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.on.dotted.circle",
+      "device": "desktop-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.on.dotted.circle",
+      "device": "desktop-firefox",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "sign.on.dotted.circle",
+      "device": "desktop-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "carrier.a.with.signs",
+      "device": "ios-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "carrier.a.with.signs",
+      "device": "android-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "carrier.a.with.signs",
+      "device": "desktop-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "carrier.a.with.signs",
+      "device": "desktop-firefox",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "carrier.a.with.signs",
+      "device": "desktop-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "prenasal.letters",
+      "device": "ios-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "prenasal.letters",
+      "device": "android-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "prenasal.letters",
+      "device": "desktop-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "prenasal.letters",
+      "device": "desktop-firefox",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "prenasal.letters",
+      "device": "desktop-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "band.no.word.spacing",
+      "device": "ios-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "band.no.word.spacing",
+      "device": "android-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "band.no.word.spacing",
+      "device": "desktop-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "band.no.word.spacing",
+      "device": "desktop-firefox",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "band.no.word.spacing",
+      "device": "desktop-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "punctuation.pallawa",
+      "device": "ios-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "punctuation.pallawa",
+      "device": "android-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "punctuation.pallawa",
+      "device": "desktop-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "punctuation.pallawa",
+      "device": "desktop-firefox",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "punctuation.pallawa",
+      "device": "desktop-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "punctuation.end.of.section",
+      "device": "ios-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "punctuation.end.of.section",
+      "device": "android-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "punctuation.end.of.section",
+      "device": "desktop-chrome",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "punctuation.end.of.section",
+      "device": "desktop-firefox",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    },
+    {
+      "case": "punctuation.end.of.section",
+      "device": "desktop-safari",
+      "status": "unchecked",
+      "fontVersion": "2.002",
+      "checkedBy": null,
+      "note": null
+    }
+  ]
+}

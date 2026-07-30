@@ -1,0 +1,92 @@
+{
+  "$comment": "The hard-string set for rendering conformance (PRD §8). A correct codepoint sequence that renders as garbage is not done, so nothing in the engine is built on a case that has not been eyeballed here first. Each case says what to look for, in words, so someone checking on a phone knows whether it passed without having to compare against an image.",
+  "font": {
+    "face": "Noto Sans Buginese",
+    "version": "2.002",
+    "shipped": "public/fonts/noto-sans-buginese-subset.woff2",
+    "features": ["liga", "abvm", "dist", "mark"]
+  },
+  "devices": ["ios-safari", "android-chrome", "desktop-chrome", "desktop-firefox", "desktop-safari"],
+  "cases": [
+    {
+      "id": "letter.ka.bare",
+      "codepoints": ["U+1A00"],
+      "why": "Baseline. If this is tofu, nothing else on the page means anything.",
+      "expect": "One aksara glyph. No dotted box, no fallback serif."
+    },
+    {
+      "id": "sign.i.above",
+      "codepoints": ["U+1A00", "U+1A17"],
+      "why": "Non-spacing mark, UCD combining class 230 (Above). Tests GPOS mark attachment.",
+      "expect": "The vowel sign sits above the letter, centred, not overlapping the letter's own strokes and not drifting right."
+    },
+    {
+      "id": "sign.u.below",
+      "codepoints": ["U+1A00", "U+1A18"],
+      "why": "Non-spacing mark, UCD combining class 220 (Below).",
+      "expect": "The vowel sign sits below the letter, centred, and is not clipped by the line box."
+    },
+    {
+      "id": "sign.e.spacing",
+      "codepoints": ["U+1A00", "U+1A19"],
+      "why": "Spacing combining mark (Mc) with no UCD combining class. Which side it takes is a rendering question, which is exactly why it is answered here and left 'unverified' in inventory.json.",
+      "expect": "Record which side the sign appears on. It must take its own advance width and must not be drawn on top of the letter."
+    },
+    {
+      "id": "sign.o.spacing",
+      "codepoints": ["U+1A00", "U+1A1A"],
+      "why": "Spacing combining mark (Mc), no UCD combining class. Same question as VOWEL SIGN E, and the two must not land on the same side as each other by accident.",
+      "expect": "Record which side. Compare against VOWEL SIGN E — if both render on the same side, that is a finding, not a pass."
+    },
+    {
+      "id": "sign.ae.unpositioned",
+      "codepoints": ["U+1A00", "U+1A1B"],
+      "why": "Non-spacing mark with combining class 0 — the UCD gives the renderer no position to work from, so this is the case most likely to misplace. Its Latin equivalence is also an open question on the ejaan page.",
+      "expect": "The sign is attached to the letter, not floating in its own cell and not stacked over another mark."
+    },
+    {
+      "id": "sign.on.dotted.circle",
+      "codepoints": ["U+25CC", "U+1A1B"],
+      "why": "The script reference shows every sign on a dotted circle. U+25CC must come from the same subset, or the reference table renders half in one face and half in another.",
+      "expect": "A dotted circle with the sign attached to it. Both shapes at the same optical weight."
+    },
+    {
+      "id": "carrier.a.with.signs",
+      "codepoints": ["U+1A15", "U+1A17", "U+0020", "U+1A15", "U+1A18", "U+0020", "U+1A15", "U+1A1B"],
+      "why": "Independent vowels: the vowel-carrier letter A takes the same signs as a consonant. Its shape differs, so the mark anchors are a separate case.",
+      "expect": "Each sign attaches to the carrier as cleanly as it does to ka. No collisions."
+    },
+    {
+      "id": "prenasal.letters",
+      "codepoints": ["U+1A03", "U+1A07", "U+1A0B", "U+1A0F"],
+      "why": "NGKA, MPA, NRA, NYCA. Prenasalisation is partly written — these four letters exist — which the ejaan page records as an open question against PRD §2.",
+      "expect": "Four distinct glyphs. Specifically confirm NGKA is distinguishable from NGA, and NYCA from NYA."
+    },
+    {
+      "id": "band.no.word.spacing",
+      "codepoints": [
+        "U+1A06", "U+1A08", "U+1A00", "U+1A17", "U+1A12", "U+1A18",
+        "U+1A04", "U+1A19", "U+1A0A", "U+1A1A", "U+1A14", "U+1A1B"
+      ],
+      "why": "The band carries no word spacing — the script does not use it, and connector strokes carry segmentation instead. A long unspaced run is where line-breaking and mark positioning go wrong together.",
+      "expect": "An even run at a consistent baseline. Marks stay attached to their own letters across the whole run. Check what happens when it must wrap."
+    },
+    {
+      "id": "punctuation.pallawa",
+      "codepoints": ["U+1A06", "U+1A08", "U+1A1E", "U+1A06", "U+1A08"],
+      "why": "PALLAWA between two runs.",
+      "expect": "The mark is visible, has its own advance width, and does not merge into the glyph on either side."
+    },
+    {
+      "id": "punctuation.end.of.section",
+      "codepoints": ["U+1A06", "U+1A08", "U+1A1F"],
+      "why": "END OF SECTION at the end of a run.",
+      "expect": "Visible and distinct from PALLAWA."
+    }
+  ],
+  "openCases": [
+    {
+      "note": "lontar.eu (the Aksara Nusantara project) reports that the stock Noto fonts are broadly functional for Lontara but have rendering issues in some situations, and ships an enhanced derivative. Their specific failing cases are not recorded here because they have not been identified yet — adding a case means naming the actual string that fails, not guessing at one. PRD Appendix A flags testing these during M0; that work is outstanding."
+    }
+  ]
+}
