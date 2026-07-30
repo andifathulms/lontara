@@ -1,0 +1,101 @@
+name: build dan deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # Rule and lexicon validation gate the deploy (PRD §13). These run as their
+  # own job so a failure reads as "the orthography data is wrong", not as a
+  # build error buried in webpack output.
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: rules:validate
+        run: pnpm rules:validate
+
+      - name: lexicon:validate
+        run: pnpm lexicon:validate
+
+      - run: pnpm typecheck
+      - run: pnpm lint
+
+      - name: test
+        run: pnpm test:run
+
+      - name: enumeration completeness (invariant 15)
+        run: pnpm test:enumerate
+
+      # The reviewer gate blocks LAUNCHING the reader, not building the site
+      # (PRD §9, invariant 12). Reported loudly and never silently: it must be
+      # visible on every run, and it must not stop the writer or the
+      # conformance page from being built for a reviewer to look at.
+      - name: gerbang penelaah / reviewer gate
+        continue-on-error: true
+        run: pnpm gate:check
+
+      - name: rule set report
+        run: pnpm rules:report
+
+  build:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
+
+      # .nojekyll must exist in the output root or Pages will drop _next/
+      # (PRD §13). public/.nojekyll is copied by the export; this asserts it
+      # rather than assuming it.
+      - name: check .nojekyll and basePath
+        run: |
+          test -f out/.nojekyll || { echo "out/.nojekyll missing — Pages would drop _next/"; exit 1; }
+          test -f out/index.html || { echo "out/index.html missing — the bare root would 404"; exit 1; }
+          grep -q '/lontara/_next' out/id/index.html || { echo "basePath is not /lontara in the export"; exit 1; }
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
