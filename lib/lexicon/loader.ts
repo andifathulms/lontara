@@ -6,12 +6,40 @@ import lexiconJson from '@/data/lexicon/entries.json'
  * 2,000 well-sourced entries beat 50,000 of unknown provenance, because the
  * ranking is only as trustworthy as the lexicon behind it.
  *
- * It currently holds zero entries. See data/lexicon/provenance.md; every path
- * through the reader is built to work, and to say what it cannot do, at size
- * zero.
+ * It currently holds 1,323 forms extracted from Bugis Wikipedia, every one of
+ * them `attestation: "corpus"` and `band: "unknown"`. That combination is the
+ * honest description of what the source supports: the form occurs in article
+ * text, and nothing more. See data/lexicon/provenance.md.
+ *
+ * Every path through the reader still works, and still says what it cannot do,
+ * at size zero — the empty case is not dead code, it is what ships the moment
+ * this file is regenerated from a source with a different licence answer.
  */
 export const BANDS = ['core', 'common', 'uncommon', 'rare', 'unknown'] as const
 export type FrequencyBand = (typeof BANDS)[number]
+
+/**
+ * What kind of claim an entry is. This is NOT frequency — it is how much is
+ * known about whether the form is a Bugis word at all.
+ *
+ * `corpus`     — the form occurs in a corpus. True and checkable, and nothing
+ *                more: the Bugis Wikipedia text this is drawn from also
+ *                contains Indonesian, English and Vietnamese place names, and
+ *                nothing in this repo can tell them apart.
+ * `dictionary` — a lexicographer recorded it as a word.
+ * `reviewer`   — a named Bugis reviewer confirmed it.
+ *
+ * Ordered weakest to strongest, and the reader shows the difference rather than
+ * flattening it.
+ */
+export const ATTESTATIONS = ['corpus', 'dictionary', 'reviewer'] as const
+export type Attestation = (typeof ATTESTATIONS)[number]
+
+export const ATTESTATION_WEIGHT: Record<Attestation, number> = {
+  corpus: 2,
+  dictionary: 30,
+  reviewer: 60,
+}
 
 const ProvenanceSchema = z.object({
   source: z.string().min(1),
@@ -27,6 +55,7 @@ export const LexiconEntrySchema = z.object({
   id: z.string().min(1),
   latin: z.string().min(1),
   band: z.enum(BANDS),
+  attestation: z.enum(ATTESTATIONS),
   /**
    * For reviewer verification only. NEVER rendered — transliteration is not
    * translation and the UI must not suggest the tool produces meaning

@@ -133,16 +133,41 @@ describe('invariant 2 — every rule carries a citation', () => {
 })
 
 describe('invariant 13 — every lexicon entry has provenance', () => {
-  it('the shipped lexicon is empty, deliberately', () => {
-    expect(LEXICON.entries).toHaveLength(0)
-  })
-
-  for (const entry of LEXICON.entries) {
-    it(`${entry.id}`, () => {
+  it('every entry carries a source, a real licence and a locator', () => {
+    // Asserted in aggregate rather than one test per entry: at 1,323 entries
+    // the per-entry form drowned the rest of the suite in noise.
+    for (const entry of LEXICON.entries) {
       expect(entry.provenance.source.length).toBeGreaterThan(3)
       expect(entry.provenance.licence.toLowerCase()).not.toBe('unknown')
-    })
-  }
+      expect(entry.provenance.locator.length).toBeGreaterThan(0)
+      expect(entry.provenance.retrieved).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    }
+  })
+
+  it('no corpus-attested entry claims a frequency band', () => {
+    // A corpus occurrence says the form OCCURS, never how often. The corpus is
+    // 85% bot-generated, so a band drawn from it would describe a template.
+    for (const entry of LEXICON.entries) {
+      if (entry.attestation === 'corpus') expect(entry.band).toBe('unknown')
+    }
+  })
+
+  it('every entry is writable by the rule set', () => {
+    // An entry the writer cannot produce could never be reached by the
+    // reader's enumeration, so it would sit there looking like coverage.
+    for (const entry of LEXICON.entries) {
+      const trace = interpret(entry.latin)
+      expect(trace.steps.some((s) => s.type === 'unhandled')).toBe(false)
+      expect(trace.output.text.length).toBeGreaterThan(0)
+    }
+  })
+
+  it('keeps the glottal stop, which is a whole ambiguity class', () => {
+    // Stripping trailing apostrophes during extraction would silently destroy
+    // it — `salo'` would become `salo`. These forms prove it did not happen.
+    const withGlottal = LEXICON.entries.filter((e) => e.latin.includes("'"))
+    expect(withGlottal.length).toBeGreaterThan(20)
+  })
 })
 
 describe('invariant 14 — Bugis only', () => {

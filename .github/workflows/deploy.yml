@@ -73,7 +73,11 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm build
+      # `tee` so the JS budget check can read the route table Next prints.
+      - run: pnpm build 2>&1 | tee build.log
+
+      - name: JS budget (PRD §12 — 200 KB gzipped)
+        run: node scripts/check-js-budget.mjs build.log
 
       # .nojekyll must exist in the output root or Pages will drop _next/
       # (PRD §13). public/.nojekyll is copied by the export; this asserts it

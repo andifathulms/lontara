@@ -97,6 +97,13 @@ export function ReaderTool({ locale }: { locale: Locale }) {
             <p className="font-anotasi text-xs text-lontar/55">
               {copy.reader.readingCount(result.readings.length)}
             </p>
+            {/* Every reading here rests on a corpus occurrence and nothing
+                stronger. Saying so above the tree, not in a tooltip. */}
+            {result.readings.every((r) => r.attestation === 'corpus') ? (
+              <p className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3 text-sm text-lontar/85">
+                {copy.attestation.corpusWarning}
+              </p>
+            ) : null}
             <ReadingTree tree={result.tree} locale={locale} />
           </>
         ) : (

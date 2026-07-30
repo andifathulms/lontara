@@ -1,4 +1,10 @@
-import type { Lexicon, LexiconEntry, FrequencyBand } from '@/lib/lexicon/loader'
+import {
+  ATTESTATION_WEIGHT,
+  type Attestation,
+  type FrequencyBand,
+  type Lexicon,
+  type LexiconEntry,
+} from '@/lib/lexicon/loader'
 import type { AmbiguityClass } from '@/lib/rules/schema'
 
 /**
@@ -53,6 +59,21 @@ export function scoreReading(
       value: lexicon.bandWeight(best.band),
       why: `Terdaftar dalam leksikon pada band frekuensi "${best.band}".`,
     })
+
+    // How much is known about the entry, which is a different question from how
+    // often it occurs. A corpus attestation is worth very little: it means the
+    // form appears in running text, not that it is a Bugis word.
+    const attestation = strongestAttestation(entries)
+    components.push({
+      label: `keterbuktian ${attestation}`,
+      value: ATTESTATION_WEIGHT[attestation],
+      why:
+        attestation === 'corpus'
+          ? 'Hanya muncul dalam korpus. Itu berarti bentuknya ada di teks, bukan bahwa ia kata Bugis — korpusnya memuat juga bahasa Indonesia, Inggris, dan nama tempat asing.'
+          : attestation === 'dictionary'
+            ? 'Tercatat sebagai lema dalam kamus.'
+            : 'Dikonfirmasi oleh penelaah Bugis bernama.',
+    })
   }
 
   if (entries.length > 1) {
@@ -80,6 +101,14 @@ export function scoreReading(
     total: components.reduce((sum, c) => sum + c.value, 0),
     components,
   }
+}
+
+export function strongestAttestation(entries: readonly LexiconEntry[]): Attestation {
+  let best: Attestation = 'corpus'
+  for (const entry of entries) {
+    if (ATTESTATION_WEIGHT[entry.attestation] > ATTESTATION_WEIGHT[best]) best = entry.attestation
+  }
+  return best
 }
 
 export function bandOf(entries: readonly LexiconEntry[], lexicon: Lexicon): FrequencyBand | null {

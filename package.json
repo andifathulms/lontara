@@ -21,8 +21,10 @@
     "gate:check": "tsx scripts/gate-check.ts",
     "corpus:fetch": "node scripts/corpus-fetch.mjs",
     "corpus:pairs": "tsx scripts/corpus-pairs.ts",
+    "lexicon:extract": "tsx scripts/lexicon-extract-bugwiki.ts",
     "fonts:subset": "node scripts/fonts-subset.mjs",
     "render:conformance": "tsx scripts/render-conformance.ts",
+    "budget": "next build > .next/build.log && node scripts/check-js-budget.mjs .next/build.log",
     "typecheck": "tsc --noEmit",
     "lint": "next lint"
   },

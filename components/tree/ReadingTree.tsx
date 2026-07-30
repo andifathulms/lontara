@@ -72,7 +72,22 @@ function Node({
 
       {isLeaf && node.reading ? (
         <div className="mb-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          {node.reading.band ? (
+          {/* What is actually behind this reading. A corpus attestation means the
+              form occurs in text — not that it is a Bugis word — so it is
+              badged in sabbe rather than gold, and never looks like a
+              confirmation. */}
+          {node.reading.attestation ? (
+            <span
+              className={`border px-1.5 font-anotasi text-[10px] uppercase tracking-widest ${
+                node.reading.attestation === 'corpus'
+                  ? 'border-sabbe text-sabbe'
+                  : 'border-gold/50 text-gold'
+              }`}
+            >
+              {copy.attestation[node.reading.attestation]}
+            </span>
+          ) : null}
+          {node.reading.band && node.reading.band !== 'unknown' ? (
             <span className="border border-gold/50 px-1.5 font-anotasi text-[10px] uppercase tracking-widest text-gold">
               {node.reading.band}
             </span>

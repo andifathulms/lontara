@@ -90,6 +90,27 @@ for (const entry of lexicon.entries) {
 const byBand = new Map<string, number>()
 for (const e of lexicon.entries) byBand.set(e.band, (byBand.get(e.band) ?? 0) + 1)
 
+// Attestation distribution. A lexicon that is entirely corpus-attested is not
+// broken, but it is a much weaker thing than it looks, and that has to be
+// visible on every run rather than discoverable in a doc.
+const byAttestation = new Map<string, number>()
+for (const e of lexicon.entries) {
+  byAttestation.set(e.attestation, (byAttestation.get(e.attestation) ?? 0) + 1)
+}
+
+// A corpus-attested entry may not claim a frequency band. The corpus this comes
+// from is 85% bot-generated, so a band derived from it would describe a
+// template rather than the language.
+for (const entry of lexicon.entries) {
+  if (entry.attestation === 'corpus' && entry.band !== 'unknown') {
+    problems.push(
+      `${entry.id}: attestation is "corpus" but band is "${entry.band}". ` +
+        `A corpus attestation says the form OCCURS, not how often — claiming a frequency band ` +
+        `on that basis is exactly the untrustworthy ranking invariant 13 exists to prevent.`,
+    )
+  }
+}
+
 const sources = new Set(lexicon.entries.map((e) => e.provenance.source))
 
 if (problems.length > 0) {
@@ -110,11 +131,17 @@ if (lexicon.entries.length === 0) {
   for (const [band, count] of [...byBand].sort((a, b) => b[1] - a[1])) {
     notes.push(`  band ${band}: ${count}`)
   }
-  const unknownShare = (byBand.get('unknown') ?? 0) / lexicon.entries.length
-  if (unknownShare > 0.9) {
+  for (const [attestation, count] of [...byAttestation].sort((a, b) => b[1] - a[1])) {
+    notes.push(`  keterbuktian ${attestation}: ${count}`)
+  }
+
+  const corpusShare = (byAttestation.get('corpus') ?? 0) / lexicon.entries.length
+  if (corpusShare > 0.9) {
     notes.push(
-      'Nearly every band is "unknown", so ranking is close to arbitrary. That is honest, but ' +
-        'the Bugis Wikipedia corpus is the cheapest way to fix it — its licence is already clear.',
+      'Nearly every entry is corpus-attested only. That means "this form occurs in running text", ' +
+        'NOT "this is a Bugis word" — the corpus also contains Indonesian, English and foreign ' +
+        'place names. Ranking is close to structural, and the reader badges every such reading. ' +
+        'A dictionary source is what fixes this; see data/lexicon/provenance.md.',
     )
   }
 }

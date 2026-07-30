@@ -1,7 +1,7 @@
 import { INVENTORY } from '@/lib/rules/inventory'
 import { RULE_SET, rule } from '@/lib/rules/loader'
 import type { AmbiguityClass } from '@/lib/rules/schema'
-import type { Lexicon, LexiconEntry, FrequencyBand } from '@/lib/lexicon/loader'
+import type { Attestation, Lexicon, LexiconEntry, FrequencyBand } from '@/lib/lexicon/loader'
 import { interpret } from './interpret'
 import { normalize, toClusters } from './normalize'
 import { classifyFinal, segmentLatin, segmentLontara, type LatinUnit, type LontaraUnit } from './segment'
@@ -12,7 +12,7 @@ import {
   type TraceStep,
   type TransliterationTrace,
 } from './trace'
-import { bandOf, scoreReading, UNATTESTED_SCORE, type Score } from './rank'
+import { bandOf, scoreReading, strongestAttestation, UNATTESTED_SCORE, type Score } from './rank'
 
 /**
  * The reader. Lontara → Latin: the **expanding** traversal (invariant 8).
@@ -52,6 +52,12 @@ export type Reading = {
   readonly attested: boolean
   readonly entries: readonly LexiconEntry[]
   readonly band: FrequencyBand | null
+  /**
+   * What is actually behind this reading. Null for the skeleton, which nothing
+   * attests. The reader shows this rather than flattening a corpus occurrence
+   * and a reviewer's confirmation into one "known word".
+   */
+  readonly attestation: Attestation | null
   readonly score: Score
   /** Which unwritten things this reading recovers. Empty for the skeleton. */
   readonly classes: readonly AmbiguityClass[]
@@ -185,6 +191,7 @@ function readingFrom(
     attested: entries.length > 0,
     entries,
     band: bandOf(entries, lexicon),
+    attestation: entries.length > 0 ? strongestAttestation(entries) : null,
     score: entries.length > 0 ? scoreReading(entries, lexicon, flat) : UNATTESTED_SCORE,
     classes: flat,
     groups,

@@ -35,6 +35,7 @@ function testLexicon(forms: readonly string[]): Lexicon {
       id: `synthetic-${String(index).padStart(4, '0')}`,
       latin,
       band: 'unknown',
+      attestation: 'corpus',
       provenance: {
         source:
           'SYNTHETIC — tests/fixtures/writer.fixture.json. Engine test data only. Not a claim ' +

@@ -71,6 +71,12 @@ export type Copy = {
     openQuestions: string
     provisional: string
   }
+  attestation: {
+    corpus: string
+    dictionary: string
+    reviewer: string
+    corpusWarning: string
+  }
   share: {
     copyLink: string
     copied: string
@@ -203,6 +209,13 @@ const id: Copy = {
     lead: 'Sisi Latin butuh spesifikasi sama ketatnya dengan sisi Lontara. Ejaan Latin yang kurang tegas membuat seluruh penyebutan bacaan tidak sahih.',
     openQuestions: 'Pertanyaan yang belum terjawab',
     provisional: 'Sementara — menunggu penelaah',
+  },
+  attestation: {
+    corpus: 'korpus',
+    dictionary: 'kamus',
+    reviewer: 'penelaah',
+    corpusWarning:
+      'Bacaan di bawah hanya terbukti dari korpus: bentuknya memang muncul dalam teks Wikipedia Basa Ugi, tetapi itu bukan berarti ia kata Bugis. Korpus yang sama memuat bahasa Indonesia, Inggris, dan nama tempat asing, dan alat ini tidak dapat membedakannya. Belum ada kamus yang dipakai.',
   },
   share: {
     copyLink: 'Salin tautan',
@@ -337,6 +350,13 @@ const en: Copy = {
     lead: 'The Latin side needs as much specification as the Lontara side. An underspecified Latin orthography makes the whole enumeration unsound.',
     openQuestions: 'Open questions',
     provisional: 'Provisional — awaiting a reviewer',
+  },
+  attestation: {
+    corpus: 'corpus',
+    dictionary: 'dictionary',
+    reviewer: 'reviewer',
+    corpusWarning:
+      'The readings below are corpus-attested only: the form does occur in Bugis Wikipedia text, but that does not make it a Bugis word. The same corpus contains Indonesian, English and foreign place names, and this tool cannot tell them apart. No dictionary has been used yet.',
   },
   share: {
     copyLink: 'Copy link',

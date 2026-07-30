@@ -41,9 +41,9 @@ Read `PRD.md` for scope and `CLAUDE.md` for how to work in the repo.
 | | | |
 |---|---|---|
 | **M0** | Rendering + scaffold | Built. Static export deploys, Noto Sans Buginese subset with licence recorded, conformance page ready — **but not yet eyeballed on any device.** `pnpm render:conformance` reports 60 unchecked rows. |
-| **M1** | Engine | Built. Rule schema and validator, segmenter, interpreter, trace, ambiguity type. 203 tests. |
+| **M1** | Engine | Built. Rule schema and validator, segmenter, interpreter, trace, ambiguity type. 232 tests. |
 | **M2** | Writer | Built. Every lossy class declared and traced, keyboard, orthography disclosure. |
-| **M3** | Reader | Built, **not launched.** The reviewer gate is unmet, and the lexicon is empty. |
+| **M3** | Reader | Built, **not launched.** The reviewer gate is unmet. The lexicon holds 1,323 corpus-attested forms, which is enough to enumerate but not enough to trust. |
 | **M4** | Explanation UI | Built. Band, connector strokes, rule trace panel, ambiguity panel. |
 | **M5** | Reference | Script reference and orthography disclosure built, offline capability and URL-fragment sharing done. Glossary outstanding. |
 
@@ -54,13 +54,22 @@ exits 1 and every page carries the unmet-gate notice. PRD §9: no reviewer, no
 launch. This gates M3, it is the long-lead item on the project, and it is a
 human task. See `data/rules/reviewers.md`.
 
-**An empty lexicon.** Every source in PRD Appendix A is an unextracted PDF and
-several have unresolved copyright positions, so nothing could be added without
-breaking invariant 13. The reader is lexicon-driven, so with no entries it
-states the syllable skeleton and says it can state nothing more. See
+**No dictionary.** The lexicon's 1,323 entries are `attestation: "corpus"` and
+nothing stronger: the form occurs in Bugis Wikipedia article text, which does
+**not** make it a Bugis word — the same corpus contains Indonesian, English and
+Vietnamese place names, and nothing here can tell them apart. Every such reading
+is badged in the UI and scored low. Every dictionary in PRD Appendix A is an
+unextracted PDF with an unresolved copyright position. See
 `data/lexicon/provenance.md`.
 
-**Six open questions, not filled in.** Including which consonants can close a
+**No frequency bands.** Every entry is `band: "unknown"`, and the build fails if
+a corpus-attested entry claims otherwise. 85% of the Wikipedia dump is
+bot-generated French commune stubs; before de-botting, nine "common Bugis words"
+each appeared in exactly 617–620 articles because they are the colour key of one
+repeated map caption. A band is a claim about frequency and that corpus cannot
+support one.
+
+**Seven open questions, not filled in.** Including which consonants can close a
 Bugis syllable — which is why enumeration is lexicon-driven rather than
 structural. A structural enumerator seeded with a guessed inventory would
 produce a confident-looking tree of readings that are not Bugis. See
@@ -72,12 +81,15 @@ produce a confident-looking tree of readings that are not Bugis. See
 pnpm dev
 pnpm build                # static export to ./out; validates rules and lexicon first
 pnpm preview              # serve ./out under the production basePath
-pnpm test:run             # 203 tests
+pnpm test:run             # 232 tests
 pnpm test:enumerate       # enumeration completeness — invariant 15
 pnpm rules:validate       # schema, citations, priority conflicts, font coverage
 pnpm rules:report         # every rule with citation and status — the reviewer's artefact
 pnpm lexicon:validate     # per-entry provenance and schema
 pnpm gate:check           # the reviewer gate; exits 1 while unmet
+pnpm corpus:pairs         # attested Lontara-Latin pairs + rule agreement rate
+pnpm lexicon:extract      # rebuild the lexicon from the Wikipedia dump
+pnpm budget               # JS budget, PRD §12
 pnpm fonts:subset         # regenerate the Noto Sans Buginese subset
 pnpm render:conformance   # the by-eye rendering checklist
 pnpm typecheck && pnpm lint
@@ -108,6 +120,30 @@ old tab closes.
 **Shareable by URL fragment** (PRD §4). The value lives after the `#`, which is
 never sent in the HTTP request — so a name someone is checking before committing
 it to a signboard does not land in a Pages access log. A query string would.
+
+## Attested practice, and what it corrected
+
+Bugis Wikipedia articles carry `{{multiscript|<lontara>|<latin>}}` — a
+community-authored pair from someone who writes Bugis. 97 of them are extracted
+into `data/corpus/bugwiki-pairs.json` and `pnpm corpus:pairs` reports how well
+the rule set agrees.
+
+That measurement caught three real defects. rules v0.1.0 agreed with **56%** of
+attested pairs; v0.2.0 agrees with **94%**:
+
+- Latin `e` takes U+1A1B and `é` takes U+1A19 — the reverse of what the Unicode
+  character names implied. The names are evidence about the *encoding*, never
+  about Bugis Latin orthography.
+- `é` was not a vowel in the rule set at all, so `sapéda` lost its whole `pé`
+  syllable.
+- The glottal stop is written `q` here, not only `'`.
+
+Wikipedia is community practice, not an authority, and some pairs are plainly
+wrong. `tests/corpus.test.ts` pins the agreement rate and requires every
+remaining disagreement to be named and explained — including a check that no
+explanation goes stale. Two findings are recorded and **deliberately not acted
+on**: `ngp` → MPA and `nc` → NYCA, which are two instances and could be article
+errors. They are a reason to ask a reviewer, not a reason to guess.
 
 ## How it is put together
 
