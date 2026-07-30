@@ -6,3 +6,7 @@ next-env.d.ts
 .DS_Store
 .env*.local
 .vercel
+
+# Wikipedia dump cache — fetched and checksum-verified by scripts/corpus-fetch.mjs.
+# Not vendored: 2.4 MB, and reproducible from the pinned URL + sha256.
+.corpus/

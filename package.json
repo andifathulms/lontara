@@ -19,6 +19,8 @@
     "rules:report": "tsx scripts/rules-report.ts",
     "lexicon:validate": "tsx scripts/lexicon-validate.ts",
     "gate:check": "tsx scripts/gate-check.ts",
+    "corpus:fetch": "node scripts/corpus-fetch.mjs",
+    "corpus:pairs": "tsx scripts/corpus-pairs.ts",
     "fonts:subset": "node scripts/fonts-subset.mjs",
     "render:conformance": "tsx scripts/render-conformance.ts",
     "typecheck": "tsc --noEmit",

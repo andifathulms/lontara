@@ -1,0 +1,815 @@
+{
+  "$comment": "Attested Lontara-Latin pairs extracted from {{multiscript|<lontara>|<latin>}} in Bugis Wikipedia articles. Community practice, NOT an authority — individual pairs contain errors, and only a Bugis reviewer settles anything. Regenerate with `pnpm corpus:pairs`. Consumed as a conformance fixture by tests/corpus.test.ts.",
+  "provenance": {
+    "source": "Bugis Wikipedia (bug.wikipedia.org), pages-articles dump",
+    "dumpDate": "20260701",
+    "dumpUrl": "https://dumps.wikimedia.org/bugwiki/20260701/bugwiki-20260701-pages-articles.xml.bz2",
+    "dumpSha256": "37b7da2c059cce33287c54edb66e87b263fdf7f732e5e67f2f1b34259ffc704e",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "attribution": "Bugis Wikipedia contributors. Each pair records the articles it was taken from.",
+    "extractedFrom": "namespace 0 only"
+  },
+  "ruleSetVersionAtExtraction": "0.1.0",
+  "pairs": [
+    {
+      "lontara": "ᨕᨖᨙᨑ",
+      "latin": "Ahéraq",
+      "occurrences": 1,
+      "articles": [
+        "ᨕᨖᨙᨑ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨀᨚᨑ",
+      "latin": "Akkorang",
+      "occurrences": 1,
+      "articles": [
+        "ᨕᨀᨚᨑ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨒ",
+      "latin": "Alang",
+      "occurrences": 1,
+      "articles": [
+        "ᨕᨒ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨒᨈᨕᨒ",
+      "latin": "Allataqala",
+      "occurrences": 1,
+      "articles": [
+        "ᨕᨒᨈᨕᨒ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨄᨛᨁᨊᨗᨔᨛᨈ",
+      "latin": "Appeganissetang",
+      "occurrences": 1,
+      "articles": [
+        "ᨕᨄᨛᨁᨊᨗᨔᨛᨈ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨓᨐᨛ",
+      "latin": "Awayeng",
+      "occurrences": 1,
+      "articles": [
+        "ᨕᨓᨐᨛ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨉᨘᨓᨗ",
+      "latin": "Baduwi",
+      "occurrences": 1,
+      "articles": [
+        "ᨅᨉᨘᨓᨗ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨍᨚ",
+      "latin": "Bajo",
+      "occurrences": 1,
+      "articles": [
+        "ᨅᨍᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨒᨉ",
+      "latin": "Balanda",
+      "occurrences": 2,
+      "articles": [
+        "Balanda",
+        "ᨅᨒᨉ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨒᨂᨛ",
+      "latin": "Balangeng",
+      "occurrences": 1,
+      "articles": [
+        "ᨅᨒᨂᨛ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨂᨔ",
+      "latin": "Bangngasa",
+      "occurrences": 1,
+      "articles": [
+        "ᨅᨂᨔ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨍᨑᨆᨔᨛ",
+      "latin": "Banjaramaseng",
+      "occurrences": 1,
+      "articles": [
+        "ᨅᨍᨑᨆᨔᨛ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨑᨘᨊᨙ",
+      "latin": "Baruné",
+      "occurrences": 1,
+      "articles": [
+        "ᨅᨑᨘᨊᨙ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨔ",
+      "latin": "Basa",
+      "occurrences": 1,
+      "articles": [
+        "ᨅᨔ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨈᨘᨆᨉᨗ",
+      "latin": "Batu Mandi",
+      "occurrences": 1,
+      "articles": [
+        "ᨅᨈᨘᨆᨉᨗ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨛᨀᨔᨗ",
+      "latin": "Bekasi",
+      "occurrences": 2,
+      "articles": [
+        "Bekasi",
+        "ᨅᨛᨀᨔᨗ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨙᨒᨛᨁᨗᨐ",
+      "latin": "Bélegiya",
+      "occurrences": 1,
+      "articles": [
+        "ᨅᨙᨒᨛᨁᨗᨐ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨗᨒᨂᨛᨊᨕᨚᨒᨚᨀᨚᨒᨚᨓᨙ",
+      "latin": "Bilangenna Olokkolowé",
+      "occurrences": 1,
+      "articles": [
+        "ᨅᨗᨒᨂᨛᨊᨕᨚᨒᨚᨀᨚᨒᨚᨓᨙ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨗᨐᨚᨒᨚᨁᨗ",
+      "latin": "Biyologi",
+      "occurrences": 1,
+      "articles": [
+        "ᨅᨗᨐᨚᨒᨚᨁᨗ"
+      ]
+    },
+    {
+      "lontara": "ᨅᨚᨒ",
+      "latin": "Bola",
+      "occurrences": 1,
+      "articles": [
+        "Bola"
+      ]
+    },
+    {
+      "lontara": "ᨌᨚᨀᨗ",
+      "latin": "Coki",
+      "occurrences": 1,
+      "articles": [
+        "ᨌᨚᨀᨗ"
+      ]
+    },
+    {
+      "lontara": "ᨀᨇᨚ",
+      "latin": "Désa",
+      "occurrences": 1,
+      "articles": [
+        "ᨀᨇᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨉᨚᨊᨈᨘᨑᨇᨛ",
+      "latin": "Donatturampeq",
+      "occurrences": 1,
+      "articles": [
+        "ᨉᨚᨊᨈᨘᨑᨇᨛ"
+      ]
+    },
+    {
+      "lontara": "ᨉᨚᨑᨕᨙᨆᨚ",
+      "latin": "Doraémong",
+      "occurrences": 1,
+      "articles": [
+        "ᨉᨚᨑᨕᨙᨆᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨙᨑᨚᨄ",
+      "latin": "Éropa",
+      "occurrences": 2,
+      "articles": [
+        "Éropa",
+        "ᨕᨙᨑᨚᨄ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨛᨔᨚ",
+      "latin": "Esso",
+      "occurrences": 1,
+      "articles": [
+        "ᨕᨛᨔᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨁᨐᨚ",
+      "latin": "Gayo",
+      "occurrences": 1,
+      "articles": [
+        "ᨁᨐᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨁᨚᨒᨚ",
+      "latin": "Goloq",
+      "occurrences": 1,
+      "articles": [
+        "ᨁᨚᨒᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨖᨍᨗ",
+      "latin": "Haji",
+      "occurrences": 1,
+      "articles": [
+        "ᨖᨍᨗ"
+      ]
+    },
+    {
+      "lontara": "ᨖᨒᨒᨛ",
+      "latin": "Halaleng",
+      "occurrences": 1,
+      "articles": [
+        "ᨖᨒᨒᨛ"
+      ]
+    },
+    {
+      "lontara": "ᨖᨑ",
+      "latin": "Harang",
+      "occurrences": 1,
+      "articles": [
+        "ᨖᨑ"
+      ]
+    },
+    {
+      "lontara": "ᨖᨚᨅᨗ",
+      "latin": "Hobi",
+      "occurrences": 2,
+      "articles": [
+        "ᨖᨚᨅᨗ",
+        "Hobi"
+      ]
+    },
+    {
+      "lontara": "ᨖᨚᨃᨚ",
+      "latin": "Hongkong",
+      "occurrences": 1,
+      "articles": [
+        "ᨖᨚᨃᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨖᨚᨓᨒᨚ",
+      "latin": "Howanglo",
+      "occurrences": 1,
+      "articles": [
+        "ᨖᨚᨓᨒᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨗᨒᨁᨒᨗᨁᨚ",
+      "latin": "I La Galigo",
+      "occurrences": 1,
+      "articles": [
+        "ᨕᨗᨒᨁᨒᨗᨁᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨗᨉᨗᨐ",
+      "latin": "Indiya",
+      "occurrences": 1,
+      "articles": [
+        "ᨕᨗᨉᨗᨐ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨗᨉᨚᨊᨙᨔᨗᨐ",
+      "latin": "Indonésiya",
+      "occurrences": 2,
+      "articles": [
+        "Indonésiya",
+        "ᨕᨗᨉᨚᨊᨙᨔᨗᨐ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨗᨑ",
+      "latin": "Iraq",
+      "occurrences": 2,
+      "articles": [
+        "ᨕᨗᨑ",
+        "Iraq"
+      ]
+    },
+    {
+      "lontara": "ᨕᨗᨑᨛᨒ",
+      "latin": "Irelang",
+      "occurrences": 1,
+      "articles": [
+        "ᨕᨗᨑᨛᨒ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨗᨈᨒᨗᨕ",
+      "latin": "Italiya",
+      "occurrences": 1,
+      "articles": [
+        "ᨕᨗᨈᨒᨗᨕ"
+      ]
+    },
+    {
+      "lontara": "ᨍᨓ",
+      "latin": "Jawa",
+      "occurrences": 2,
+      "articles": [
+        "ᨍᨓ",
+        "Jawa"
+      ]
+    },
+    {
+      "lontara": "ᨍᨛᨄ",
+      "latin": "Jeppang",
+      "occurrences": 1,
+      "articles": [
+        "ᨍᨛᨄ"
+      ]
+    },
+    {
+      "lontara": "ᨍᨙᨑᨛᨆ",
+      "latin": "Jéremang",
+      "occurrences": 1,
+      "articles": [
+        "ᨍᨙᨑᨛᨆ"
+      ]
+    },
+    {
+      "lontara": "ᨍᨚᨅᨙᨉᨛ",
+      "latin": "Jobédeng",
+      "occurrences": 1,
+      "articles": [
+        "ᨍᨚᨅᨙᨉᨛ"
+      ]
+    },
+    {
+      "lontara": "ᨀᨕᨗᨒᨗ",
+      "latin": "Kaili",
+      "occurrences": 1,
+      "articles": [
+        "ᨀᨕᨗᨒᨗ"
+      ]
+    },
+    {
+      "lontara": "ᨀᨆᨗᨔᨗ",
+      "latin": "Kamisiq",
+      "occurrences": 2,
+      "articles": [
+        "ᨀᨆᨗᨔᨗ",
+        "Kamisiq"
+      ]
+    },
+    {
+      "lontara": "ᨀᨇᨚᨍ",
+      "latin": "Kampoja",
+      "occurrences": 1,
+      "articles": [
+        "ᨀᨇᨚᨍ"
+      ]
+    },
+    {
+      "lontara": "ᨀᨇᨚ",
+      "latin": "Kampong",
+      "occurrences": 1,
+      "articles": [
+        "Kampong"
+      ]
+    },
+    {
+      "lontara": "ᨀᨄᨒᨐᨑ",
+      "latin": "Kapallayaraq",
+      "occurrences": 2,
+      "articles": [
+        "Kapallayaraq",
+        "ᨀᨄᨒᨐᨑ"
+      ]
+    },
+    {
+      "lontara": "ᨀᨔᨔᨛᨈ",
+      "latin": "Kasassetang",
+      "occurrences": 1,
+      "articles": [
+        "ᨀᨔᨔᨛᨈ"
+      ]
+    },
+    {
+      "lontara": "ᨀᨈᨑ",
+      "latin": "Kataraq",
+      "occurrences": 1,
+      "articles": [
+        "ᨀᨈᨑ"
+      ]
+    },
+    {
+      "lontara": "ᨀᨚᨇᨘᨈᨛᨑᨙ",
+      "latin": "Komputeréq",
+      "occurrences": 2,
+      "articles": [
+        "Komputeréq",
+        "ᨀᨚᨇᨘᨈᨛᨑᨙ"
+      ]
+    },
+    {
+      "lontara": "ᨀᨚᨆᨘᨊᨗᨈᨔ",
+      "latin": "Komunitasaq",
+      "occurrences": 2,
+      "articles": [
+        "ᨀᨚᨆᨘᨊᨗᨈᨔ",
+        "Komunitasaq"
+      ]
+    },
+    {
+      "lontara": "ᨀᨘᨑᨘᨉᨗᨔᨗᨈᨛ",
+      "latin": "Kurudissiteng",
+      "occurrences": 1,
+      "articles": [
+        "ᨀᨘᨑᨘᨉᨗᨔᨗᨈᨛ"
+      ]
+    },
+    {
+      "lontara": "ᨀᨘᨓᨇᨗ",
+      "latin": "Kuwamping",
+      "occurrences": 1,
+      "articles": [
+        "ᨀᨘᨓᨇᨗ"
+      ]
+    },
+    {
+      "lontara": "ᨀᨘᨓᨛᨖᨚ",
+      "latin": "Kuweng Ho",
+      "occurrences": 1,
+      "articles": [
+        "ᨀᨘᨓᨛᨖᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨒᨙᨅᨊᨚ",
+      "latin": "Lébanong",
+      "occurrences": 1,
+      "articles": [
+        "ᨒᨙᨅᨊᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨒᨙᨅᨑᨛᨄᨘᨒᨘ",
+      "latin": "Lébarepuluq",
+      "occurrences": 1,
+      "articles": [
+        "ᨒᨙᨅᨑᨛᨄᨘᨒᨘ"
+      ]
+    },
+    {
+      "lontara": "ᨒᨗᨅᨗᨐ",
+      "latin": "Libiya",
+      "occurrences": 1,
+      "articles": [
+        "ᨒᨗᨅᨗᨐ"
+      ]
+    },
+    {
+      "lontara": "ᨒᨗᨊᨚ",
+      "latin": "Lino",
+      "occurrences": 2,
+      "articles": [
+        "ᨒᨗᨊᨚ",
+        "Lino"
+      ]
+    },
+    {
+      "lontara": "ᨆᨒᨕᨗᨔᨗᨐ",
+      "latin": "Malaisiya",
+      "occurrences": 2,
+      "articles": [
+        "ᨆᨒᨕᨗᨔᨗᨐ",
+        "Malaisiya"
+      ]
+    },
+    {
+      "lontara": "ᨆᨒᨗᨒ",
+      "latin": "Malilla",
+      "occurrences": 1,
+      "articles": [
+        "ᨆᨒᨗᨒ"
+      ]
+    },
+    {
+      "lontara": "ᨆᨉᨗᨑᨍ",
+      "latin": "Mandiraja",
+      "occurrences": 2,
+      "articles": [
+        "Mandiraja",
+        "ᨆᨉᨗᨑᨍ"
+      ]
+    },
+    {
+      "lontara": "ᨆᨈᨙ",
+      "latin": "Maté",
+      "occurrences": 1,
+      "articles": [
+        "ᨆᨈᨙ"
+      ]
+    },
+    {
+      "lontara": "ᨆᨗᨐᨆᨑ",
+      "latin": "Miyammaraq",
+      "occurrences": 1,
+      "articles": [
+        "ᨆᨗᨐᨆᨑ"
+      ]
+    },
+    {
+      "lontara": "ᨆᨘᨖᨆ",
+      "latin": "Muhammaq",
+      "occurrences": 1,
+      "articles": [
+        "ᨆᨘᨖᨆ"
+      ]
+    },
+    {
+      "lontara": "ᨊᨚᨑᨘᨓᨙᨁᨗᨐ",
+      "latin": "Noruwégiya",
+      "occurrences": 1,
+      "articles": [
+        "ᨊᨚᨑᨘᨓᨙᨁᨗᨐ"
+      ]
+    },
+    {
+      "lontara": "ᨄᨀᨗᨔᨗᨈ",
+      "latin": "Pakisitang",
+      "occurrences": 1,
+      "articles": [
+        "ᨄᨀᨗᨔᨗᨈ"
+      ]
+    },
+    {
+      "lontara": "ᨄᨑᨛᨈᨆᨗᨊ",
+      "latin": "Paretamina",
+      "occurrences": 1,
+      "articles": [
+        "ᨄᨑᨛᨈᨆᨗᨊ"
+      ]
+    },
+    {
+      "lontara": "ᨄᨛᨉ",
+      "latin": "Peddang",
+      "occurrences": 2,
+      "articles": [
+        "Peddang",
+        "ᨄᨛᨉ"
+      ]
+    },
+    {
+      "lontara": "ᨄᨛᨑᨏᨗᨔᨗ",
+      "latin": "Perancisiq",
+      "occurrences": 1,
+      "articles": [
+        "ᨄᨛᨑᨏᨗᨔᨗ"
+      ]
+    },
+    {
+      "lontara": "ᨄᨙᨑᨙᨈᨗᨓᨗ",
+      "latin": "Pérétiwi",
+      "occurrences": 1,
+      "articles": [
+        "ᨄᨙᨑᨙᨈᨗᨓᨗ"
+      ]
+    },
+    {
+      "lontara": "ᨄᨗᨒᨗᨄᨗᨊ",
+      "latin": "Pilipina",
+      "occurrences": 1,
+      "articles": [
+        "ᨄᨗᨒᨗᨄᨗᨊ"
+      ]
+    },
+    {
+      "lontara": "ᨄᨗᨊᨗᨔᨗ",
+      "latin": "Pinisi",
+      "occurrences": 2,
+      "articles": [
+        "Pinisi",
+        "ᨄᨗᨊᨗᨔᨗ"
+      ]
+    },
+    {
+      "lontara": "ᨄᨗᨔᨗᨀ",
+      "latin": "Pisika",
+      "occurrences": 2,
+      "articles": [
+        "Pisika",
+        "ᨄᨗᨔᨗᨀ"
+      ]
+    },
+    {
+      "lontara": "ᨄᨚᨈᨗᨐᨊ",
+      "latin": "Pontiyanaq",
+      "occurrences": 1,
+      "articles": [
+        "ᨄᨚᨈᨗᨐᨊ"
+      ]
+    },
+    {
+      "lontara": "ᨄᨘᨓᨔ",
+      "latin": "Puwasa",
+      "occurrences": 1,
+      "articles": [
+        "ᨄᨘᨓᨔ"
+      ]
+    },
+    {
+      "lontara": "ᨑᨙᨕᨗᨓ",
+      "latin": "Réiwa",
+      "occurrences": 1,
+      "articles": [
+        "ᨑᨙᨕᨗᨓ"
+      ]
+    },
+    {
+      "lontara": "ᨑᨘᨄᨈᨕᨘ",
+      "latin": "Rupatau",
+      "occurrences": 1,
+      "articles": [
+        "ᨑᨘᨄᨈᨕᨘ"
+      ]
+    },
+    {
+      "lontara": "ᨔᨅ",
+      "latin": "Saba",
+      "occurrences": 1,
+      "articles": [
+        "ᨔᨅ"
+      ]
+    },
+    {
+      "lontara": "ᨔᨖᨉ",
+      "latin": "Sahadaq",
+      "occurrences": 1,
+      "articles": [
+        "ᨔᨖᨉ"
+      ]
+    },
+    {
+      "lontara": "ᨔᨆᨑᨗᨉ",
+      "latin": "Samarinda",
+      "occurrences": 2,
+      "articles": [
+        "ᨔᨆᨑᨗᨉ",
+        "Samarinda"
+      ]
+    },
+    {
+      "lontara": "ᨔᨄᨙᨉ",
+      "latin": "Sapéda",
+      "occurrences": 1,
+      "articles": [
+        "ᨔᨛᨙᨄᨉ"
+      ]
+    },
+    {
+      "lontara": "ᨔᨓᨙᨑᨗᨁᨉᨗ",
+      "latin": "Sawérigading",
+      "occurrences": 1,
+      "articles": [
+        "ᨔᨓᨙᨑᨗᨁᨉᨗ"
+      ]
+    },
+    {
+      "lontara": "ᨕᨔᨛᨒᨛ",
+      "latin": "Selleng",
+      "occurrences": 2,
+      "articles": [
+        "Selleng",
+        "ᨕᨔᨛᨒᨛ"
+      ]
+    },
+    {
+      "lontara": "ᨔᨗᨂᨄᨘᨑ",
+      "latin": "Singapura",
+      "occurrences": 2,
+      "articles": [
+        "ᨔᨗᨂᨄᨘᨑ",
+        "Singapura"
+      ]
+    },
+    {
+      "lontara": "ᨔᨘᨖᨑᨛᨈᨚ",
+      "latin": "Suhareto",
+      "occurrences": 1,
+      "articles": [
+        "ᨔᨘᨖᨑᨛᨈᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨔᨘᨀᨑᨛᨊᨚ",
+      "latin": "Sukareno",
+      "occurrences": 1,
+      "articles": [
+        "ᨔᨘᨀᨑᨛᨊᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨔᨘᨒᨓᨙᨔᨗ",
+      "latin": "Sulawési",
+      "occurrences": 2,
+      "articles": [
+        "ᨔᨘᨒᨓᨙᨔᨗ",
+        "Sulawési"
+      ]
+    },
+    {
+      "lontara": "ᨔᨘᨇᨍ",
+      "latin": "Sumpajang",
+      "occurrences": 1,
+      "articles": [
+        "ᨔᨘᨇᨍ"
+      ]
+    },
+    {
+      "lontara": "ᨈᨕᨘ",
+      "latin": "Tau",
+      "occurrences": 1,
+      "articles": [
+        "ᨈᨕᨘ"
+      ]
+    },
+    {
+      "lontara": "ᨈᨓᨓᨘ",
+      "latin": "Tawawu",
+      "occurrences": 1,
+      "articles": [
+        "ᨈᨓᨓᨘ"
+      ]
+    },
+    {
+      "lontara": "ᨈᨘᨓᨚ",
+      "latin": "Tuwo",
+      "occurrences": 1,
+      "articles": [
+        "ᨈᨘᨓᨚ"
+      ]
+    },
+    {
+      "lontara": "ᨓᨈᨇᨚᨊᨙ",
+      "latin": "Watamponé",
+      "occurrences": 1,
+      "articles": [
+        "ᨓᨈᨇᨚᨊᨙ"
+      ]
+    },
+    {
+      "lontara": "ᨓᨈᨇᨚᨒ",
+      "latin": "Watangpola",
+      "occurrences": 1,
+      "articles": [
+        "Watangpola"
+      ]
+    },
+    {
+      "lontara": "ᨓᨙᨉᨑᨚᨉᨙ",
+      "latin": "Wedang ronde",
+      "occurrences": 2,
+      "articles": [
+        "Wedang ronde",
+        "ᨓᨙᨉᨑᨚᨉᨙ"
+      ]
+    },
+    {
+      "lontara": "ᨓᨛᨈᨘ",
+      "latin": "Wettu",
+      "occurrences": 2,
+      "articles": [
+        "ᨓᨛᨈᨘ",
+        "Wettu"
+      ]
+    }
+  ]
+}
