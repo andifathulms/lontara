@@ -1,0 +1,15 @@
+{
+  "$comment": "EMPTY ON PURPOSE. Every entry needs a provenance field and no entry goes in without a source (invariant 13). The sources in PRD Appendix A are all PDFs and none has been extracted, so there is nothing here that could be added honestly yet. See provenance.md.\n\nThe reader's enumeration is lexicon-driven, so an empty lexicon means the reader can state the syllable skeleton and nothing more — and it says exactly that instead of inventing readings. 2,000 well-sourced entries beat 50,000 of unknown provenance, and zero beats any number of invented ones.",
+  "version": "0.0.0",
+  "bands": {
+    "core": { "weight": 100, "description": "Attested as high-frequency in a cited corpus." },
+    "common": { "weight": 70, "description": "Attested as common in a cited corpus." },
+    "uncommon": { "weight": 40, "description": "Attested, low frequency." },
+    "rare": { "weight": 15, "description": "Attested, rare." },
+    "unknown": {
+      "weight": 1,
+      "description": "In a dictionary, but with no frequency evidence. Until a corpus is counted, honest entries land here — a band is a claim about frequency and guessing one would make the ranking untrustworthy in exactly the way the lexicon is supposed to prevent."
+    }
+  },
+  "entries": []
+}
