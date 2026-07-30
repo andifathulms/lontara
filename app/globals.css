@@ -98,3 +98,27 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Motion, and only this (PRD §10): connector strokes draw in briefly, in the
+   direction of writing, and reading-tree branches expand from the rhombus.
+   Nothing else animates. Both are disabled under prefers-reduced-motion by the
+   blanket rule above. */
+@keyframes lontara-stroke {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes lontara-branch {
+  from {
+    opacity: 0;
+    transform: translateX(-0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
