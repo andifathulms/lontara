@@ -1,0 +1,24 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "@next/next/no-page-custom-font": "off"
+  },
+  "overrides": [
+    {
+      "files": ["lib/engine/**/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["react", "react-dom", "next", "next/*", "@/components/*"],
+                "message": "The engine is pure — no React, no Next, no components. Invariant 5."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
