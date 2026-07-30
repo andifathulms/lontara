@@ -29,6 +29,20 @@ is what those citations point at, and what is deliberately still missing.
   `pnpm rules:validate` checks every codepoint in `inventory.json` against that
   font's cmap.
 
+### Attested practice
+
+- **Bugis Wikipedia**, `{{multiscript|<lontara>|<latin>}}` in article namespace.
+  97 unique community-authored pairs, extracted from the dated
+  `bugwiki-20260701-pages-articles` dump (sha256 recorded in
+  `data/corpus/bugwiki-pairs.json`), CC BY-SA 4.0. Regenerate with
+  `pnpm corpus:pairs`.
+
+  This is **community practice, not an authority**, and individual pairs are
+  demonstrably wrong — `tests/corpus.test.ts` names each disagreement and why.
+  But it is real evidence about Bugis Latin orthography, which is more than the
+  Unicode character names ever were, and it is what rules v0.2.0 rests on where
+  the two conflict. A reviewer still settles anything.
+
 ### In-repo
 
 - **`PRD.md` §2** for the four ambiguity classes and the `mata` / `matta` /
@@ -49,7 +63,7 @@ filled from general knowledge of Brahmic scripts — see `openQuestions` in
 | *Kamus Bahasa Bugis-Indonesia* (227 pp.) and *Kamus Dwibahasa Bugis-Indonesia* (2017), Wikimedia Commons — check the licence tag on each file first | The lexicon, in bulk |
 | A Bugis–English–Indonesian dictionary ordered by **Latin** alphabet | The lexicon, more cheaply than a Lontara-ordered source |
 | Bugis Wikipedia (`bug.wikipedia.org`) | Frequency bands for ranking |
-| Badan Pengembangan dan Pembinaan Bahasa | The standard Latin orthography — which is what `ejaan` needs, and what `openQuestions.va-latin` and `openQuestions.vowel-sign-ae` turn on |
+| Badan Pengembangan dan Pembinaan Bahasa | Whether the attested practice in `bugwiki-pairs.json` is the *standard* orthography — which is what `openQuestions.va-latin`, `openQuestions.vowel-sign-e-ae` and `openQuestions.glottal-q` now turn on |
 | *Sureq Galigo*, *pappaseng* — short excerpts, edition and translator credited | Running-text fixtures |
 
 ## Changelog
@@ -58,4 +72,5 @@ Rule changes go through this log (PRD §9).
 
 | Version | Change |
 |---|---|
+| 0.2.0 | Corrected from attested pairs (`data/corpus/bugwiki-pairs.json`, bug.wikipedia dump 20260701, CC BY-SA 4.0). **Latin `e` takes U+1A1B and `é` takes U+1A19** — the reverse of what the Unicode character names implied, and the old mapping meant the writer silently dropped every `é`. **U+1A13 takes the onset `w`**, not `v`; `v` is accepted on input only. **`q` accepted as the glottal stop.** Agreement with attested pairs went from 54/97 to 91/97. Two findings recorded and deliberately NOT acted on: `ngp` → MPA and `nc` → NYCA. |
 | 0.1.0 | First rule set. Composition and prenasal-letter rules cited to the Unicode code chart and character names. Four loss rules derived from the absence of a virama, with the derivation stated. `latin.va.w` shipped as provisional. Six open questions recorded and not guessed at. No reviewer has seen any of it. |

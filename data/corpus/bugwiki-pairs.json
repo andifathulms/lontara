@@ -10,7 +10,7 @@
     "attribution": "Bugis Wikipedia contributors. Each pair records the articles it was taken from.",
     "extractedFrom": "namespace 0 only"
   },
-  "ruleSetVersionAtExtraction": "0.1.0",
+  "ruleSetVersionAtExtraction": "0.2.0",
   "pairs": [
     {
       "lontara": "ᨕᨖᨙᨑ",

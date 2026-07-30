@@ -4,170 +4,323 @@
     {
       "id": "compose.inherent.a",
       "latin": "ka",
-      "lontara": ["U+1A00"],
+      "lontara": [
+        "U+1A00"
+      ],
       "citation": "Unicode code chart U1A00.pdf — U+1A00 BUGINESE LETTER KA carries the inherent vowel /a/.",
       "expectLoss": []
     },
     {
       "id": "compose.sign.i",
       "latin": "ki",
-      "lontara": ["U+1A00", "U+1A17"],
+      "lontara": [
+        "U+1A00",
+        "U+1A17"
+      ],
       "citation": "Unicode code chart U1A00.pdf — U+1A17 BUGINESE VOWEL SIGN I replaces the inherent vowel.",
       "expectLoss": []
     },
     {
       "id": "compose.sign.u",
       "latin": "ku",
-      "lontara": ["U+1A00", "U+1A18"],
+      "lontara": [
+        "U+1A00",
+        "U+1A18"
+      ],
       "citation": "Unicode code chart U1A00.pdf — U+1A18 BUGINESE VOWEL SIGN U.",
       "expectLoss": []
     },
     {
       "id": "compose.sign.e",
       "latin": "ke",
-      "lontara": ["U+1A00", "U+1A19"],
-      "citation": "Unicode code chart U1A00.pdf — U+1A19 BUGINESE VOWEL SIGN E.",
+      "lontara": [
+        "U+1A00",
+        "U+1A1B"
+      ],
+      "citation": "Attested pairs (data/corpus/bugwiki-pairs.json): plain Latin `e` takes U+1A1B BUGINESE VOWEL SIGN AE, not U+1A19 — Bekasi, Wettu, Peddang, Jeppang, Halaleng and ~25 more. The Unicode character name said otherwise and was wrong.",
       "expectLoss": []
     },
     {
       "id": "compose.sign.o",
       "latin": "ko",
-      "lontara": ["U+1A00", "U+1A1A"],
+      "lontara": [
+        "U+1A00",
+        "U+1A1A"
+      ],
       "citation": "Unicode code chart U1A00.pdf — U+1A1A BUGINESE VOWEL SIGN O.",
       "expectLoss": []
     },
     {
-      "id": "compose.sign.ae",
-      "latin": "kae",
-      "lontara": ["U+1A00", "U+1A1B"],
-      "citation": "Unicode code chart U1A00.pdf — U+1A1B BUGINESE VOWEL SIGN AE. The Latin value `ae` is taken from the character name and is provisional; see openQuestions.vowel-sign-ae.",
+      "id": "compose.sign.e.acute",
+      "latin": "ké",
+      "lontara": [
+        "U+1A00",
+        "U+1A19"
+      ],
+      "citation": "Attested pairs (data/corpus/bugwiki-pairs.json): Latin `é` takes U+1A19 BUGINESE VOWEL SIGN E — Sapéda, Sulawési, Baruné, Watamponé, Sawérigading, Éropa. Before rules v0.2.0 `é` was not a vowel at all and the writer silently dropped a whole syllable from `Sapéda`.",
       "expectLoss": []
     },
     {
       "id": "compose.carrier.vowel.initial",
       "latin": "ana",
-      "lontara": ["U+1A15", "U+1A0A"],
+      "lontara": [
+        "U+1A15",
+        "U+1A0A"
+      ],
       "citation": "Unicode code chart U1A00.pdf — U+1A15 BUGINESE LETTER A carries a vowel with no consonant onset.",
       "expectLoss": []
     },
     {
       "id": "compose.carrier.with.sign",
       "latin": "iga",
-      "lontara": ["U+1A15", "U+1A17", "U+1A01"],
+      "lontara": [
+        "U+1A15",
+        "U+1A17",
+        "U+1A01"
+      ],
       "citation": "Unicode code chart U1A00.pdf — the vowel carrier takes vowel signs like any consonant letter.",
       "expectLoss": []
     },
     {
       "id": "prd.mata",
       "latin": "mata",
-      "lontara": ["U+1A06", "U+1A08"],
+      "lontara": [
+        "U+1A06",
+        "U+1A08"
+      ],
       "citation": "PRD §2 — `mata`, `matta` and `manta` are written identically.",
       "expectLoss": []
     },
     {
       "id": "prd.matta.gemination",
       "latin": "matta",
-      "lontara": ["U+1A06", "U+1A08"],
+      "lontara": [
+        "U+1A06",
+        "U+1A08"
+      ],
       "citation": "PRD §2 — written identically to `mata`. The geminate collapses (lontara.gemination.collapse).",
-      "expectLoss": ["gemination"]
+      "expectLoss": [
+        "gemination"
+      ]
     },
     {
       "id": "prd.manta.final",
       "latin": "manta",
-      "lontara": ["U+1A06", "U+1A08"],
+      "lontara": [
+        "U+1A06",
+        "U+1A08"
+      ],
       "citation": "PRD §2 — written identically to `mata`. `nt` is not written by any of the four prenasal letters, and `t` is not the second element of any of them either, so the nasal is classified as a plain unwritten final rather than as prenasalisation. That the classification is narrower than PRD §2's prose suggests is exactly openQuestions.prenasal-coverage.",
-      "expectLoss": ["final"]
+      "expectLoss": [
+        "final"
+      ]
     },
     {
       "id": "final.word.final.ng",
       "latin": "mang",
-      "lontara": ["U+1A06"],
+      "lontara": [
+        "U+1A06"
+      ],
       "citation": "Derived — inventory.json block.hasVirama = false: no bare consonant can be written, so a word-final consonant is dropped (lontara.final.drop).",
-      "expectLoss": ["final"]
+      "expectLoss": [
+        "final"
+      ]
     },
     {
       "id": "glottal.apostrophe",
       "latin": "lontara'",
-      "lontara": ["U+1A12", "U+1A1A", "U+1A08", "U+1A11"],
+      "lontara": [
+        "U+1A12",
+        "U+1A1A",
+        "U+1A08",
+        "U+1A11"
+      ],
       "citation": "PRD §6.7 names the apostrophe in `Lontara'` as how Bugis Latin writes the glottal stop. Nothing in the block writes it, so it is dropped (lontara.glottal.drop). The final `a` of `-ra'` is the inherent vowel of RA. TWO classes are lost, not one: the `n` of `lon-` closes a syllable and is not written either, so NA never appears in the output.",
-      "expectLoss": ["final", "glottal"]
+      "expectLoss": [
+        "final",
+        "glottal"
+      ]
     },
     {
       "id": "glottal.typographic.normalised",
       "latin": "lontara’",
-      "lontara": ["U+1A12", "U+1A1A", "U+1A08", "U+1A11"],
+      "lontara": [
+        "U+1A12",
+        "U+1A1A",
+        "U+1A08",
+        "U+1A11"
+      ],
       "citation": "latin.apostrophe.normalize — U+2019 RIGHT SINGLE QUOTATION MARK is normalised to U+0027 before anything else looks at the text. Output identical to glottal.apostrophe, which is the point.",
-      "expectLoss": ["final", "glottal"]
+      "expectLoss": [
+        "final",
+        "glottal"
+      ]
     },
     {
       "id": "prenasal.mpa.written",
       "latin": "mampa",
-      "lontara": ["U+1A06", "U+1A07"],
+      "lontara": [
+        "U+1A06",
+        "U+1A07"
+      ],
       "citation": "Unicode character name U+1A07 BUGINESE LETTER MPA. The cluster `mp` is written by a single letter, so NOTHING is lost — this is the case that shows prenasalisation is not uniformly unwritten.",
       "expectLoss": []
     },
     {
       "id": "prenasal.ngka.written",
       "latin": "mangka",
-      "lontara": ["U+1A06", "U+1A03"],
+      "lontara": [
+        "U+1A06",
+        "U+1A03"
+      ],
       "citation": "Unicode character name U+1A03 BUGINESE LETTER NGKA. Maximal onset takes `ngk` over `ng`, so the cluster is written.",
       "expectLoss": []
     },
     {
       "id": "prenasal.nra.written",
       "latin": "manra",
-      "lontara": ["U+1A06", "U+1A0B"],
+      "lontara": [
+        "U+1A06",
+        "U+1A0B"
+      ],
       "citation": "Unicode character name U+1A0B BUGINESE LETTER NRA.",
       "expectLoss": []
     },
     {
       "id": "prenasal.nyca.written",
       "latin": "manyca",
-      "lontara": ["U+1A06", "U+1A0F"],
+      "lontara": [
+        "U+1A06",
+        "U+1A0F"
+      ],
       "citation": "Unicode character name U+1A0F BUGINESE LETTER NYCA.",
       "expectLoss": []
     },
     {
       "id": "prenasal.nga.not.ngka",
       "latin": "manga",
-      "lontara": ["U+1A06", "U+1A02"],
+      "lontara": [
+        "U+1A06",
+        "U+1A02"
+      ],
       "citation": "Unicode character names U+1A02 BUGINESE LETTER NGA and U+1A03 NGKA. `nga` must take NGA, not NGKA — maximal onset tries `ngk` first and it does not match.",
       "expectLoss": []
     },
     {
       "id": "prenasal.nk.dropped",
       "latin": "manka",
-      "lontara": ["U+1A06", "U+1A00"],
+      "lontara": [
+        "U+1A06",
+        "U+1A00"
+      ],
       "citation": "Derived — `nk` is not written by any of the four prenasal letters (ngk, mp, nr, nyc), so the nasal is not written (lontara.prenasal.drop). Whether Bugis practice does something else here is openQuestions.prenasal-coverage.",
-      "expectLoss": ["prenasal"]
+      "expectLoss": [
+        "prenasal"
+      ]
     },
     {
       "id": "variant.case.folded",
       "latin": "MATA",
-      "lontara": ["U+1A06", "U+1A08"],
+      "lontara": [
+        "U+1A06",
+        "U+1A08"
+      ],
       "citation": "latin.case.fold — every letter in the block is general category Lo with no case mappings, so Latin case carries no information the script can record.",
       "expectLoss": []
     },
     {
-      "id": "variant.va.w.provisional",
+      "id": "inventory.wa.primary",
       "latin": "wa",
-      "lontara": ["U+1A13"],
-      "citation": "latin.va.w, PROVISIONAL — `w` is accepted as input for the onset written by U+1A13 BUGINESE LETTER VA. See openQuestions.va-latin.",
+      "lontara": [
+        "U+1A13"
+      ],
+      "citation": "inventory.json takes the onset `w` for U+1A13 from attested pairs (Watangpola, Tawawu, Kuweng, Awayeng, Sulawési); `v` never appears in the corpus. PROVISIONAL — see openQuestions.va-latin.",
       "expectLoss": []
     },
     {
-      "id": "variant.va.v.primary",
+      "id": "variant.wa.v.accepted",
       "latin": "va",
-      "lontara": ["U+1A13"],
-      "citation": "inventory.json takes the onset `v` from the Unicode character name BUGINESE LETTER VA.",
+      "lontara": [
+        "U+1A13"
+      ],
+      "citation": "latin.wa.v, PROVISIONAL — `v` is accepted on input for the same letter, because the Unicode character name BUGINESE LETTER VA leads people to type it. Input tolerance only; the writer never emits `v`.",
       "expectLoss": []
     },
     {
       "id": "loss.multiple.classes",
       "latin": "matta'",
-      "lontara": ["U+1A06", "U+1A08"],
+      "lontara": [
+        "U+1A06",
+        "U+1A08"
+      ],
       "citation": "PRD §2 — a geminate and a glottal stop in one form. Both losses must be declared, each at its own span.",
-      "expectLoss": ["gemination", "glottal"]
+      "expectLoss": [
+        "gemination",
+        "glottal"
+      ]
+    },
+    {
+      "id": "glottal.q.accepted",
+      "latin": "goloq",
+      "lontara": [
+        "U+1A01",
+        "U+1A1A",
+        "U+1A12",
+        "U+1A1A"
+      ],
+      "citation": "latin.glottal.q, PROVISIONAL — attested pair Goloq → ᨁᨚᨒᨚ. Word-final `q` is not written. Whether it is the glottal stop or a final /k/ changes only the declared class, never the output; see openQuestions.glottal-q.",
+      "expectLoss": [
+        "glottal"
+      ]
+    },
+    {
+      "id": "corpus.sapeda.acute.e",
+      "latin": "sapéda",
+      "lontara": [
+        "U+1A14",
+        "U+1A04",
+        "U+1A19",
+        "U+1A09"
+      ],
+      "citation": "Attested pair Sapéda → ᨔᨄᨙᨉ. This is the case that exposed `é` being dropped entirely before rules v0.2.0: the output was ᨔᨉ, missing the whole `pé` syllable.",
+      "expectLoss": []
+    },
+    {
+      "id": "corpus.lebarepuluq.both.e.signs",
+      "latin": "lébarepuluq",
+      "lontara": [
+        "U+1A12",
+        "U+1A19",
+        "U+1A05",
+        "U+1A11",
+        "U+1A1B",
+        "U+1A04",
+        "U+1A18",
+        "U+1A12",
+        "U+1A18"
+      ],
+      "citation": "Attested pair Lébarepuluq → ᨒᨙᨅᨑᨛᨄᨘᨒᨘ. Both signs in one word: `é` takes U+1A19 and `e` takes U+1A1B. Plus a word-final `q`.",
+      "expectLoss": [
+        "glottal"
+      ]
+    },
+    {
+      "id": "corpus.komputereq.prenasal.and.both.signs",
+      "latin": "komputeréq",
+      "lontara": [
+        "U+1A00",
+        "U+1A1A",
+        "U+1A07",
+        "U+1A18",
+        "U+1A08",
+        "U+1A1B",
+        "U+1A11",
+        "U+1A19"
+      ],
+      "citation": "Attested pair Komputeréq → ᨀᨚᨇᨘᨈᨛᨑᨙ. `mp` written with U+1A07 MPA (so nothing lost there), `e` with U+1A1B, `é` with U+1A19, and a final `q`.",
+      "expectLoss": [
+        "glottal"
+      ]
     }
   ]
 }

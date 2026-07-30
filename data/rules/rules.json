@@ -1,6 +1,6 @@
 {
   "$comment": "THE ORTHOGRAPHY. No orthographic rule is written in application code (invariant 1) — the engine in lib/engine/ is an interpreter over this file, and it exists in this form so that a Bugis-literate reviewer who does not program can audit it. `pnpm rules:report` prints it as a readable table. Every rule carries a citation (invariant 2); `status` says what kind of citation it is, and `provisional` rules are the ones a reviewer should attack first. Things this repo will not rule on are listed under openQuestions rather than guessed at.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "reviewStatus": "unreviewed",
   "$ambiguityClassesComment": "A CLOSED SET (invariant 3). Adding a class is a deliberate schema change, not a convenience. All four follow from the absence of a virama in the encoding.",
   "ambiguityClasses": {
@@ -21,7 +21,12 @@
       "description": "The glottal stop is not written."
     }
   },
-  "stages": ["normalize", "segment", "classify", "compose"],
+  "stages": [
+    "normalize",
+    "segment",
+    "classify",
+    "compose"
+  ],
   "rules": [
     {
       "id": "latin.case.fold",
@@ -30,7 +35,9 @@
       "priority": 10,
       "status": "cited",
       "citation": "Unicode: every letter in the Buginese block has general category Lo and no case mappings — the script is unicameral, so Latin case carries no information the script can record.",
-      "from": ["A-Z"],
+      "from": [
+        "A-Z"
+      ],
       "to": "lowercase",
       "description": "Fold Latin input to lower case."
     },
@@ -41,21 +48,42 @@
       "priority": 20,
       "status": "cited",
       "citation": "Unicode Standard: U+2019 RIGHT SINGLE QUOTATION MARK and U+02BC MODIFIER LETTER APOSTROPHE are the two characters commonly typed or substituted where U+0027 APOSTROPHE is meant. Typographic normalisation of the input, not an orthographic claim.",
-      "from": ["U+2019", "U+02BC", "U+2018", "U+00B4"],
+      "from": [
+        "U+2019",
+        "U+02BC",
+        "U+2018",
+        "U+00B4"
+      ],
       "to": "U+0027",
       "description": "Normalise apostrophe-like characters to U+0027, which is how the glottal stop is written in Bugis Latin — the apostrophe in Lontara'."
     },
     {
-      "id": "latin.va.w",
+      "id": "latin.glottal.q",
+      "type": "variant",
+      "stage": "normalize",
+      "priority": 40,
+      "status": "provisional",
+      "citation": "Attested pairs in data/corpus/bugwiki-pairs.json (Bugis Wikipedia, pages-articles dump 20260701, sha256 37b7da2c…, CC BY-SA 4.0) write a word-final `q` that is not written in Lontara at all: Kamisiq → ᨀᨆᨗᨔᨗ, Goloq → ᨁᨚᨒᨚ, Ahéraq → ᨕᨖᨙᨑ, Perancisiq, Donatturampeq, Lébarepuluq, Komputeréq. PRD §6.7 names the glottal stop as what Bugis Latin writes with an apostrophe, so `q` is read as a second convention for the same phoneme and normalised to U+0027.",
+      "note": "PROVISIONAL. That `q` here is the glottal stop rather than a final /k/ is an inference: both are unwritten in Lontara, so THE OUTPUT IS IDENTICAL EITHER WAY and only the declared ambiguity class differs — `glottal` versus `final`. The risk of being wrong is therefore confined to a label, which is why this ships rather than waiting. A reviewer should still settle it. See openQuestions.glottal-q.",
+      "from": [
+        "q"
+      ],
+      "to": "U+0027",
+      "description": "Accept `q` as an input spelling of the glottal stop."
+    },
+    {
+      "id": "latin.wa.v",
       "type": "variant",
       "stage": "normalize",
       "priority": 30,
       "status": "provisional",
-      "citation": "The Unicode character name for U+1A13 is BUGINESE LETTER VA, which is why `v` is the primary onset in inventory.json. `w` is accepted as an input spelling for the same letter.",
-      "note": "PROVISIONAL AND UNVERIFIED. Whether Bugis Latin practice writes this onset `w` or `v` — or whether both occur — is not established in this repository, and the Unicode character name is evidence about the encoding rather than about Bugis Latin orthography. This rule only widens what is accepted as input; it never changes what is written out. A reviewer should rule on it. See openQuestions.va-latin.",
-      "from": ["w"],
-      "to": "v",
-      "description": "Accept `w` as input for the onset written by U+1A13 BUGINESE LETTER VA."
+      "citation": "Attested pairs in data/corpus/bugwiki-pairs.json (Bugis Wikipedia, pages-articles dump 20260701, sha256 37b7da2c…, CC BY-SA 4.0) write U+1A13 as Latin `w` in every case (Watangpola, Tawawu, Kuweng, Awayeng, Sulawési, Noruwégiya, Réiwa, Pérétiwi); `v` never appears. inventory.json therefore takes `w` as the onset, and this rule accepts `v` on input for the same letter, since the Unicode character name BUGINESE LETTER VA leads people to type it.",
+      "note": "PROVISIONAL. Bugis Wikipedia is community practice, not an authority, and the direction of this rule was inverted in v0.2.0 on the strength of that corpus — it previously mapped `w` to `v` on the basis of the Unicode character name alone. It only widens what is accepted as input; it never changes what is written out. A reviewer should confirm `w` is standard. See openQuestions.va-latin.",
+      "from": [
+        "v"
+      ],
+      "to": "w",
+      "description": "Accept `v` as input for the onset written by U+1A13, whose Latin form is `w`."
     },
     {
       "id": "latin.syllable.segment",
@@ -145,23 +173,27 @@
   "openQuestions": [
     {
       "id": "openQuestions.va-latin",
-      "blocks": ["latin.va.w"],
-      "question": "Does Bugis Latin write the onset of U+1A13 BUGINESE LETTER VA as `w`, as `v`, or both depending on the source?",
-      "why": "inventory.json takes `v` from the Unicode character name, which is evidence about the encoding and not about Bugis Latin orthography. `w` is accepted on input as provisional. Getting this wrong misspells every word containing the letter.",
+      "blocks": [
+        "latin.wa.v"
+      ],
+      "question": "Is the Latin form of U+1A13 `w` (as every attested pair writes it) or `v` (as the Unicode character name suggests)?",
+      "why": "Settled in practice, not in principle. Every one of the attested pairs in data/corpus/bugwiki-pairs.json writes `w` and none writes `v`, so v0.2.0 takes `w` as the onset and accepts `v` only on input. What is still missing is confirmation that `w` is standard rather than merely what Wikipedia contributors do.",
       "askWhom": "Badan Bahasa South Sulawesi; the dictionaries in PRD Appendix A"
     },
     {
-      "id": "openQuestions.vowel-sign-ae",
+      "id": "openQuestions.vowel-sign-e-ae",
       "blocks": [],
-      "question": "Which Latin letter or diacritic corresponds to U+1A1B BUGINESE VOWEL SIGN AE?",
-      "why": "The name gives `ae`, which is almost certainly not how it is written in Bugis Latin — /e/ versus /ə/ is exactly the kind of distinction PRD §6.7 says the Latin side must specify. Until it is settled, inventory.json carries `ae` from the character name with a note, and nothing prettier is invented.",
+      "question": "Which Latin vowels do U+1A19 VOWEL SIGN E and U+1A1B VOWEL SIGN AE correspond to?",
+      "why": "Answered in practice and CHANGED in v0.2.0. The Unicode character names gave `e` for U+1A19 and `ae` for U+1A1B; roughly thirty independent attested pairs say the opposite assignment — plain `e` takes U+1A1B (Bekasi, Wettu, Peddang, Jeppang, Halaleng) and `é` takes U+1A19 (Sapéda, Sulawési, Baruné, Watamponé, Sawérigading). The old mapping meant the writer silently dropped every `é`, losing a whole syllable in a word like Sapéda. What remains open is whether this is standard orthography, and what phonemes the two signs represent — /ə/ versus /e/ is the obvious guess and a guess is all it is.",
       "askWhom": "Badan Bahasa South Sulawesi; a Bugis reviewer"
     },
     {
       "id": "openQuestions.prenasal-coverage",
-      "blocks": ["lontara.prenasal.drop"],
+      "blocks": [
+        "lontara.prenasal.drop"
+      ],
       "question": "Four prenasal clusters are written with dedicated letters (ngk, mp, nr, nyc). What happens to every other nasal+stop cluster?",
-      "why": "PRD §2 states flatly that prenasalisation is not written, but the block plainly writes four of them. Either the statement is a simplification or the four letters are used differently than their names suggest. The reader's enumeration of the `prenasal` class depends on the answer.",
+      "why": "PRD §2 states flatly that prenasalisation is not written, but the block plainly writes four of them. Either the statement is a simplification or the four letters are used differently than their names suggest. The reader's enumeration of the `prenasal` class depends on the answer.\n\nTWO attested pairs bear on it, and both point the same way — that the prenasal letter is chosen by the SECOND element, whichever nasal precedes it: Watangpola → ᨓᨈᨇᨚᨒ writes `ngp` with U+1A07 MPA, and Perancisiq → ᨄᨛᨑᨏᨗᨔᨗ writes `nc` with U+1A0F NYCA. DELIBERATELY NOT ACTED ON. Two instances is thin, either could be an article error, and generalising would change `manka` from MA KA to MA NGKA — a real behaviour change on weak evidence. The rule set still drops such a nasal and declares the loss, and these two pairs are the reason to ask a reviewer rather than the reason to guess.",
       "askWhom": "A Bugis reviewer who reads manuscript Lontara; Everson's encoding proposals (PRD Appendix A)"
     },
     {
@@ -184,6 +216,15 @@
       "question": "Which side do VOWEL SIGN E (U+1A19) and VOWEL SIGN O (U+1A1A) render on?",
       "why": "Both are spacing marks (Mc) with no UCD combining class, so the encoding does not answer it. This is a rendering question, and the conformance page answers it by eye rather than inventory.json asserting it.",
       "askWhom": "Nobody — check /aksara/konformansi on a real device and record the answer."
+    },
+    {
+      "id": "openQuestions.glottal-q",
+      "blocks": [
+        "latin.glottal.q"
+      ],
+      "question": "Is word-final `q` in Bugis Latin the glottal stop, or a final /k/, or does it vary?",
+      "why": "It changes which ambiguity class the writer declares, and nothing else — both are unwritten in Lontara, so the aksara output is byte-identical either way. Recorded so the label can be corrected rather than quietly trusted.",
+      "askWhom": "Badan Bahasa South Sulawesi; a Bugis reviewer"
     }
   ]
 }

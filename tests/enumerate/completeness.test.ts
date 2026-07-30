@@ -55,12 +55,12 @@ describe('invariant 15 — enumeration completeness', () => {
       const written = interpret(latin)
       const result = enumerate(written.output.text, LEXICON)
 
-      // The normalised form is what enumeration can return — case folding and
-      // apostrophe normalisation happen before anything is written, so `MATA`
-      // comes back as `mata`. That is the loss being honest, not a failure.
-      const expected = written.input.normalized
-
-      expect(result.readings.map((r) => r.latin)).toContain(expected)
+      // The ORIGINAL form, exactly as invariant 15 states it. Not the
+      // normalised one: the lexicon stores the attested spelling and
+      // enumeration hands that spelling back, so `goloq` returns as `goloq`
+      // and not as `golo'`. Normalisation is input tolerance — it widens what
+      // the writer accepts and never rewrites the lexicon.
+      expect(result.readings.map((r) => r.latin)).toContain(latin)
     })
   }
 

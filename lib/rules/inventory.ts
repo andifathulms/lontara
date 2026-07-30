@@ -18,6 +18,8 @@ const ConsonantSchema = z.object({
   /** Latin onset. Empty string for U+1A15 BUGINESE LETTER A, the vowel carrier. */
   onset: z.string(),
   prenasal: z.boolean(),
+  /** Present where the onset departs from the Unicode character name. */
+  onsetNote: z.string().min(1).optional(),
 })
 
 const VowelSignSchema = z.object({

@@ -154,8 +154,12 @@ describe('segmentLatin — maximal onset', () => {
     expect(kinds('ana')).toEqual(['|a', 'n|a'])
   })
 
-  it('reads `ae` as one vowel — a consequence of the provisional romanisation', () => {
-    expect(kinds('kae')).toEqual(['k|ae'])
+  it('treats `é` as its own vowel, not as a stray character', () => {
+    // Before rules v0.2.0, `é` was not in the vowel set, so `sapéda` parsed as
+    // sa + final p + unhandled é + da and lost the whole `pé` syllable. The
+    // attested pair Sapéda → ᨔᨄᨙᨉ is what caught it.
+    expect(kinds('sapéda')).toEqual(['s|a', 'p|é', 'd|a'])
+    expect(kinds('kae')).toEqual(['k|a', '|e'])
   })
 })
 

@@ -5,7 +5,9 @@
     "citation": "Unicode code chart U1A00.pdf, block Buginese; 30 assigned code points since Unicode 4.1 (2005)",
     "url": "https://www.unicode.org/charts/PDF/U1A00.pdf",
     "designRationale": "Everson, encoding proposals L2/98-021, L2/99-011, L2/03-191, L2/03-320",
-    "verifiedAgainstFont": "vendor/fonts/NotoSansBuginese-Regular.ttf (version 2.002)"
+    "verifiedAgainstFont": "vendor/fonts/NotoSansBuginese-Regular.ttf (version 2.002)",
+    "latinValuesNote": "Codepoints and unicodeName come from the Unicode Standard and are facts. The `onset` and `latin` fields are a DIFFERENT kind of claim: they are about Bugis Latin orthography, which the Unicode character names are not evidence about. Where attested pairs in data/corpus/bugwiki-pairs.json contradict a character name, the attested form wins and the field carries a latinNote saying so.",
+    "attestedPairs": "data/corpus/bugwiki-pairs.json (bug.wikipedia dump 20260701)"
   },
   "block": {
     "start": "U+1A00",
@@ -23,38 +25,183 @@
     "name": "ka-ga-nga",
     "note": "The codepoint order U+1A00..U+1A16 is the traditional order. The on-screen keyboard is laid out in it, in rows of four, which is how the code chart itself groups the letters.",
     "rows": [
-      ["U+1A00", "U+1A01", "U+1A02", "U+1A03"],
-      ["U+1A04", "U+1A05", "U+1A06", "U+1A07"],
-      ["U+1A08", "U+1A09", "U+1A0A", "U+1A0B"],
-      ["U+1A0C", "U+1A0D", "U+1A0E", "U+1A0F"],
-      ["U+1A10", "U+1A11", "U+1A12", "U+1A13"],
-      ["U+1A14", "U+1A15", "U+1A16"]
+      [
+        "U+1A00",
+        "U+1A01",
+        "U+1A02",
+        "U+1A03"
+      ],
+      [
+        "U+1A04",
+        "U+1A05",
+        "U+1A06",
+        "U+1A07"
+      ],
+      [
+        "U+1A08",
+        "U+1A09",
+        "U+1A0A",
+        "U+1A0B"
+      ],
+      [
+        "U+1A0C",
+        "U+1A0D",
+        "U+1A0E",
+        "U+1A0F"
+      ],
+      [
+        "U+1A10",
+        "U+1A11",
+        "U+1A12",
+        "U+1A13"
+      ],
+      [
+        "U+1A14",
+        "U+1A15",
+        "U+1A16"
+      ]
     ]
   },
   "consonants": [
-    { "codepoint": "U+1A00", "unicodeName": "BUGINESE LETTER KA", "onset": "k", "prenasal": false },
-    { "codepoint": "U+1A01", "unicodeName": "BUGINESE LETTER GA", "onset": "g", "prenasal": false },
-    { "codepoint": "U+1A02", "unicodeName": "BUGINESE LETTER NGA", "onset": "ng", "prenasal": false },
-    { "codepoint": "U+1A03", "unicodeName": "BUGINESE LETTER NGKA", "onset": "ngk", "prenasal": true },
-    { "codepoint": "U+1A04", "unicodeName": "BUGINESE LETTER PA", "onset": "p", "prenasal": false },
-    { "codepoint": "U+1A05", "unicodeName": "BUGINESE LETTER BA", "onset": "b", "prenasal": false },
-    { "codepoint": "U+1A06", "unicodeName": "BUGINESE LETTER MA", "onset": "m", "prenasal": false },
-    { "codepoint": "U+1A07", "unicodeName": "BUGINESE LETTER MPA", "onset": "mp", "prenasal": true },
-    { "codepoint": "U+1A08", "unicodeName": "BUGINESE LETTER TA", "onset": "t", "prenasal": false },
-    { "codepoint": "U+1A09", "unicodeName": "BUGINESE LETTER DA", "onset": "d", "prenasal": false },
-    { "codepoint": "U+1A0A", "unicodeName": "BUGINESE LETTER NA", "onset": "n", "prenasal": false },
-    { "codepoint": "U+1A0B", "unicodeName": "BUGINESE LETTER NRA", "onset": "nr", "prenasal": true },
-    { "codepoint": "U+1A0C", "unicodeName": "BUGINESE LETTER CA", "onset": "c", "prenasal": false },
-    { "codepoint": "U+1A0D", "unicodeName": "BUGINESE LETTER JA", "onset": "j", "prenasal": false },
-    { "codepoint": "U+1A0E", "unicodeName": "BUGINESE LETTER NYA", "onset": "ny", "prenasal": false },
-    { "codepoint": "U+1A0F", "unicodeName": "BUGINESE LETTER NYCA", "onset": "nyc", "prenasal": true },
-    { "codepoint": "U+1A10", "unicodeName": "BUGINESE LETTER YA", "onset": "y", "prenasal": false },
-    { "codepoint": "U+1A11", "unicodeName": "BUGINESE LETTER RA", "onset": "r", "prenasal": false },
-    { "codepoint": "U+1A12", "unicodeName": "BUGINESE LETTER LA", "onset": "l", "prenasal": false },
-    { "codepoint": "U+1A13", "unicodeName": "BUGINESE LETTER VA", "onset": "v", "prenasal": false },
-    { "codepoint": "U+1A14", "unicodeName": "BUGINESE LETTER SA", "onset": "s", "prenasal": false },
-    { "codepoint": "U+1A15", "unicodeName": "BUGINESE LETTER A", "onset": "", "prenasal": false },
-    { "codepoint": "U+1A16", "unicodeName": "BUGINESE LETTER HA", "onset": "h", "prenasal": false }
+    {
+      "codepoint": "U+1A00",
+      "unicodeName": "BUGINESE LETTER KA",
+      "onset": "k",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A01",
+      "unicodeName": "BUGINESE LETTER GA",
+      "onset": "g",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A02",
+      "unicodeName": "BUGINESE LETTER NGA",
+      "onset": "ng",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A03",
+      "unicodeName": "BUGINESE LETTER NGKA",
+      "onset": "ngk",
+      "prenasal": true
+    },
+    {
+      "codepoint": "U+1A04",
+      "unicodeName": "BUGINESE LETTER PA",
+      "onset": "p",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A05",
+      "unicodeName": "BUGINESE LETTER BA",
+      "onset": "b",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A06",
+      "unicodeName": "BUGINESE LETTER MA",
+      "onset": "m",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A07",
+      "unicodeName": "BUGINESE LETTER MPA",
+      "onset": "mp",
+      "prenasal": true
+    },
+    {
+      "codepoint": "U+1A08",
+      "unicodeName": "BUGINESE LETTER TA",
+      "onset": "t",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A09",
+      "unicodeName": "BUGINESE LETTER DA",
+      "onset": "d",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A0A",
+      "unicodeName": "BUGINESE LETTER NA",
+      "onset": "n",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A0B",
+      "unicodeName": "BUGINESE LETTER NRA",
+      "onset": "nr",
+      "prenasal": true
+    },
+    {
+      "codepoint": "U+1A0C",
+      "unicodeName": "BUGINESE LETTER CA",
+      "onset": "c",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A0D",
+      "unicodeName": "BUGINESE LETTER JA",
+      "onset": "j",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A0E",
+      "unicodeName": "BUGINESE LETTER NYA",
+      "onset": "ny",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A0F",
+      "unicodeName": "BUGINESE LETTER NYCA",
+      "onset": "nyc",
+      "prenasal": true
+    },
+    {
+      "codepoint": "U+1A10",
+      "unicodeName": "BUGINESE LETTER YA",
+      "onset": "y",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A11",
+      "unicodeName": "BUGINESE LETTER RA",
+      "onset": "r",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A12",
+      "unicodeName": "BUGINESE LETTER LA",
+      "onset": "l",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A13",
+      "unicodeName": "BUGINESE LETTER VA",
+      "onset": "w",
+      "prenasal": false,
+      "onsetNote": "Latin `w`, not `v`. The Unicode character name is BUGINESE LETTER VA, which is evidence about the encoding; every attested pair writes this letter `w` (Watangpola, Tawawu, Kuweng, Awayeng, Sulawési, Noruwégiya, Réiwa, Pérétiwi) and `v` never appears. `v` is still accepted on input — see latin.wa.v. PROVISIONAL. See openQuestions.va-latin."
+    },
+    {
+      "codepoint": "U+1A14",
+      "unicodeName": "BUGINESE LETTER SA",
+      "onset": "s",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A15",
+      "unicodeName": "BUGINESE LETTER A",
+      "onset": "",
+      "prenasal": false
+    },
+    {
+      "codepoint": "U+1A16",
+      "unicodeName": "BUGINESE LETTER HA",
+      "onset": "h",
+      "prenasal": false
+    }
   ],
   "$vowelSignComment": "generalCategory and combiningClass are read from the UCD and are facts. `position` is derived from the combining class where the UCD determines one, and is 'unverified' where it does not — E and O are spacing marks (Mc), so they take advance width, but which side they sit on is a rendering question answered by the conformance page, not something to assert here.",
   "vowelSigns": [
@@ -79,11 +226,12 @@
     {
       "codepoint": "U+1A19",
       "unicodeName": "BUGINESE VOWEL SIGN E",
-      "latin": "e",
+      "latin": "é",
       "generalCategory": "Mc",
       "combiningClass": 0,
       "position": "unverified",
-      "positionSource": "Spacing combining mark; the UCD assigns no combining class. See the rendering conformance page."
+      "positionSource": "Spacing combining mark; the UCD assigns no combining class. See the rendering conformance page.",
+      "latinNote": "Latin `é`, NOT `e`. Taken from attested pairs in data/corpus/bugwiki-pairs.json rather than from the Unicode character name: Sapéda, Sulawési, Baruné, Watamponé, Sawérigading, Éropa, Lébarepuluq and Komputeréq all write `é` with this sign. PROVISIONAL — Wikipedia is community practice, not an authority. See openQuestions.vowel-sign-e-ae."
     },
     {
       "codepoint": "U+1A1A",
@@ -97,17 +245,25 @@
     {
       "codepoint": "U+1A1B",
       "unicodeName": "BUGINESE VOWEL SIGN AE",
-      "latin": "ae",
+      "latin": "e",
       "generalCategory": "Mn",
       "combiningClass": 0,
       "position": "unverified",
       "positionSource": "Non-spacing mark, but the UCD assigns no combining class. See the rendering conformance page.",
-      "latinNote": "`ae` is taken from the Unicode character name, not from a Bugis Latin orthography. Which Latin letter or diacritic this sign corresponds to is an open question — see the ejaan page."
+      "latinNote": "Latin `e`, NOT `ae`. `ae` came from the Unicode character name and was wrong: about thirty independent attested pairs in data/corpus/bugwiki-pairs.json write plain `e` with this sign (Bekasi, Wettu, Peddang, Jeppang, Halaleng, Balangeng, Irelang, Banjaramaseng and more). PROVISIONAL — Wikipedia is community practice, not an authority. See openQuestions.vowel-sign-e-ae."
     }
   ],
   "$punctuationComment": "`latin` is deliberately null for both marks. The function of pallawa in Bugis practice, and how either mark should be represented in Latin, is not something this repo can cite yet — see the ejaan page. Presenting a guess as the answer is the specific failure this project must avoid.",
   "punctuation": [
-    { "codepoint": "U+1A1E", "unicodeName": "BUGINESE PALLAWA", "latin": null },
-    { "codepoint": "U+1A1F", "unicodeName": "BUGINESE END OF SECTION", "latin": null }
+    {
+      "codepoint": "U+1A1E",
+      "unicodeName": "BUGINESE PALLAWA",
+      "latin": null
+    },
+    {
+      "codepoint": "U+1A1F",
+      "unicodeName": "BUGINESE END OF SECTION",
+      "latin": null
+    }
   ]
 }

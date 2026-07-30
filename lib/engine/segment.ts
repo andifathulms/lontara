@@ -24,11 +24,13 @@ const ONSETS: readonly string[] = INVENTORY.consonants
 /**
  * The inherent vowel plus every vowel sign's Latin value, longest-first.
  *
- * `ae` sorting before `a` is a consequence of the provisional romanisation of
- * U+1A1B BUGINESE VOWEL SIGN AE, which is taken from the Unicode character
- * name and not from a Bugis Latin orthography. See
- * `openQuestions.vowel-sign-ae` — until that is settled, an input `ae` is read
- * as the single sign rather than as `a` followed by `e`.
+ * All six are a single character as of rules v0.2.0, so the longest-first sort
+ * is currently a no-op — it is kept because the Latin value of a sign is
+ * provisional and a multi-character one would silently mis-segment without it.
+ *
+ * `é` is here because U+1A19 VOWEL SIGN E takes Latin `é`, not `e` — see the
+ * latinNote on that sign. Before v0.2.0 `é` was not a vowel at all, which made
+ * the writer drop an entire syllable from a form like `Sapéda`.
  */
 const VOWELS: readonly string[] = [
   INVENTORY.inherentVowel.latin,
