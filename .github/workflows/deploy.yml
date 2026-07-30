@@ -84,6 +84,56 @@ jobs:
           test -f out/index.html || { echo "out/index.html missing — the bare root would 404"; exit 1; }
           grep -q '/lontara/_next' out/id/index.html || { echo "basePath is not /lontara in the export"; exit 1; }
 
+      # Offline after first load (PRD §12) depends entirely on the precache list
+      # being accurate, and a wrong list fails silently — the site just stops
+      # working on a train. So the list is checked against the export that was
+      # actually produced, and every entry is fetched.
+      - name: check the service worker precaches the real export
+        run: |
+          test -f out/sw.js || { echo "out/sw.js missing — no offline support"; exit 1; }
+          node --check out/sw.js
+          node -e "
+            const fs = require('fs')
+            const sw = fs.readFileSync('out/sw.js', 'utf8')
+            const pre = JSON.parse(/const PRECACHE = (\[[\s\S]*?\])\n\nconst CRITICAL/.exec(sw)[1])
+            const onDisk = []
+            ;(function walk(d) {
+              for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+                const p = d + '/' + e.name
+                if (e.isDirectory()) walk(p)
+                else onDisk.push(p.replace(/^out/, '/lontara'))
+              }
+            })('out')
+            const expected = onDisk.filter((p) => !/\/(sw\.js|\.nojekyll)$/.test(p)).sort()
+            const missing = expected.filter((p) => !pre.includes(p))
+            const phantom = pre.filter((p) => !expected.includes(p))
+            if (missing.length || phantom.length) {
+              console.error('precache does not match the export')
+              for (const m of missing) console.error('  missing  ' + m)
+              for (const p of phantom) console.error('  phantom  ' + p)
+              process.exit(1)
+            }
+            console.log('precache matches the export: ' + pre.length + ' files')
+          "
+
+      - name: every precached URL resolves
+        run: |
+          PORT=4399 node scripts/preview.mjs & SRV=$!
+          for i in $(seq 1 40); do curl -sg -o /dev/null http://localhost:4399/lontara/ && break; sleep 0.25; done
+          fail=0
+          # -g: curl globs [ ] by default, and the app-router chunks live under
+          # a literal app/[locale]/ directory.
+          for u in $(node -e "
+            const fs=require('fs')
+            const sw=fs.readFileSync('out/sw.js','utf8')
+            console.log(JSON.parse(/const PRECACHE = (\[[\s\S]*?\])\n\nconst CRITICAL/.exec(sw)[1]).join(' '))
+          "); do
+            code=$(curl -sg -o /dev/null -w '%{http_code}' "http://localhost:4399$u")
+            [ "$code" = "200" ] || { echo "  $code  $u"; fail=1; }
+          done
+          kill $SRV
+          exit $fail
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

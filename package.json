@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm rules:validate && pnpm lexicon:validate && next build",
+    "build": "pnpm rules:validate && pnpm lexicon:validate && next build && node scripts/build-service-worker.mjs",
     "preview": "node scripts/preview.mjs",
     "test": "vitest",
     "test:run": "vitest run",

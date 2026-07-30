@@ -1,6 +1,7 @@
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
 import { REPOSITORY_URL } from '@/lib/paths'
+import { OfflineReady } from '@/components/chrome/OfflineReady'
 
 /**
  * The non-authority statement is footer furniture on every page, not a page of
@@ -47,6 +48,9 @@ export function SiteFooter({ locale }: { locale: Locale }) {
               {copy.common.sourceCode}
             </a>
           </p>
+          <div className="mt-3">
+            <OfflineReady locale={locale} />
+          </div>
         </div>
       </div>
     </footer>

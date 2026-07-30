@@ -41,11 +41,11 @@ Read `PRD.md` for scope and `CLAUDE.md` for how to work in the repo.
 | | | |
 |---|---|---|
 | **M0** | Rendering + scaffold | Built. Static export deploys, Noto Sans Buginese subset with licence recorded, conformance page ready — **but not yet eyeballed on any device.** `pnpm render:conformance` reports 60 unchecked rows. |
-| **M1** | Engine | Built. Rule schema and validator, segmenter, interpreter, trace, ambiguity type. 180 tests. |
+| **M1** | Engine | Built. Rule schema and validator, segmenter, interpreter, trace, ambiguity type. 203 tests. |
 | **M2** | Writer | Built. Every lossy class declared and traced, keyboard, orthography disclosure. |
 | **M3** | Reader | Built, **not launched.** The reviewer gate is unmet, and the lexicon is empty. |
 | **M4** | Explanation UI | Built. Band, connector strokes, rule trace panel, ambiguity panel. |
-| **M5** | Reference | Script reference and orthography disclosure built. Glossary and offline polish outstanding. |
+| **M5** | Reference | Script reference and orthography disclosure built, offline capability and URL-fragment sharing done. Glossary outstanding. |
 
 ### Three things are deliberately absent
 
@@ -72,7 +72,7 @@ produce a confident-looking tree of readings that are not Bugis. See
 pnpm dev
 pnpm build                # static export to ./out; validates rules and lexicon first
 pnpm preview              # serve ./out under the production basePath
-pnpm test:run             # 180 tests
+pnpm test:run             # 203 tests
 pnpm test:enumerate       # enumeration completeness — invariant 15
 pnpm rules:validate       # schema, citations, priority conflicts, font coverage
 pnpm rules:report         # every rule with citation and status — the reviewer's artefact
@@ -85,6 +85,29 @@ pnpm typecheck && pnpm lint
 
 `rules:validate` and `lexicon:validate` are wired into `build` and CI and may
 fail the deploy. Do not weaken them.
+
+`build` also regenerates `out/sw.js` from the export it just produced. Offline
+support depends on that precache list being accurate and a wrong list fails
+*silently* — the site simply stops working on a train — so CI checks the list
+against the files on disk in both directions and then fetches every entry.
+
+## Offline and sharing
+
+**Fully offline after first load** (PRD §12). `scripts/build-service-worker.mjs`
+reads the export and emits a precache list; Next emits content-hashed chunk
+names, so a hand-written list in `public/` would go stale on the next build. The
+cache name is derived from the contents of the whole export, so cache-first is
+unconditionally safe — nothing inside one version can go stale — and a deploy
+that changes nothing does not invalidate anyone's cache.
+
+No `skipWaiting` and no `clients.claim`, deliberately: the app router loads route
+chunks lazily, so swapping the active worker mid-session could hand an already
+loaded page chunks from a different build. A new version activates once the last
+old tab closes.
+
+**Shareable by URL fragment** (PRD §4). The value lives after the `#`, which is
+never sent in the HTTP request — so a name someone is checking before committing
+it to a signboard does not land in a Pages access log. A query string would.
 
 ## How it is put together
 
