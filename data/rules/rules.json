@@ -1,0 +1,189 @@
+{
+  "$comment": "THE ORTHOGRAPHY. No orthographic rule is written in application code (invariant 1) — the engine in lib/engine/ is an interpreter over this file, and it exists in this form so that a Bugis-literate reviewer who does not program can audit it. `pnpm rules:report` prints it as a readable table. Every rule carries a citation (invariant 2); `status` says what kind of citation it is, and `provisional` rules are the ones a reviewer should attack first. Things this repo will not rule on are listed under openQuestions rather than guessed at.",
+  "version": "0.1.0",
+  "reviewStatus": "unreviewed",
+  "$ambiguityClassesComment": "A CLOSED SET (invariant 3). Adding a class is a deliberate schema change, not a convenience. All four follow from the absence of a virama in the encoding.",
+  "ambiguityClasses": {
+    "final": {
+      "citation": "PRD §2; inventory.json block.hasVirama = false",
+      "description": "A syllable-final consonant is not written."
+    },
+    "gemination": {
+      "citation": "PRD §2; inventory.json block.hasVirama = false",
+      "description": "A single consonant and a doubled consonant are written alike."
+    },
+    "prenasal": {
+      "citation": "PRD §2; inventory.json block.hasVirama = false",
+      "description": "Prenasalisation is not written where no prenasal letter covers the cluster."
+    },
+    "glottal": {
+      "citation": "PRD §2; inventory.json block.hasVirama = false",
+      "description": "The glottal stop is not written."
+    }
+  },
+  "stages": ["normalize", "segment", "classify", "compose"],
+  "rules": [
+    {
+      "id": "latin.case.fold",
+      "type": "variant",
+      "stage": "normalize",
+      "priority": 10,
+      "status": "cited",
+      "citation": "Unicode: every letter in the Buginese block has general category Lo and no case mappings — the script is unicameral, so Latin case carries no information the script can record.",
+      "from": ["A-Z"],
+      "to": "lowercase",
+      "description": "Fold Latin input to lower case."
+    },
+    {
+      "id": "latin.apostrophe.normalize",
+      "type": "variant",
+      "stage": "normalize",
+      "priority": 20,
+      "status": "cited",
+      "citation": "Unicode Standard: U+2019 RIGHT SINGLE QUOTATION MARK and U+02BC MODIFIER LETTER APOSTROPHE are the two characters commonly typed or substituted where U+0027 APOSTROPHE is meant. Typographic normalisation of the input, not an orthographic claim.",
+      "from": ["U+2019", "U+02BC", "U+2018", "U+00B4"],
+      "to": "U+0027",
+      "description": "Normalise apostrophe-like characters to U+0027, which is how the glottal stop is written in Bugis Latin — the apostrophe in Lontara'."
+    },
+    {
+      "id": "latin.va.w",
+      "type": "variant",
+      "stage": "normalize",
+      "priority": 30,
+      "status": "provisional",
+      "citation": "The Unicode character name for U+1A13 is BUGINESE LETTER VA, which is why `v` is the primary onset in inventory.json. `w` is accepted as an input spelling for the same letter.",
+      "note": "PROVISIONAL AND UNVERIFIED. Whether Bugis Latin practice writes this onset `w` or `v` — or whether both occur — is not established in this repository, and the Unicode character name is evidence about the encoding rather than about Bugis Latin orthography. This rule only widens what is accepted as input; it never changes what is written out. A reviewer should rule on it. See openQuestions.va-latin.",
+      "from": ["w"],
+      "to": "v",
+      "description": "Accept `w` as input for the onset written by U+1A13 BUGINESE LETTER VA."
+    },
+    {
+      "id": "latin.syllable.segment",
+      "type": "segmentation",
+      "stage": "segment",
+      "priority": 10,
+      "status": "derived",
+      "citation": "Derived from inventory.json: the block has no virama (block.hasVirama = false), so the script writes only (C)V units — a consonant letter carrying the inherent vowel /a/, optionally with a vowel sign replacing it. A Latin form is therefore parsed as the longest onset present in inventory.consonants followed by a vowel; a consonant that cannot begin such a unit is syllable-final. The derivation is stated here in full so it can be disputed as a whole rather than accepted piecemeal.",
+      "strategy": "maximal-onset",
+      "description": "Parse Latin into (C)V units, longest onset first. Leftover consonants are syllable-final."
+    },
+    {
+      "id": "lontara.syllable.compose",
+      "type": "composition",
+      "stage": "compose",
+      "priority": 10,
+      "status": "cited",
+      "citation": "Unicode code chart U1A00.pdf, block Buginese. Each consonant letter U+1A00..U+1A16 carries the inherent vowel /a/; a vowel sign U+1A17..U+1A1B replaces it. The Latin value of each letter and sign is its Unicode character name.",
+      "onsetSource": "inventory.consonants",
+      "vowelSource": "inventory.vowelSigns",
+      "inherentVowel": "a",
+      "carrier": "U+1A15",
+      "description": "Write a (C)V unit as its consonant letter, plus a vowel sign unless the vowel is the inherent /a/. A vowel with no onset takes U+1A15 BUGINESE LETTER A as its carrier."
+    },
+    {
+      "id": "lontara.prenasal.letter",
+      "type": "composition",
+      "stage": "compose",
+      "priority": 20,
+      "status": "cited",
+      "citation": "Unicode character names U+1A03 BUGINESE LETTER NGKA, U+1A07 MPA, U+1A0B NRA, U+1A0F NYCA. These four letters write a nasal+stop onset as a single letter, so those four clusters are written rather than lost.",
+      "onsetSource": "inventory.consonants[prenasal]",
+      "vowelSource": "inventory.vowelSigns",
+      "inherentVowel": "a",
+      "description": "Where a nasal+stop cluster is covered by one of the four prenasal letters, write that letter. Nothing is lost in this case."
+    },
+    {
+      "id": "lontara.gemination.collapse",
+      "type": "loss",
+      "stage": "classify",
+      "priority": 10,
+      "ambiguityClass": "gemination",
+      "status": "derived",
+      "citation": "Derived from inventory.json block.hasVirama = false and PRD §2 (`mata` / `matta` / `manta` are written identically). A syllable-final consonant identical to the onset of the syllable that follows it is a geminate; with no virama there is no way to write it, so it collapses into the single following letter.",
+      "trigger": "final consonant identical to the following onset",
+      "action": "collapse",
+      "description": "A geminate is written as a single letter. The doubling is not recoverable from the writing."
+    },
+    {
+      "id": "lontara.prenasal.drop",
+      "type": "loss",
+      "stage": "classify",
+      "priority": 20,
+      "ambiguityClass": "prenasal",
+      "status": "derived",
+      "citation": "Derived from inventory.json and PRD §2. Where a nasal is syllable-final before a stop and the cluster is NOT one of the four written by U+1A03/U+1A07/U+1A0B/U+1A0F, no letter in the block writes it, so the nasal is not written.",
+      "note": "The choice this rule records is a real open question, not a settled one. Four prenasal clusters ARE written, which sits in tension with PRD §2's flat statement that prenasalisation is not written. Whether Bugis practice extends a prenasal letter to other nasal+stop clusters, writes the nasal some other way, or omits it, is unresolved here — so the writer emits an Ambiguity of class `prenasal` with this rule as its stated reason rather than passing over it in silence. See openQuestions.prenasal-coverage.",
+      "trigger": "final nasal before a stop, cluster not covered by a prenasal letter",
+      "action": "drop",
+      "description": "An unwritten prenasalising nasal is dropped, and the loss is declared at that span."
+    },
+    {
+      "id": "lontara.final.drop",
+      "type": "loss",
+      "stage": "classify",
+      "priority": 30,
+      "ambiguityClass": "final",
+      "status": "derived",
+      "citation": "Derived from inventory.json block.hasVirama = false and PRD §2. There is no mechanism in the encoding for a bare consonant, so any consonant that closes a syllable is not written.",
+      "trigger": "syllable-final consonant not matched by a higher-priority loss rule",
+      "action": "drop",
+      "description": "A syllable-final consonant is dropped, and the loss is declared at that span."
+    },
+    {
+      "id": "lontara.glottal.drop",
+      "type": "loss",
+      "stage": "classify",
+      "priority": 40,
+      "ambiguityClass": "glottal",
+      "status": "derived",
+      "citation": "Derived from inventory.json: no character in the block writes a glottal stop, and there is no virama. PRD §2 lists the glottal stop among what the orthography does not write; PRD §6.7 identifies the apostrophe in Lontara' as how Bugis Latin writes it.",
+      "trigger": "U+0027 APOSTROPHE in normalised Latin input",
+      "action": "drop",
+      "description": "The glottal stop is dropped, and the loss is declared at that span."
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "openQuestions.va-latin",
+      "blocks": ["latin.va.w"],
+      "question": "Does Bugis Latin write the onset of U+1A13 BUGINESE LETTER VA as `w`, as `v`, or both depending on the source?",
+      "why": "inventory.json takes `v` from the Unicode character name, which is evidence about the encoding and not about Bugis Latin orthography. `w` is accepted on input as provisional. Getting this wrong misspells every word containing the letter.",
+      "askWhom": "Badan Bahasa South Sulawesi; the dictionaries in PRD Appendix A"
+    },
+    {
+      "id": "openQuestions.vowel-sign-ae",
+      "blocks": [],
+      "question": "Which Latin letter or diacritic corresponds to U+1A1B BUGINESE VOWEL SIGN AE?",
+      "why": "The name gives `ae`, which is almost certainly not how it is written in Bugis Latin — /e/ versus /ə/ is exactly the kind of distinction PRD §6.7 says the Latin side must specify. Until it is settled, inventory.json carries `ae` from the character name with a note, and nothing prettier is invented.",
+      "askWhom": "Badan Bahasa South Sulawesi; a Bugis reviewer"
+    },
+    {
+      "id": "openQuestions.prenasal-coverage",
+      "blocks": ["lontara.prenasal.drop"],
+      "question": "Four prenasal clusters are written with dedicated letters (ngk, mp, nr, nyc). What happens to every other nasal+stop cluster?",
+      "why": "PRD §2 states flatly that prenasalisation is not written, but the block plainly writes four of them. Either the statement is a simplification or the four letters are used differently than their names suggest. The reader's enumeration of the `prenasal` class depends on the answer.",
+      "askWhom": "A Bugis reviewer who reads manuscript Lontara; Everson's encoding proposals (PRD Appendix A)"
+    },
+    {
+      "id": "openQuestions.final-inventory",
+      "blocks": [],
+      "question": "Which consonants can close a syllable in Bugis, and with what relative frequency?",
+      "why": "It would let the reader enumerate `final` readings structurally rather than only where the lexicon attests them. Deliberately NOT guessed at: a structural enumerator seeded with an invented set of possible finals would produce a confident-looking tree of readings that are not Bugis. Until the set is cited, enumeration stays lexicon-driven and says so.",
+      "askWhom": "The dictionaries in PRD Appendix A; a Bugis reviewer"
+    },
+    {
+      "id": "openQuestions.pallawa",
+      "blocks": [],
+      "question": "What does PALLAWA (U+1A1E) separate, and how should it and END OF SECTION (U+1A1F) be represented in Latin?",
+      "why": "The writer cannot emit either mark and the reader cannot read one back until this is answered. inventory.json carries `latin: null` for both rather than assuming pallawa is a space.",
+      "askWhom": "The dictionaries and textbook sources in PRD Appendix A; a Bugis reviewer"
+    },
+    {
+      "id": "openQuestions.vowel-sign-position",
+      "blocks": [],
+      "question": "Which side do VOWEL SIGN E (U+1A19) and VOWEL SIGN O (U+1A1A) render on?",
+      "why": "Both are spacing marks (Mc) with no UCD combining class, so the encoding does not answer it. This is a rendering question, and the conformance page answers it by eye rather than inventory.json asserting it.",
+      "askWhom": "Nobody — check /aksara/konformansi on a real device and record the answer."
+    }
+  ]
+}
