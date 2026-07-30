@@ -1,0 +1,38 @@
+<!doctype html>
+<!--
+  A static export has no middleware, so the bare basePath root cannot redirect
+  server-side. This file is copied verbatim into out/index.html and sends the
+  visitor to the default locale.
+
+  basePath is relative here on purpose: `id/` resolves correctly whether the app
+  is served at /lontara/ on Pages or at / by `next dev`.
+-->
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lontara</title>
+    <link rel="canonical" href="id/" />
+    <meta http-equiv="refresh" content="0; url=id/" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #1a1614;
+        color: #dbc7a0;
+        font-family: Georgia, serif;
+      }
+      a {
+        color: #c79a3a;
+      }
+    </style>
+  </head>
+  <body>
+    <p><a href="id/">Lontara</a></p>
+    <script>
+      location.replace('id/')
+    </script>
+  </body>
+</html>

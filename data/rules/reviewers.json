@@ -1,0 +1,4 @@
+{
+  "$comment": "PRD §9. At least one named Bugis reviewer, with consent recorded, before the reader launches. No reviewer, no launch — this gates M3. Machine-readable so lib/gate.ts and scripts/gate-check.ts read the same source of truth; the human-facing account of the search lives in reviewers.md.",
+  "reviewers": []
+}

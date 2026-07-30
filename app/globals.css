@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Self-hosted faces only (invariant 17). The aksara family is declared under a
+ * local name so a subset face is never presented as the upstream one — see
+ * public/fonts/LICENSES.md.
+ *
+ * font-display: block on the aksara face. Tofu reads as a broken app, so
+ * no-text beats wrong-text (PRD §13). The Latin faces swap, because a brief
+ * fallback serif is harmless.
+ */
+@font-face {
+  font-family: 'Lontara Aksara';
+  src: url('/fonts/noto-sans-buginese-subset.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+  unicode-range: U+1A00-1A1F, U+25CC;
+}
+
+@font-face {
+  font-family: 'Gentium Plus';
+  src: url('/fonts/gentium-plus-latin-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gentium Plus';
+  src: url('/fonts/gentium-plus-latin-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  src: url('/fonts/space-mono-latin-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* 'Lontara Aksara' is listed first on every stack so that any Buginese
+     codepoint resolves to the bundled face via its unicode-range, wherever it
+     appears — including inside Latin running text. */
+  --font-aksara: 'Lontara Aksara';
+  --font-latin: 'Lontara Aksara', 'Gentium Plus';
+  --font-anotasi: 'Lontara Aksara', 'Space Mono';
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: theme('colors.grid');
+  color: theme('colors.lontar');
+  font-family: var(--font-latin), Georgia, serif;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+/* Hard grid lines borrowed from the sarong: structural division, not ornament
+   (PRD §10). No gradients, no shadows, no rounded corners — `borderRadius` is
+   pinned to `none` in tailwind.config.ts so the utilities cannot reintroduce
+   them. */
+
+::selection {
+  background-color: theme('colors.gold');
+  color: theme('colors.grid');
+}
+
+:focus-visible {
+  outline: 2px solid theme('colors.gold');
+  outline-offset: 2px;
+}
+
+/* The aksara band never wraps mid-word and carries no word spacing — the
+   script does not use it. Connector strokes carry segmentation instead. */
+.aksara {
+  font-family: var(--font-aksara), serif;
+  font-feature-settings: normal;
+  word-spacing: 0;
+  line-height: 1.9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
