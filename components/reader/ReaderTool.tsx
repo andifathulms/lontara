@@ -12,6 +12,8 @@ import { TracePanel } from '@/components/trace/TracePanel'
 import { AmbiguityPanel } from '@/components/ambiguity/AmbiguityPanel'
 import { CodepointView } from '@/components/codepoints/CodepointView'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
+import { ShareLink } from '@/components/share/ShareLink'
+import { useHashState } from '@/components/share/useHashState'
 
 const CLASSES = ['final', 'gemination', 'prenasal', 'glottal'] as const
 
@@ -26,7 +28,7 @@ const CLASSES = ['final', 'gemination', 'prenasal', 'glottal'] as const
  */
 export function ReaderTool({ locale }: { locale: Locale }) {
   const copy = getCopy(locale)
-  const [lontara, setLontara] = useState('')
+  const [lontara, setLontara] = useHashState()
   const [showKeyboard, setShowKeyboard] = useState(true)
 
   const result = useMemo(() => enumerate(lontara, LEXICON), [lontara])
@@ -60,6 +62,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
         >
           {copy.writer.keyboardToggle} {showKeyboard ? '−' : '+'}
         </button>
+        <ShareLink locale={locale} value={lontara} />
       </div>
 
       {showKeyboard ? (

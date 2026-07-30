@@ -71,6 +71,15 @@ export type Copy = {
     openQuestions: string
     provisional: string
   }
+  share: {
+    copyLink: string
+    copied: string
+    fragmentNote: string
+  }
+  offline: {
+    ready: string
+    note: string
+  }
   trace: {
     ruleId: string
     citation: string
@@ -195,6 +204,16 @@ const id: Copy = {
     openQuestions: 'Pertanyaan yang belum terjawab',
     provisional: 'Sementara — menunggu penelaah',
   },
+  share: {
+    copyLink: 'Salin tautan',
+    copied: 'Tersalin',
+    fragmentNote: 'Bagian setelah # tidak dikirim ke server.',
+  },
+  offline: {
+    ready: 'Siap dipakai tanpa jaringan',
+    note:
+      'Seluruh situs sudah tersimpan di perangkat ini. Ia tetap bekerja tanpa sambungan, dan tidak ada yang dikirim ke mana pun.',
+  },
   trace: {
     ruleId: 'Aturan',
     citation: 'Rujukan',
@@ -318,6 +337,16 @@ const en: Copy = {
     lead: 'The Latin side needs as much specification as the Lontara side. An underspecified Latin orthography makes the whole enumeration unsound.',
     openQuestions: 'Open questions',
     provisional: 'Provisional — awaiting a reviewer',
+  },
+  share: {
+    copyLink: 'Copy link',
+    copied: 'Copied',
+    fragmentNote: 'Everything after the # is never sent to the server.',
+  },
+  offline: {
+    ready: 'Ready to use offline',
+    note:
+      'The whole site is stored on this device. It keeps working with no connection, and nothing is sent anywhere.',
   },
   trace: {
     ruleId: 'Rule',

@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { interpret } from '@/lib/engine/interpret'
 import { bandOf } from '@/lib/engine/band'
 import { getCopy } from '@/lib/i18n/copy'
@@ -9,6 +9,8 @@ import { Band } from '@/components/band/Band'
 import { TracePanel } from '@/components/trace/TracePanel'
 import { AmbiguityPanel } from '@/components/ambiguity/AmbiguityPanel'
 import { CodepointView } from '@/components/codepoints/CodepointView'
+import { ShareLink } from '@/components/share/ShareLink'
+import { useHashState } from '@/components/share/useHashState'
 
 /**
  * Nothing is computed here (invariant 9). The component holds the input string,
@@ -18,7 +20,7 @@ import { CodepointView } from '@/components/codepoints/CodepointView'
  */
 export function WriterTool({ locale }: { locale: Locale }) {
   const copy = getCopy(locale)
-  const [latin, setLatin] = useState('')
+  const [latin, setLatin] = useHashState()
 
   const trace = useMemo(() => interpret(latin), [latin])
   const band = useMemo(() => bandOf(trace), [trace])
@@ -43,6 +45,7 @@ export function WriterTool({ locale }: { locale: Locale }) {
           spellCheck={false}
           className="w-full border-2 border-lontar/30 bg-transparent px-4 py-3 text-2xl text-lontar placeholder:text-lontar/30 focus:border-gold"
         />
+        <ShareLink locale={locale} value={latin} />
       </div>
 
       <section className="space-y-3">
