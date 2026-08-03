@@ -31,15 +31,24 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         <ReviewerGateNotice locale={locale} />
       </section>
 
+      {/* The two tools lead. `baca` is the flagship (PRD §3) and was one of
+          four equal tiles; the reference pages are where you go second. */}
       <nav className="grid gap-px bg-gold/30 md:grid-cols-2" aria-label={copy.siteName}>
         {SECTIONS.map((section) => (
           <Link
             key={section}
             href={href(locale, section)}
-            className="group bg-grid px-5 py-6 no-underline hover:bg-gold/5"
+            className="group flex flex-col bg-grid px-5 py-6 no-underline hover:bg-gold/5"
           >
-            <span className="text-xl text-gold">{copy.nav[section]}</span>
-            <span className="mt-1 block text-sm text-lontar/75">
+            <span className="flex items-baseline gap-2 text-xl text-gold">
+              {copy.nav[section]}
+              {/* A card that looks like a card but gives no sign it is a link
+                  is a dead end until you happen to hover it. */}
+              <span aria-hidden="true" className="text-lontar/65 group-hover:text-gold">
+                →
+              </span>
+            </span>
+            <span className="mt-1 block max-w-measure-tight text-sm text-lontar/75">
               {copy.navDescription[section]}
             </span>
           </Link>

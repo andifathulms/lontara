@@ -44,36 +44,37 @@ export function WriterTool({ locale }: { locale: Locale }) {
       </ToolInput>
 
       <section className="space-y-3">
-        <h2 className={eyebrow()}>
-          {copy.writer.outputLabel}
-        </h2>
+        <h2 className="text-section text-lontar">{copy.writer.outputLabel}</h2>
         <Band band={band} locale={locale} />
       </section>
 
-      <div className="grid gap-8 md:grid-cols-2">
-        <section className="space-y-3">
-          <h2 className={eyebrow('daun')}>
-            {copy.writer.lossTitle}
-          </h2>
-          <AmbiguityPanel
-            ambiguities={trace.ambiguities}
-            inputClusters={trace.input.clusters}
-            locale={locale}
-            emptyMessage={latin.length === 0 ? copy.writer.emptyState : copy.writer.lossEmpty}
-          />
-        </section>
+      {/* What was discarded is the reason this tool exists — someone writing a
+          name on a sign needs to know their Latin distinctions are about to
+          vanish (PRD §3). It was sharing a row with a codepoint dump. It gets
+          the full measure now. */}
+      <section className="space-y-3">
+        <h2 className="text-section text-daun-ink">{copy.writer.lossTitle}</h2>
+        <AmbiguityPanel
+          ambiguities={trace.ambiguities}
+          inputClusters={trace.input.clusters}
+          locale={locale}
+          emptyMessage={latin.length === 0 ? copy.writer.emptyState : copy.writer.lossEmpty}
+        />
+      </section>
 
-        <section className="space-y-3">
+      {/* Reference tier. Always present (invariant 10) and always complete,
+          but ruled off from the answer above it so it reads as apparatus
+          rather than as another finding. */}
+      <div className="grid gap-8 border-t-2 border-gold/30 pt-8 md:grid-cols-2">
+        <section>
           <CodepointView text={trace.output.text} locale={locale} />
         </section>
-      </div>
 
-      <section className="space-y-3">
-        <h2 className={eyebrow()}>
-          {copy.writer.traceLabel}
-        </h2>
-        <TracePanel trace={trace} locale={locale} />
-      </section>
+        <section className="space-y-3">
+          <h2 className={eyebrow()}>{copy.writer.traceLabel}</h2>
+          <TracePanel trace={trace} locale={locale} />
+        </section>
+      </div>
     </div>
   )
 }

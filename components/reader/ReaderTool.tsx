@@ -85,10 +85,8 @@ export function ReaderTool({ locale }: { locale: Locale }) {
         </div>
       ) : null}
 
-      <section className="space-y-2">
-        <h2 className={eyebrow()}>
-          {copy.reader.skeletonLabel}
-        </h2>
+      <section className="space-y-3">
+        <h2 className="text-section text-lontar">{copy.reader.skeletonLabel}</h2>
         <p className="border-l-4 border-gold/50 bg-gold/5 px-4 py-3 text-2xl text-lontar">
           {empty ? (
             <span className="text-base text-lontar/65">{copy.reader.emptyState}</span>
@@ -104,9 +102,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
       </section>
 
       <section className="space-y-3">
-        <h2 className={eyebrow()}>
-          {copy.reader.treeLabel}
-        </h2>
+        <h2 className="text-section text-lontar">{copy.reader.treeLabel}</h2>
 
         {result.readings.length > 0 ? (
           <>
@@ -154,8 +150,8 @@ export function ReaderTool({ locale }: { locale: Locale }) {
       </section>
 
       <section className="space-y-3">
-        <h2 className={`flex items-center gap-2 ${eyebrow('daun')}`}>
-          <Rhombus size={11} tone="daun" />
+        <h2 className="flex items-center gap-3 text-section text-daun-ink">
+          <Rhombus size={14} tone="daun" />
           {copy.reader.undetermined}
         </h2>
         <ul className="grid gap-2 sm:grid-cols-2">
@@ -185,7 +181,10 @@ export function ReaderTool({ locale }: { locale: Locale }) {
         </section>
       ) : null}
 
-      <div className="grid gap-8 md:grid-cols-2">
+      {/* Reference tier. Always present (invariant 10) and always complete,
+          but ruled off from the answer above it so it reads as apparatus
+          rather than as another finding. */}
+      <div className="grid gap-8 border-t-2 border-gold/30 pt-8 md:grid-cols-2">
         <section>
           <CodepointView text={result.input.normalized} locale={locale} />
         </section>
