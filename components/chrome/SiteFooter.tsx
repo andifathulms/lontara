@@ -3,6 +3,7 @@ import type { Locale } from '@/lib/i18n/locales'
 import { REPOSITORY_URL } from '@/lib/paths'
 import { OfflineReady } from '@/components/chrome/OfflineReady'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
+import { MakerSignature } from '@/components/chrome/MakerSignature'
 import { eyebrow } from '@/components/chrome/eyebrow'
 
 /**
@@ -41,38 +42,42 @@ export function SiteFooter({ locale }: { locale: Locale }) {
 
   return (
     <footer className="mt-20 border-t-2 border-gold/40">
-      <div className="mx-auto grid max-w-5xl gap-8 px-5 py-10 md:grid-cols-3">
-        <div className="md:col-span-2">
-          <h2 className={`flex items-center gap-2 ${eyebrow('sabbe')}`}>
-            <Rhombus size={9} tone="sabbe" />
-            {copy.disclaimer.title}
-          </h2>
-          <p className="mt-2 max-w-measure text-sm text-lontar/75">{copy.disclaimer.body}</p>
+      <div className="mx-auto max-w-5xl px-5 py-10">
+        <div className="grid gap-8 md:grid-cols-3">
+          <div className="md:col-span-2">
+            <h2 className={`flex items-center gap-2 ${eyebrow('sabbe')}`}>
+              <Rhombus size={9} tone="sabbe" />
+              {copy.disclaimer.title}
+            </h2>
+            <p className="mt-2 max-w-measure text-sm text-lontar/75">{copy.disclaimer.body}</p>
+          </div>
+
+          <div className="space-y-4 text-sm text-lontar/75">
+            <p>
+              {locale === 'id' ? 'Untuk aksara Jawa dan Bali, ' : 'For Javanese and Balinese, '}
+              <External href="https://bennylin.github.io/transliterasijawa/" locale={locale}>
+                Nulisa
+              </External>
+              {locale === 'id'
+                ? ' adalah alat yang lebih baik dan sudah menanganinya sejak 2012.'
+                : ' is the better tool and has covered them since 2012.'}
+            </p>
+
+            <p>
+              <External
+                href={REPOSITORY_URL}
+                locale={locale}
+                className={`underline decoration-lontar/30 underline-offset-4 hover:text-gold ${eyebrow('quiet', 'sm')}`}
+              >
+                {copy.common.sourceCode}
+              </External>
+            </p>
+
+            <OfflineReady locale={locale} />
+          </div>
         </div>
 
-        <div className="space-y-4 text-sm text-lontar/75">
-          <p>
-            {locale === 'id' ? 'Untuk aksara Jawa dan Bali, ' : 'For Javanese and Balinese, '}
-            <External href="https://bennylin.github.io/transliterasijawa/" locale={locale}>
-              Nulisa
-            </External>
-            {locale === 'id'
-              ? ' adalah alat yang lebih baik dan sudah menanganinya sejak 2012.'
-              : ' is the better tool and has covered them since 2012.'}
-          </p>
-
-          <p>
-            <External
-              href={REPOSITORY_URL}
-              locale={locale}
-              className={`underline decoration-lontar/30 underline-offset-4 hover:text-gold ${eyebrow('quiet', 'sm')}`}
-            >
-              {copy.common.sourceCode}
-            </External>
-          </p>
-
-          <OfflineReady locale={locale} />
-        </div>
+        <MakerSignature locale={locale} />
       </div>
     </footer>
   )

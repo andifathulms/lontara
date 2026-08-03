@@ -122,6 +122,7 @@ export type Copy = {
     skipToContent: string
     currentPage: string
     opensInNewTab: string
+    builtBy: string
   }
 }
 
@@ -288,6 +289,7 @@ const id: Copy = {
     skipToContent: 'Langsung ke isi',
     currentPage: 'halaman ini',
     opensInNewTab: 'membuka tab baru',
+    builtBy: 'Dirancang & dibangun oleh',
   },
 }
 
@@ -454,6 +456,7 @@ const en: Copy = {
     skipToContent: 'Skip to content',
     currentPage: 'current page',
     opensInNewTab: 'opens in a new tab',
+    builtBy: 'Designed & built by',
   },
 }
 

@@ -196,6 +196,11 @@ specific failure this project has to avoid.
   OFL-1.1, chosen because this project needs `' ə ŋ ñ á` to render consistently.
   **Annotation:** Space Mono, OFL-1.1. All self-hosted and subset — see
   [`public/fonts/LICENSES.md`](public/fonts/LICENSES.md).
+- **Icons:** the GitHub, LinkedIn and Instagram marks in the footer are the
+  official paths from [Simple Icons](https://github.com/simple-icons/simple-icons)
+  v16.28.0, CC0-1.0, inlined rather than fetched. The globe is drawn in
+  `components/chrome/MakerSignature.tsx`. Brand marks remain the trademarks of
+  their owners and are used here only to link to the author's own profiles.
 - For **Javanese and Balinese**, [Nulisa](https://bennylin.github.io/transliterasijawa/)
   is the better tool and has covered them since 2012.
 - Reviewers will be credited by name, with consent, when there are any.
