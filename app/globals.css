@@ -55,6 +55,9 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* The header is sticky, so an anchored jump would otherwise land its target
+     underneath it. */
+  scroll-padding-top: 5rem;
 }
 
 body {

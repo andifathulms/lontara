@@ -16,4 +16,6 @@ export function asset(path: string): string {
   return `${BASE_PATH}${path.startsWith('/') ? path : `/${path}`}`
 }
 
-export const REPOSITORY_URL = 'https://github.com/andifathul/lontara'
+/** Must match the deployed repository — the footer "source" link is the whole
+ *  of the project's auditability claim, and it 404s if this is wrong. */
+export const REPOSITORY_URL = 'https://github.com/andifathulms/lontara'

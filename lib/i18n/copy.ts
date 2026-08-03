@@ -100,6 +100,9 @@ export type Copy = {
     sourceCode: string
     codepointView: string
     unverified: string
+    skipToContent: string
+    currentPage: string
+    opensInNewTab: string
   }
 }
 
@@ -241,6 +244,9 @@ const id: Copy = {
     sourceCode: 'Kode sumber',
     codepointView: 'Tampilan titik kode',
     unverified: 'belum terverifikasi',
+    skipToContent: 'Langsung ke isi',
+    currentPage: 'halaman ini',
+    opensInNewTab: 'membuka tab baru',
   },
 }
 
@@ -382,6 +388,9 @@ const en: Copy = {
     sourceCode: 'Source',
     codepointView: 'Codepoint view',
     unverified: 'unverified',
+    skipToContent: 'Skip to content',
+    currentPage: 'current page',
+    opensInNewTab: 'opens in a new tab',
   },
 }
 
