@@ -67,7 +67,7 @@ export function MakerSignature({ locale }: { locale: Locale }) {
   const year = new Date().getFullYear()
 
   return (
-    <div className="mt-10 flex flex-col gap-3 md:flex-row md:items-center md:justify-end md:gap-6">
+    <div className="mt-6 flex flex-col gap-2 md:flex-row md:items-center md:justify-end md:gap-4">
       <p className="text-sm text-lontar/65">
         {copy.common.builtBy}{' '}
         <a
@@ -86,7 +86,7 @@ export function MakerSignature({ locale }: { locale: Locale }) {
           `a[href^=http]::after` rule in globals.css would render it as a bare
           parenthesised URL, four times over. The portfolio URL still prints,
           attached to the name above. */}
-      <ul className="-mx-2 flex items-center gap-1 print:hidden">
+      <ul className="-mx-1.5 flex items-center print:hidden">
         {MAKER.links.map((link) => (
           <li key={link.label}>
             <a
@@ -98,14 +98,15 @@ export function MakerSignature({ locale }: { locale: Locale }) {
                  above, which an icon-only link has no room for. */
               aria-label={`${link.label} — ${copy.common.opensInNewTab}`}
               /* Square, like everything else: `borderRadius` is pinned to none
-                 in tailwind.config.ts on purpose. 40px clears the WCAG 2.2
-                 target minimum without turning a quiet credit into a button
-                 bar. */
-              className="flex h-10 w-10 items-center justify-center text-lontar/65 hover:bg-gold/10 hover:text-gold"
+                 in tailwind.config.ts on purpose. 32px still clears the WCAG
+                 2.2 target minimum of 24px with room to spare, and keeps the
+                 row the same height as the line of text beside it rather than
+                 setting the height of the whole footer's last line. */
+              className="flex h-8 w-8 items-center justify-center text-lontar/65 hover:bg-gold/10 hover:text-gold"
             >
               <svg
-                width={18}
-                height={18}
+                width={16}
+                height={16}
                 viewBox="0 0 24 24"
                 fill="currentColor"
                 aria-hidden="true"

@@ -41,9 +41,9 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   const copy = getCopy(locale)
 
   return (
-    <footer className="mt-20 border-t-2 border-gold/40">
-      <div className="mx-auto max-w-5xl px-5 py-10">
-        <div className="grid gap-8 md:grid-cols-3">
+    <footer className="mt-14 border-t-2 border-gold/40">
+      <div className="mx-auto max-w-5xl px-5 py-8">
+        <div className="grid gap-x-8 gap-y-6 md:grid-cols-3">
           <div className="md:col-span-2">
             <h2 className={`flex items-center gap-2 ${eyebrow('sabbe')}`}>
               <Rhombus size={9} tone="sabbe" />
@@ -52,7 +52,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             <p className="mt-2 max-w-measure text-sm text-lontar/75">{copy.disclaimer.body}</p>
           </div>
 
-          <div className="space-y-4 text-sm text-lontar/75">
+          <div className="space-y-3 text-sm text-lontar/75">
             <p>
               {locale === 'id' ? 'Untuk aksara Jawa dan Bali, ' : 'For Javanese and Balinese, '}
               <External href="https://bennylin.github.io/transliterasijawa/" locale={locale}>
