@@ -56,12 +56,27 @@ function describe(step: TraceStep, locale: Locale): string {
   }
 }
 
+/**
+ * Optional linking. Every step already carries an input and an output span
+ * (invariant 6) and the comment on that type says "all highlighting, linking
+ * and loss-marking is span-based" — but nothing consumed them, so the spans
+ * were printed as bare index pairs and left for the reader to resolve by
+ * counting glyphs.
+ *
+ * Pointing at a step now lights up exactly the aksara it produced. Hover and
+ * focus preview it; a click pins it, because hover does not exist on a phone
+ * and this is most useful on the device where the band is hardest to read.
+ */
 export function TracePanel({
   trace,
   locale,
+  activeIndex = null,
+  onActiveChange,
 }: {
   trace: Pick<TransliterationTrace, 'input' | 'output' | 'steps'>
   locale: Locale
+  activeIndex?: number | null
+  onActiveChange?: (index: number | null) => void
 }) {
   const copy = getCopy(locale)
 
@@ -69,24 +84,41 @@ export function TracePanel({
     return <p className="text-sm text-lontar/65">{copy.writer.emptyState}</p>
   }
 
+  const linked = onActiveChange !== undefined
+
   return (
     <ol className="space-y-px bg-gold/20">
       {trace.steps.map((step, index) => {
         const meta = rule(step.ruleId)
         const inputText = sliceSpan(trace.input.clusters, step.inputSpan)
         const outputText = sliceSpan(outputClustersFor(trace, step), step.outputSpan)
+        const active = linked && activeIndex === index
 
         return (
-          <li key={`${step.ruleId}-${index}`} className="bg-grid px-4 py-3">
+          <li
+            key={`${step.ruleId}-${index}`}
+            className={`px-4 py-3 ${active ? 'bg-gold/10' : 'bg-grid'}`}
+            onMouseEnter={linked ? () => onActiveChange(index) : undefined}
+            onMouseLeave={linked ? () => onActiveChange(null) : undefined}
+          >
             <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
               {step.type === 'loss' ? <Rhombus size={10} tone="daun" /> : null}
-              <span
-                className={`font-anotasi text-xs ${
+              {/* Only the rule id is a control. The rest of the step is a `dl`
+                  and a couple of paragraphs, which cannot legally live inside
+                  a button. */}
+              <button
+                type="button"
+                disabled={!linked}
+                aria-pressed={linked ? active : undefined}
+                onFocus={linked ? () => onActiveChange(index) : undefined}
+                onBlur={linked ? () => onActiveChange(null) : undefined}
+                onClick={linked ? () => onActiveChange(active ? null : index) : undefined}
+                className={`font-anotasi text-xs disabled:cursor-text ${
                   step.type === 'loss' ? 'text-daun-ink' : 'text-gold'
-                }`}
+                } ${linked ? 'underline decoration-dotted underline-offset-4' : ''}`}
               >
                 {step.ruleId}
-              </span>
+              </button>
               <StatusBadge status={meta.status} locale={locale} />
               <span className={eyebrow('quiet', 'sm')}>
                 {step.type}

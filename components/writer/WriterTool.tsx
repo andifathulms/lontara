@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { interpret } from '@/lib/engine/interpret'
 import { bandOf } from '@/lib/engine/band'
 import { getCopy } from '@/lib/i18n/copy'
@@ -28,6 +28,26 @@ export function WriterTool({ locale }: { locale: Locale }) {
   const trace = useMemo(() => interpret(latin), [latin])
   const band = useMemo(() => bandOf(trace), [trace])
 
+  /*
+   * Which trace step the reader is pointing at, linking the rule list to the
+   * glyphs it produced. Held here rather than in either view, because the
+   * whole point is that the two are showing the same structure.
+   */
+  const [activeStep, setActiveStep] = useState<number | null>(null)
+
+  /*
+   * Only steps whose span indexes the *output* can highlight the band. A
+   * `normalize` step's `outputSpan` addresses the normalised input instead
+   * (see `outputSpanIn`), and lighting up band column 0 for it would be
+   * pointing at an unrelated glyph with total confidence.
+   */
+  const activeSpan = useMemo(() => {
+    if (activeStep === null) return null
+    const step = trace.steps[activeStep]
+    if (!step || step.outputSpanIn !== 'output') return null
+    return step.outputSpan
+  }, [activeStep, trace])
+
   return (
     <div className="space-y-8">
       {/* The three examples are PRD §2's illustration, and they are the whole
@@ -46,7 +66,7 @@ export function WriterTool({ locale }: { locale: Locale }) {
 
       <section className="space-y-3">
         <h2 className="text-section text-lontar">{copy.writer.outputLabel}</h2>
-        <Band band={band} locale={locale} />
+        <Band band={band} locale={locale} activeSpan={activeSpan} />
         <CopyAksara locale={locale} text={trace.output.text} />
       </section>
 
@@ -74,7 +94,12 @@ export function WriterTool({ locale }: { locale: Locale }) {
 
         <section className="space-y-3">
           <h2 className={eyebrow()}>{copy.writer.traceLabel}</h2>
-          <TracePanel trace={trace} locale={locale} />
+          <TracePanel
+            trace={trace}
+            locale={locale}
+            activeIndex={activeStep}
+            onActiveChange={setActiveStep}
+          />
         </section>
       </div>
     </div>

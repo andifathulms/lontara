@@ -5,6 +5,7 @@ import { normalize, toClusters } from '@/lib/engine/normalize'
 import { segmentLatin } from '@/lib/engine/segment'
 import { fromCodepoint } from '@/lib/rules/inventory'
 import { lossSteps, outputClustersFor, sliceSpan } from '@/lib/engine/trace'
+import { bandOf } from '@/lib/engine/band'
 import { AMBIGUITY_CLASSES } from '@/lib/rules/schema'
 import { RULES } from '@/lib/rules/loader'
 
@@ -199,4 +200,39 @@ describe('codepoint view (PRD §6.8)', () => {
   it('is derivable from any output, because rendering will fail somewhere', () => {
     expect(codepointsOf(interpret('mata').output.text)).toEqual(['U+1A06', 'U+1A08'])
   })
+})
+
+/*
+ * The band and the rule trace are two views of one structure, and the writer
+ * links them: pointing at a step highlights the aksara that step produced.
+ * That link is only sound if an output-space span actually addresses band
+ * columns — which is a different claim from "the span is in bounds", already
+ * asserted above. A span that resolved to no column would light up nothing
+ * and read as "this rule did nothing", silently.
+ */
+describe('span linking — every output-space step addresses band columns', () => {
+  for (const c of CASES) {
+    it(`${c.id}: ${c.latin}`, () => {
+      const trace = interpret(c.latin)
+      const band = bandOf(trace)
+      const indices = new Set(band.columns.map((col) => col.index))
+
+      for (const step of trace.steps) {
+        if (step.outputSpanIn !== 'output') continue
+
+        const { start, end } = step.outputSpan
+        // A loss produces nothing, so its span is empty and means "here", not
+        // "nowhere" — it must still land on a column, the one it hangs under.
+        const covered =
+          end > start
+            ? band.columns.filter((col) => col.index >= start && col.index < end)
+            : band.columns.filter((col) => col.index === start)
+
+        expect(
+          covered.length,
+          `${step.ruleId} (${step.type}) spans [${start},${end}) but covers no band column; columns are [${[...indices].join(', ')}]`,
+        ).toBeGreaterThan(0)
+      }
+    })
+  }
 })

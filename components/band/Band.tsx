@@ -1,4 +1,5 @@
 import type { Band as BandLayout } from '@/lib/engine/band'
+import type { Span } from '@/lib/engine/trace'
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
@@ -29,11 +30,33 @@ import { eyebrow } from '@/components/chrome/eyebrow'
  * glyphs apart — the band has to stay shoulder to shoulder, and what was
  * dropped is spelled out in full in the ambiguity panel beside it.
  */
-export function Band({ band, locale }: { band: BandLayout; locale: Locale }) {
+export function Band({
+  band,
+  locale,
+  activeSpan = null,
+}: {
+  band: BandLayout
+  locale: Locale
+  /**
+   * The output span of whichever trace step is being pointed at, in the
+   * *output* coordinate space. A `normalize` step indexes the normalised input
+   * instead and must never be passed here — see `outputSpanIn` on TraceStep.
+   */
+  activeSpan?: Span | null
+}) {
   const copy = getCopy(locale)
 
   if (band.columns.length === 0) {
     return <p className="text-sm text-lontar/65">{copy.writer.emptyState}</p>
+  }
+
+  /* A loss produces nothing, so its span is empty and collapses to the single
+     column it hangs on. A width-zero span is not "no columns", it is "here". */
+  const isActive = (index: number) => {
+    if (!activeSpan) return false
+    return activeSpan.end > activeSpan.start
+      ? index >= activeSpan.start && index < activeSpan.end
+      : index === activeSpan.start
   }
 
   const columns = band.columns
@@ -51,7 +74,11 @@ export function Band({ band, locale }: { band: BandLayout; locale: Locale }) {
           {columns.map((column) => (
             <span
               key={`aksara-${column.index}`}
-              className="aksara bg-lontar py-4 text-center text-5xl leading-none text-grid"
+              /* The highlight is a block of gold on the leaf, not a glow or a
+                 rounded pill — the same hard-edged vocabulary as the rest. */
+              className={`aksara py-4 text-center text-5xl leading-none text-grid ${
+                isActive(column.index) ? 'bg-gold' : 'bg-lontar'
+              }`}
             >
               {/* An empty trailing column still has to occupy the band, or the
                   connector below it would point at nothing. */}
@@ -86,7 +113,9 @@ export function Band({ band, locale }: { band: BandLayout; locale: Locale }) {
           {columns.map((column) => (
             <span
               key={`latin-${column.index}`}
-              className="text-center font-anotasi text-anotasi text-lontar/85"
+              className={`text-center font-anotasi text-anotasi ${
+                isActive(column.index) ? 'text-gold' : 'text-lontar/85'
+              }`}
             >
               {column.latin}
             </span>
