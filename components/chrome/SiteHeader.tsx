@@ -6,6 +6,7 @@ import { getCopy } from '@/lib/i18n/copy'
 import { DEFAULT_LOCALE, LOCALES, type Locale } from '@/lib/i18n/locales'
 import { href } from '@/lib/paths'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
+import { eyebrow } from '@/components/chrome/eyebrow'
 
 const SECTIONS = ['baca', 'tulis', 'aksara', 'ejaan'] as const
 
@@ -68,7 +69,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           href={href(other)}
           hrefLang={other}
           lang={other}
-          className="ml-auto pb-3 font-anotasi text-anotasi uppercase tracking-widest text-lontar/65 no-underline hover:text-gold"
+          className={`ml-auto pb-3 no-underline hover:text-gold ${eyebrow('quiet', 'sm')}`}
         >
           {copy.common.switchLocale}
         </Link>

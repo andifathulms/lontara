@@ -3,6 +3,7 @@ import type { Locale } from '@/lib/i18n/locales'
 import { REPOSITORY_URL } from '@/lib/paths'
 import { OfflineReady } from '@/components/chrome/OfflineReady'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
+import { eyebrow } from '@/components/chrome/eyebrow'
 
 /**
  * The non-authority statement is footer furniture on every page, not a page of
@@ -42,7 +43,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
     <footer className="mt-20 border-t-2 border-gold/40">
       <div className="mx-auto grid max-w-5xl gap-8 px-5 py-10 md:grid-cols-3">
         <div className="md:col-span-2">
-          <h2 className="flex items-center gap-2 font-anotasi text-eyebrow uppercase text-sabbe-ink">
+          <h2 className={`flex items-center gap-2 ${eyebrow('sabbe')}`}>
             <Rhombus size={9} tone="sabbe" />
             {copy.disclaimer.title}
           </h2>
@@ -64,7 +65,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             <External
               href={REPOSITORY_URL}
               locale={locale}
-              className="font-anotasi text-anotasi uppercase tracking-widest text-lontar/65 underline decoration-lontar/30 underline-offset-4 hover:text-gold"
+              className={`underline decoration-lontar/30 underline-offset-4 hover:text-gold ${eyebrow('quiet', 'sm')}`}
             >
               {copy.common.sourceCode}
             </External>

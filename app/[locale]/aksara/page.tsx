@@ -4,6 +4,8 @@ import { getCopy } from '@/lib/i18n/copy'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { href } from '@/lib/paths'
 import { INVENTORY, fromCodepoint } from '@/lib/rules/inventory'
+import { eyebrow } from '@/components/chrome/eyebrow'
+import { Page, PageHeader } from '@/components/chrome/Page'
 
 export function generateStaticParams() {
   return localeParams()
@@ -23,26 +25,24 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
   const { columns } = copy.aksara
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-10 space-y-10">
-      <header className="space-y-3">
-        <h1 className="text-title text-lontar">{copy.aksara.title}</h1>
-        <p className="max-w-measure text-lead text-lontar/75">{copy.aksara.lead}</p>
+    <Page>
+      <PageHeader title={copy.aksara.title} lead={copy.aksara.lead}>
         <p className="max-w-measure text-sm text-lontar/75">{copy.aksara.inherentVowel}</p>
         <p className="font-anotasi text-xs text-lontar/65">
           {INVENTORY.source.citation}
         </p>
         <Link
           href={href(locale, 'aksara/konformansi')}
-          className="inline-block font-anotasi text-xs uppercase tracking-widest text-gold no-underline"
+          className={`inline-block no-underline ${eyebrow()}`}
         >
           {copy.aksara.conformanceLink} →
         </Link>
-      </header>
+      </PageHeader>
 
       {/* No virama. This is the fact the whole project follows from, so it is
           stated on the reference page and not only in the prose. */}
       <aside className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
-        <h2 className="font-anotasi text-xs uppercase tracking-widest text-sabbe-ink">
+        <h2 className={eyebrow('sabbe')}>
           {locale === 'id' ? 'Tidak ada virama' : 'No virama'}
         </h2>
         <p className="mt-1 text-sm text-lontar/85">{INVENTORY.block.viramaNote}</p>
@@ -54,19 +54,19 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
           <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-gold/40 text-left">
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {columns.glyph}
                 </th>
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {columns.latin}
                 </th>
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {columns.codepoint}
                 </th>
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {columns.unicodeName}
                 </th>
-                <th className="py-2 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 ${eyebrow()}`}>
                   {columns.note}
                 </th>
               </tr>
@@ -111,19 +111,19 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
           <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-gold/40 text-left">
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {columns.glyph}
                 </th>
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   ka + {columns.glyph.toLowerCase()}
                 </th>
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {columns.latin}
                 </th>
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {columns.codepoint}
                 </th>
-                <th className="py-2 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 ${eyebrow()}`}>
                   {columns.note}
                 </th>
               </tr>
@@ -163,16 +163,16 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
           <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-gold/40 text-left">
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {columns.glyph}
                 </th>
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {columns.codepoint}
                 </th>
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {columns.unicodeName}
                 </th>
-                <th className="py-2 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 ${eyebrow()}`}>
                   {columns.latin}
                 </th>
               </tr>
@@ -201,6 +201,6 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
             : 'A Latin representation for either mark cannot yet be cited in this repository, so it is left blank rather than guessed. See the Ejaan page.'}
         </p>
       </section>
-    </div>
+    </Page>
   )
 }

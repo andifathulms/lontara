@@ -9,6 +9,7 @@ import {
   type TransliterationTrace,
 } from '@/lib/engine/trace'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
+import { eyebrow } from '@/components/chrome/eyebrow'
 
 /**
  * The rule trace (PRD §6.3): the ordered list of applied rules with input span,
@@ -23,13 +24,13 @@ function StatusBadge({ status, locale }: { status: string; locale: Locale }) {
   const copy = getCopy(locale)
   if (status === 'provisional') {
     return (
-      <span className="border border-sabbe px-1.5 font-anotasi text-anotasi uppercase tracking-widest text-sabbe-ink">
+      <span className={`border border-sabbe px-1.5 ${eyebrow('sabbe', 'sm')}`}>
         {copy.trace.provisionalBadge}
       </span>
     )
   }
   return (
-    <span className="font-anotasi text-anotasi uppercase tracking-widest text-lontar/65">
+    <span className={eyebrow('quiet', 'sm')}>
       {status}
     </span>
   )
@@ -87,7 +88,7 @@ export function TracePanel({
                 {step.ruleId}
               </span>
               <StatusBadge status={meta.status} locale={locale} />
-              <span className="font-anotasi text-anotasi uppercase tracking-widest text-lontar/65">
+              <span className={eyebrow('quiet', 'sm')}>
                 {step.type}
               </span>
             </div>
@@ -111,7 +112,7 @@ export function TracePanel({
             </dl>
 
             <p className="mt-2 border-l-2 border-lontar/20 pl-3 text-xs text-lontar/65">
-              <span className="font-anotasi uppercase tracking-widest text-lontar/65">
+              <span className={eyebrow('quiet')}>
                 {copy.trace.citation}
               </span>{' '}
               {meta.citation}

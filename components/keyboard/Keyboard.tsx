@@ -3,6 +3,7 @@
 import { INVENTORY, fromCodepoint, CONSONANT_BY_CHAR } from '@/lib/rules/inventory'
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
+import { eyebrow } from '@/components/chrome/eyebrow'
 
 /**
  * The on-screen Lontara keyboard (PRD §6.5). There is no system Lontara keyboard
@@ -43,7 +44,7 @@ export function Keyboard({
 
   return (
     <div className="space-y-3">
-      <h3 className="font-anotasi text-xs uppercase tracking-widest text-gold/80">
+      <h3 className={eyebrow()}>
         {copy.writer.keyboardLabel}
       </h3>
 

@@ -14,6 +14,7 @@ import { CodepointView } from '@/components/codepoints/CodepointView'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
 import { ShareLink } from '@/components/share/ShareLink'
 import { useHashState } from '@/components/share/useHashState'
+import { eyebrow } from '@/components/chrome/eyebrow'
 
 const CLASSES = ['final', 'gemination', 'prenasal', 'glottal'] as const
 
@@ -39,7 +40,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
       <div className="space-y-2">
         <label
           htmlFor="lontara-input"
-          className="block font-anotasi text-xs uppercase tracking-widest text-gold/80"
+          className={`block ${eyebrow()}`}
         >
           {copy.reader.inputLabel}
         </label>
@@ -57,7 +58,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
         <button
           type="button"
           onClick={() => setShowKeyboard((v) => !v)}
-          className="font-anotasi text-xs uppercase tracking-widest text-gold/80 hover:text-gold"
+          className={`hover:text-gold ${eyebrow()}`}
           aria-expanded={showKeyboard}
         >
           {copy.writer.keyboardToggle} {showKeyboard ? '−' : '+'}
@@ -70,7 +71,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
       ) : null}
 
       <section className="space-y-2">
-        <h2 className="font-anotasi text-xs uppercase tracking-widest text-gold/80">
+        <h2 className={eyebrow()}>
           {copy.reader.skeletonLabel}
         </h2>
         <p className="border-l-4 border-gold/50 bg-gold/5 px-4 py-3 text-2xl text-lontar">
@@ -88,7 +89,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-anotasi text-xs uppercase tracking-widest text-gold/80">
+        <h2 className={eyebrow()}>
           {copy.reader.treeLabel}
         </h2>
 
@@ -108,7 +109,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
           </>
         ) : (
           <div className="border-l-4 border-gold bg-gold/10 px-4 py-3 space-y-2">
-            <h3 className="font-anotasi text-xs uppercase tracking-widest text-gold">
+            <h3 className={eyebrow()}>
               {copy.reader.noAttested}
             </h3>
             <p className="text-sm text-lontar/85">
@@ -138,14 +139,14 @@ export function ReaderTool({ locale }: { locale: Locale }) {
       </section>
 
       <section className="space-y-3">
-        <h2 className="flex items-center gap-2 font-anotasi text-xs uppercase tracking-widest text-daun-ink">
+        <h2 className={`flex items-center gap-2 ${eyebrow('daun')}`}>
           <Rhombus size={11} tone="daun" />
           {copy.reader.undetermined}
         </h2>
         <ul className="grid gap-2 sm:grid-cols-2">
           {CLASSES.map((cls) => (
             <li key={cls} className="border-l-2 border-daun pl-3">
-              <span className="font-anotasi text-anotasi uppercase tracking-widest text-daun-ink">
+              <span className={eyebrow('daun', 'sm')}>
                 {copy.ambiguityClass[cls]}
               </span>
               <span className="block text-xs text-lontar/75">{copy.ambiguityClassBody[cls]}</span>
@@ -157,7 +158,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
 
       {result.ambiguities.length > 0 ? (
         <section className="space-y-3">
-          <h2 className="font-anotasi text-xs uppercase tracking-widest text-daun-ink">
+          <h2 className={eyebrow('daun')}>
             {copy.reader.treeLabel} — {copy.reader.undetermined}
           </h2>
           <AmbiguityPanel
@@ -174,7 +175,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
           <CodepointView text={result.input.normalized} locale={locale} />
         </section>
         <section className="space-y-3">
-          <h2 className="font-anotasi text-xs uppercase tracking-widest text-gold/80">
+          <h2 className={eyebrow()}>
             {copy.writer.traceLabel}
           </h2>
           <TracePanel

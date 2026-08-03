@@ -1,6 +1,7 @@
 import { UNICODE_NAME_BY_CHAR, toCodepoint } from '@/lib/rules/inventory'
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
+import { eyebrow } from '@/components/chrome/eyebrow'
 
 /**
  * Always available (invariant 10, PRD §6.8). Rendering will fail on some device;
@@ -19,7 +20,7 @@ export function CodepointView({ text, locale }: { text: string; locale: Locale }
 
   return (
     <div>
-      <h3 className="font-anotasi text-xs uppercase tracking-widest text-gold/80">
+      <h3 className={eyebrow()}>
         {copy.common.codepointView}
       </h3>
       {points.length === 0 ? (

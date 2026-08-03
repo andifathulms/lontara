@@ -5,6 +5,8 @@ import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { href } from '@/lib/paths'
 import { NotTranslatorNotice, ReviewerGateNotice } from '@/components/chrome/Notice'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
+import { eyebrow } from '@/components/chrome/eyebrow'
+import { Page, PageHeader } from '@/components/chrome/Page'
 
 export function generateStaticParams() {
   return localeParams()
@@ -19,7 +21,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
   const copy = getCopy(locale)
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-10 space-y-12">
+    <Page>
       <section className="space-y-5">
         <h1 className="text-display text-lontar max-w-measure">
           {copy.tagline}
@@ -61,7 +63,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
               {/* daun = ambiguity, and nothing else. PRD §10. */}
               <Rhombus size={13} tone="daun" className="mt-1.5" />
               <span>
-                <span className="text-daun-ink font-anotasi text-xs uppercase tracking-widest">
+                <span className={eyebrow('daun')}>
                   {copy.ambiguityClass[cls]}
                 </span>
                 <span className="block text-sm text-lontar/75">
@@ -77,22 +79,22 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         <h2 className="text-section text-lontar">{copy.home.asymmetry.title}</h2>
         <dl className="grid gap-px bg-gold/30 md:grid-cols-2">
           <div className="bg-grid px-5 py-4">
-            <dt className="font-anotasi text-xs uppercase tracking-widest text-gold">
+            <dt className={eyebrow()}>
               Latin → Lontara
             </dt>
             <dd className="mt-1 text-sm text-lontar/85">{copy.home.asymmetry.latinToLontara}</dd>
           </div>
           <div className="bg-grid px-5 py-4">
-            <dt className="font-anotasi text-xs uppercase tracking-widest text-gold">
+            <dt className={eyebrow()}>
               Lontara → Latin
             </dt>
             <dd className="mt-1 text-sm text-lontar/85">{copy.home.asymmetry.lontaraToLatin}</dd>
           </div>
         </dl>
-        <p className="font-anotasi text-xs uppercase tracking-widest text-lontar/65">
+        <p className={eyebrow('quiet')}>
           {copy.home.open}
         </p>
       </section>
-    </div>
+    </Page>
   )
 }

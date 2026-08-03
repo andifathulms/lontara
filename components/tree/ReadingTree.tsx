@@ -2,6 +2,7 @@ import type { ReadingTreeNode } from '@/lib/engine/enumerate'
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
+import { eyebrow } from '@/components/chrome/eyebrow'
 
 /**
  * The reading tree (PRD §6.1) — the flagship view.
@@ -45,13 +46,13 @@ function Node({
         </span>
 
         {node.classes.length > 0 ? (
-          <span className="font-anotasi text-anotasi uppercase tracking-widest text-daun-ink">
+          <span className={eyebrow('daun', 'sm')}>
             {node.classes.map((c) => copy.ambiguityClass[c]).join(' + ')}
           </span>
         ) : null}
 
         {isBranch ? (
-          <span className="font-anotasi text-anotasi uppercase tracking-widest text-lontar/65">
+          <span className={eyebrow('quiet', 'sm')}>
             {copy.reader.readingCount(node.readingCount)}
           </span>
         ) : null}
@@ -61,7 +62,7 @@ function Node({
         <div className="mb-1 ml-1 border-l-2 border-daun pl-3">
           {node.ambiguities.map((a, index) => (
             <p key={`${a.ruleId}-${index}`} className="text-xs text-lontar/65">
-              <span className="font-anotasi uppercase tracking-widest text-daun-ink">
+              <span className={eyebrow('daun')}>
                 {copy.ambiguityClass[a.class]}
               </span>{' '}
               {a.reason}
@@ -78,17 +79,17 @@ function Node({
               confirmation. */}
           {node.reading.attestation ? (
             <span
-              className={`border px-1.5 font-anotasi text-anotasi uppercase tracking-widest ${
+              className={`border px-1.5 ${
                 node.reading.attestation === 'corpus'
-                  ? 'border-sabbe text-sabbe-ink'
-                  : 'border-gold/50 text-gold'
+                  ? `border-sabbe ${eyebrow('sabbe', 'sm')}`
+                  : `border-gold/50 ${eyebrow('gold', 'sm')}`
               }`}
             >
               {copy.attestation[node.reading.attestation]}
             </span>
           ) : null}
           {node.reading.band && node.reading.band !== 'unknown' ? (
-            <span className="border border-gold/50 px-1.5 font-anotasi text-anotasi uppercase tracking-widest text-gold">
+            <span className={`border border-gold/50 px-1.5 ${eyebrow('gold', 'sm')}`}>
               {node.reading.band}
             </span>
           ) : null}

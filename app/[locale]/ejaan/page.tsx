@@ -7,6 +7,8 @@ import { INVENTORY } from '@/lib/rules/inventory'
 import { RULE_SET, RULES, OPEN_QUESTIONS, PROVISIONAL_RULES } from '@/lib/rules/loader'
 import { AMBIGUITY_CLASSES } from '@/lib/rules/schema'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
+import { eyebrow } from '@/components/chrome/eyebrow'
+import { Page, PageHeader } from '@/components/chrome/Page'
 
 export function generateStaticParams() {
   return localeParams()
@@ -35,18 +37,16 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
   const id = locale === 'id'
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-10 space-y-12">
-      <header className="space-y-3">
-        <h1 className="text-title text-lontar">{copy.ejaan.title}</h1>
-        <p className="max-w-measure text-lead text-lontar/75">{copy.ejaan.lead}</p>
+    <Page>
+      <PageHeader title={copy.ejaan.title} lead={copy.ejaan.lead}>
         <p className="font-anotasi text-xs text-lontar/65">
           rules.json v{RULE_SET.version} · {RULE_SET.reviewStatus} · {RULES.length}{' '}
           {id ? 'aturan' : 'rules'}
         </p>
-      </header>
+      </PageHeader>
 
       <aside className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
-        <h2 className="font-anotasi text-xs uppercase tracking-widest text-sabbe-ink">
+        <h2 className={eyebrow('sabbe')}>
           {id ? 'Apa yang belum ada di sini' : 'What is not here'}
         </h2>
         <p className="mt-1 text-sm text-lontar/85">
@@ -71,13 +71,13 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
             </caption>
             <thead>
               <tr className="border-b-2 border-gold/40 text-left">
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {id ? 'Onset' : 'Onset'}
                 </th>
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {id ? 'Huruf' : 'Letter'}
                 </th>
-                <th className="py-2 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 ${eyebrow()}`}>
                   {id ? 'Nama Unicode' : 'Unicode name'}
                 </th>
               </tr>
@@ -109,13 +109,13 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
           <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-gold/40 text-left">
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {id ? 'Vokal' : 'Vowel'}
                 </th>
-                <th className="py-2 pr-4 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 pr-4 ${eyebrow()}`}>
                   {id ? 'Tanda' : 'Sign'}
                 </th>
-                <th className="py-2 font-anotasi text-xs uppercase tracking-widest text-gold/80">
+                <th className={`py-2 ${eyebrow()}`}>
                   {id ? 'Dasar' : 'Basis'}
                 </th>
               </tr>
@@ -171,7 +171,7 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
               <div key={cls} className="bg-grid px-4 py-3">
                 <dt className="flex items-center gap-2">
                   <Rhombus size={11} tone="daun" />
-                  <span className="font-anotasi text-xs uppercase tracking-widest text-daun-ink">
+                  <span className={eyebrow('daun')}>
                     {copy.ambiguityClass[cls]}
                   </span>
                 </dt>
@@ -203,7 +203,7 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
               <li key={r.id} className="bg-grid px-4 py-3">
                 <div className="flex flex-wrap items-baseline gap-x-3">
                   <span className="font-anotasi text-xs text-gold">{r.id}</span>
-                  <span className="border border-sabbe px-1.5 font-anotasi text-anotasi uppercase tracking-widest text-sabbe-ink">
+                  <span className={`border border-sabbe px-1.5 ${eyebrow('sabbe', 'sm')}`}>
                     {copy.trace.provisionalBadge}
                   </span>
                 </div>
@@ -253,12 +253,12 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
         <p className="text-sm">
           <Link
             href={href(locale, 'aksara')}
-            className="font-anotasi text-xs uppercase tracking-widest text-gold no-underline"
+            className={`no-underline ${eyebrow()}`}
           >
             {copy.nav.aksara} →
           </Link>
         </p>
       </section>
-    </div>
+    </Page>
   )
 }

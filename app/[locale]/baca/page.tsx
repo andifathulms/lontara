@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { getCopy } from '@/lib/i18n/copy'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { NotTranslatorNotice, ReviewerGateNotice } from '@/components/chrome/Notice'
+import { Page, PageHeader } from '@/components/chrome/Page'
 import { ReaderTool } from '@/components/reader/ReaderTool'
 
 export function generateStaticParams() {
@@ -25,15 +26,13 @@ export default function BacaPage({ params }: { params: { locale: string } }) {
   const copy = getCopy(locale)
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-10 space-y-8">
-      <header className="space-y-4">
-        <h1 className="text-title text-lontar">{copy.reader.title}</h1>
-        <p className="max-w-measure text-lead text-lontar/75">{copy.reader.lead}</p>
+    <Page>
+      <PageHeader title={copy.reader.title} lead={copy.reader.lead}>
         <NotTranslatorNotice locale={locale} />
         <ReviewerGateNotice locale={locale} strong />
-      </header>
+      </PageHeader>
 
       <ReaderTool locale={locale} />
-    </div>
+    </Page>
   )
 }

@@ -1,6 +1,7 @@
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
 import { REVIEWER_GATE_MET, CONSENTING_REVIEWERS } from '@/lib/gate'
+import { eyebrow } from '@/components/chrome/eyebrow'
 
 /**
  * Two notices that must be unmissable rather than tucked away:
@@ -14,7 +15,7 @@ export function NotTranslatorNotice({ locale }: { locale: Locale }) {
   const copy = getCopy(locale)
   return (
     <aside className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
-      <h2 className="font-anotasi text-xs uppercase tracking-widest text-sabbe-ink">
+      <h2 className={eyebrow('sabbe')}>
         {copy.notTranslator.title}
       </h2>
       <p className="mt-1 text-sm text-lontar/85">{copy.notTranslator.body}</p>
@@ -34,7 +35,7 @@ export function ReviewerGateNotice({
   if (REVIEWER_GATE_MET) {
     return (
       <aside className="border-l-4 border-gold bg-gold/10 px-4 py-3">
-        <h2 className="font-anotasi text-xs uppercase tracking-widest text-gold">
+        <h2 className={eyebrow()}>
           {locale === 'id' ? 'Ditelaah oleh' : 'Reviewed by'}
         </h2>
         <ul className="mt-1 text-sm text-lontar/85">
@@ -50,7 +51,7 @@ export function ReviewerGateNotice({
 
   return (
     <aside className="border-l-4 border-gold bg-gold/10 px-4 py-3">
-      <h2 className="font-anotasi text-xs uppercase tracking-widest text-gold">
+      <h2 className={eyebrow()}>
         {copy.gate.title}
       </h2>
       <p className="mt-1 text-sm text-lontar/85">{copy.gate.body}</p>

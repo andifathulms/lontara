@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
 import { shareUrl } from '@/lib/share/hash'
+import { eyebrow } from '@/components/chrome/eyebrow'
 
 /**
  * Copy a link to whatever is currently in the tool.
@@ -41,7 +42,7 @@ export function ShareLink({ locale, value }: { locale: Locale; value: string }) 
       <button
         type="button"
         onClick={onCopy}
-        className="border border-gold/50 px-2 py-1 font-anotasi text-anotasi uppercase tracking-widest text-gold hover:bg-gold/10"
+        className={`border border-gold/50 px-2 py-1 hover:bg-gold/10 ${eyebrow('gold', 'sm')}`}
       >
         {copied ? copy.share.copied : copy.share.copyLink}
       </button>

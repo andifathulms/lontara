@@ -3,6 +3,7 @@ import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
 import { ambiguitiesByClass, sliceSpan, type Ambiguity } from '@/lib/engine/trace'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
+import { eyebrow } from '@/components/chrome/eyebrow'
 
 /**
  * Ambiguity stated plainly and without apology (PRD §10).
@@ -34,7 +35,7 @@ export function AmbiguityPanel({
         <section key={cls} className="bg-grid px-4 py-3">
           <h3 className="flex items-center gap-2">
             <Rhombus size={12} tone="daun" />
-            <span className="font-anotasi text-xs uppercase tracking-widest text-daun-ink">
+            <span className={eyebrow('daun')}>
               {copy.ambiguityClass[cls]}
             </span>
             <span className="font-anotasi text-anotasi text-lontar/65">

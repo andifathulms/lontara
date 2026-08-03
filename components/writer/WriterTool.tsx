@@ -11,6 +11,7 @@ import { AmbiguityPanel } from '@/components/ambiguity/AmbiguityPanel'
 import { CodepointView } from '@/components/codepoints/CodepointView'
 import { ShareLink } from '@/components/share/ShareLink'
 import { useHashState } from '@/components/share/useHashState'
+import { eyebrow } from '@/components/chrome/eyebrow'
 
 /**
  * Nothing is computed here (invariant 9). The component holds the input string,
@@ -30,7 +31,7 @@ export function WriterTool({ locale }: { locale: Locale }) {
       <div className="space-y-2">
         <label
           htmlFor="latin-input"
-          className="block font-anotasi text-xs uppercase tracking-widest text-gold/80"
+          className={`block ${eyebrow()}`}
         >
           {copy.writer.inputLabel}
         </label>
@@ -49,7 +50,7 @@ export function WriterTool({ locale }: { locale: Locale }) {
       </div>
 
       <section className="space-y-3">
-        <h2 className="font-anotasi text-xs uppercase tracking-widest text-gold/80">
+        <h2 className={eyebrow()}>
           {copy.writer.outputLabel}
         </h2>
         <Band band={band} locale={locale} />
@@ -57,7 +58,7 @@ export function WriterTool({ locale }: { locale: Locale }) {
 
       <div className="grid gap-8 md:grid-cols-2">
         <section className="space-y-3">
-          <h2 className="font-anotasi text-xs uppercase tracking-widest text-daun-ink">
+          <h2 className={eyebrow('daun')}>
             {copy.writer.lossTitle}
           </h2>
           <AmbiguityPanel
@@ -74,7 +75,7 @@ export function WriterTool({ locale }: { locale: Locale }) {
       </div>
 
       <section className="space-y-3">
-        <h2 className="font-anotasi text-xs uppercase tracking-widest text-gold/80">
+        <h2 className={eyebrow()}>
           {copy.writer.traceLabel}
         </h2>
         <TracePanel trace={trace} locale={locale} />
