@@ -83,6 +83,8 @@ export type Copy = {
     copyLink: string
     copied: string
     fragmentNote: string
+    copyAksara: string
+    copyRefused: string
   }
   offline: {
     ready: string
@@ -229,6 +231,9 @@ const id: Copy = {
   share: {
     copyLink: 'Salin tautan',
     copied: 'Tersalin',
+    copyAksara: 'Salin aksara',
+    copyRefused:
+      'Peramban menolak menyalin. Aksara di atas bisa dipilih dan disalin sendiri, dan titik kodenya ada di bawah.',
     fragmentNote: 'Bagian setelah # tidak dikirim ke server.',
   },
   offline: {
@@ -377,6 +382,9 @@ const en: Copy = {
   share: {
     copyLink: 'Copy link',
     copied: 'Copied',
+    copyAksara: 'Copy the aksara',
+    copyRefused:
+      'The browser refused to copy. The aksara above can be selected and copied by hand, and its codepoints are below.',
     fragmentNote: 'Everything after the # is never sent to the server.',
   },
   offline: {

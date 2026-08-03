@@ -10,6 +10,7 @@ import { TracePanel } from '@/components/trace/TracePanel'
 import { AmbiguityPanel } from '@/components/ambiguity/AmbiguityPanel'
 import { CodepointView } from '@/components/codepoints/CodepointView'
 import { ShareLink } from '@/components/share/ShareLink'
+import { CopyAksara } from '@/components/share/CopyAksara'
 import { useHashState } from '@/components/share/useHashState'
 import { eyebrow } from '@/components/chrome/eyebrow'
 import { ToolInput } from '@/components/tool/ToolInput'
@@ -46,6 +47,7 @@ export function WriterTool({ locale }: { locale: Locale }) {
       <section className="space-y-3">
         <h2 className="text-section text-lontar">{copy.writer.outputLabel}</h2>
         <Band band={band} locale={locale} />
+        <CopyAksara locale={locale} text={trace.output.text} />
       </section>
 
       {/* What was discarded is the reason this tool exists — someone writing a

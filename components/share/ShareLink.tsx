@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
 import { shareUrl } from '@/lib/share/hash'
+import { useCopy } from '@/components/share/useCopy'
 import { eyebrow } from '@/components/chrome/eyebrow'
 
 /**
@@ -16,26 +17,15 @@ import { eyebrow } from '@/components/chrome/eyebrow'
 export function ShareLink({ locale, value }: { locale: Locale; value: string }) {
   const copy = getCopy(locale)
   const [url, setUrl] = useState('')
-  const [copied, setCopied] = useState(false)
+  const [state, onCopy] = useCopy(url)
 
   useEffect(() => {
     // In an effect, not during render: a static export is prerendered with no
     // location to read.
     setUrl(shareUrl(window.location.origin, window.location.pathname, value))
-    setCopied(false)
   }, [value])
 
   if (value === '') return null
-
-  const onCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(url)
-      setCopied(true)
-    } catch {
-      // Refused, or no secure context. The URL below is still selectable.
-      setCopied(false)
-    }
-  }
 
   return (
     <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
@@ -44,7 +34,7 @@ export function ShareLink({ locale, value }: { locale: Locale; value: string }) 
         onClick={onCopy}
         className={`border border-gold/50 px-2 py-1 hover:bg-gold/10 ${eyebrow('gold', 'sm')}`}
       >
-        {copied ? copy.share.copied : copy.share.copyLink}
+        {state === 'copied' ? copy.share.copied : copy.share.copyLink}
       </button>
       <code className="min-w-0 break-all font-anotasi text-anotasi text-lontar/65">{url}</code>
       <span className="font-anotasi text-anotasi text-lontar/65">{copy.share.fragmentNote}</span>
