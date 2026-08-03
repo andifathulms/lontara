@@ -12,6 +12,7 @@ import { CodepointView } from '@/components/codepoints/CodepointView'
 import { ShareLink } from '@/components/share/ShareLink'
 import { useHashState } from '@/components/share/useHashState'
 import { eyebrow } from '@/components/chrome/eyebrow'
+import { ToolInput } from '@/components/tool/ToolInput'
 
 /**
  * Nothing is computed here (invariant 9). The component holds the input string,
@@ -28,26 +29,19 @@ export function WriterTool({ locale }: { locale: Locale }) {
 
   return (
     <div className="space-y-8">
-      <div className="space-y-2">
-        <label
-          htmlFor="latin-input"
-          className={`block ${eyebrow()}`}
-        >
-          {copy.writer.inputLabel}
-        </label>
-        <input
-          id="latin-input"
-          type="text"
-          value={latin}
-          onChange={(event) => setLatin(event.target.value)}
-          placeholder={copy.writer.placeholder}
-          autoCapitalize="off"
-          autoComplete="off"
-          spellCheck={false}
-          className="w-full border-2 border-lontar/30 bg-transparent px-4 py-3 text-2xl text-lontar placeholder:text-lontar/65 focus:border-gold"
-        />
+      {/* The three examples are PRD §2's illustration, and they are the whole
+          argument: press them in turn and the band below does not change. */}
+      <ToolInput
+        id="latin-input"
+        label={copy.writer.inputLabel}
+        value={latin}
+        onChange={setLatin}
+        placeholder={copy.writer.placeholder}
+        locale={locale}
+        examples={copy.writer.examples.map((value) => ({ label: value, value }))}
+      >
         <ShareLink locale={locale} value={latin} />
-      </div>
+      </ToolInput>
 
       <section className="space-y-3">
         <h2 className={eyebrow()}>

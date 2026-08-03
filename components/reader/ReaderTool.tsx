@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { enumerate } from '@/lib/engine/enumerate'
+import { interpret } from '@/lib/engine/interpret'
 import { toClusters } from '@/lib/engine/normalize'
 import { LEXICON } from '@/lib/lexicon/loader'
 import { getCopy } from '@/lib/i18n/copy'
@@ -14,6 +15,7 @@ import { CodepointView } from '@/components/codepoints/CodepointView'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
 import { ShareLink } from '@/components/share/ShareLink'
 import { useHashState } from '@/components/share/useHashState'
+import { ToolInput } from '@/components/tool/ToolInput'
 import { eyebrow } from '@/components/chrome/eyebrow'
 
 const CLASSES = ['final', 'gemination', 'prenasal', 'glottal'] as const
@@ -35,39 +37,52 @@ export function ReaderTool({ locale }: { locale: Locale }) {
   const result = useMemo(() => enumerate(lontara, LEXICON), [lontara])
   const empty = lontara.length === 0
 
+  /*
+   * The example is written by the writer, not typed out here as a literal.
+   * PRD §2's three words all produce one string, so running them through
+   * `interpret` and deduplicating leaves exactly the sequence a reader is
+   * supposed to find undecidable — and it cannot drift from what the writer
+   * actually emits, which a hard-coded literal could.
+   */
+  const examples = useMemo(() => {
+    const seen = new Set<string>()
+    for (const word of copy.writer.examples) {
+      const written = interpret(word).output.text
+      if (written) seen.add(written)
+    }
+    return [...seen].map((value) => ({ label: value, value, aksara: true }))
+  }, [copy.writer.examples])
+
   return (
     <div className="space-y-8">
-      <div className="space-y-2">
-        <label
-          htmlFor="lontara-input"
-          className={`block ${eyebrow()}`}
-        >
-          {copy.reader.inputLabel}
-        </label>
-        <input
-          id="lontara-input"
-          type="text"
-          value={lontara}
-          onChange={(event) => setLontara(event.target.value)}
-          placeholder={copy.reader.placeholder}
-          autoCapitalize="off"
-          autoComplete="off"
-          spellCheck={false}
-          className="aksara w-full border-2 border-lontar/30 bg-lontar/5 px-4 py-3 text-3xl text-lontar placeholder:font-latin placeholder:text-base placeholder:text-lontar/65 focus:border-gold"
-        />
-        <button
-          type="button"
-          onClick={() => setShowKeyboard((v) => !v)}
-          className={`hover:text-gold ${eyebrow()}`}
-          aria-expanded={showKeyboard}
-        >
-          {copy.writer.keyboardToggle} {showKeyboard ? '−' : '+'}
-        </button>
+      <ToolInput
+        id="lontara-input"
+        label={copy.reader.inputLabel}
+        value={lontara}
+        onChange={setLontara}
+        placeholder={copy.reader.placeholder}
+        locale={locale}
+        aksara
+        examples={examples}
+      >
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <button
+            type="button"
+            onClick={() => setShowKeyboard((v) => !v)}
+            className={`min-h-[36px] hover:text-gold ${eyebrow()}`}
+            aria-expanded={showKeyboard}
+            aria-controls="papan-tombol"
+          >
+            {copy.writer.keyboardToggle} {showKeyboard ? '−' : '+'}
+          </button>
+        </div>
         <ShareLink locale={locale} value={lontara} />
-      </div>
+      </ToolInput>
 
       {showKeyboard ? (
-        <Keyboard locale={locale} value={lontara} onChange={setLontara} />
+        <div id="papan-tombol">
+          <Keyboard locale={locale} value={lontara} onChange={setLontara} />
+        </div>
       ) : null}
 
       <section className="space-y-2">
