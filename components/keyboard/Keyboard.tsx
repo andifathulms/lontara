@@ -50,7 +50,7 @@ export function Keyboard({
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 print:hidden">
       <h3 className={eyebrow()} id="papan-tombol-judul">
         {copy.writer.keyboardLabel}
       </h3>

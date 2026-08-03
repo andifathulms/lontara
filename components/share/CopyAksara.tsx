@@ -26,7 +26,7 @@ export function CopyAksara({ locale, text }: { locale: Locale; text: string }) {
   if (text === '') return null
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-1 print:hidden">
       <button
         type="button"
         onClick={run}

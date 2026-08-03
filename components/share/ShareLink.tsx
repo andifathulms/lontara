@@ -32,7 +32,7 @@ export function ShareLink({ locale, value }: { locale: Locale; value: string }) 
       <button
         type="button"
         onClick={onCopy}
-        className={`border border-gold/50 px-2 py-1 hover:bg-gold/10 ${eyebrow('gold', 'sm')}`}
+        className={`border border-gold/50 px-2 py-1 hover:bg-gold/10 print:hidden ${eyebrow('gold', 'sm')}`}
       >
         {state === 'copied' ? copy.share.copied : copy.share.copyLink}
       </button>

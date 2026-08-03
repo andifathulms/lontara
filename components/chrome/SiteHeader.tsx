@@ -30,7 +30,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const isCurrent = (section: string) => pathname.startsWith(href(locale, section))
 
   return (
-    <header className="sticky top-0 z-20 border-b-2 border-gold/40 bg-grid">
+    <header className="sticky top-0 z-20 border-b-2 border-gold/40 bg-grid print:hidden">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-6 gap-y-1 px-5 pt-3">
         <Link
           href={href(locale)}

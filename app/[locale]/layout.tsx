@@ -51,7 +51,7 @@ export default function LocaleLayout({
             input is the thing a keyboard user actually came for. */}
         <a
           href="#isi"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-30 focus:border-2 focus:border-gold focus:bg-grid focus:px-4 focus:py-2 focus:font-anotasi focus:text-anotasi focus:uppercase focus:tracking-widest focus:text-gold focus:no-underline"
+          className="sr-only print:hidden focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-30 focus:border-2 focus:border-gold focus:bg-grid focus:px-4 focus:py-2 focus:font-anotasi focus:text-anotasi focus:uppercase focus:tracking-widest focus:text-gold focus:no-underline"
         >
           {copy.common.skipToContent}
         </a>

@@ -81,7 +81,7 @@ export function ToolInput({
             type="button"
             onClick={() => onChange('')}
             /* 44px minimum, which is the smallest reliable touch target. */
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center px-3 font-anotasi text-lontar/65 hover:bg-sabbe/15 hover:text-lontar"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center px-3 print:hidden font-anotasi text-lontar/65 hover:bg-sabbe/15 hover:text-lontar"
           >
             <span aria-hidden="true">✕</span>
             <span className="sr-only">{copy.common.clear}</span>
@@ -90,7 +90,7 @@ export function ToolInput({
       </div>
 
       {examples.length > 0 ? (
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 print:hidden">
           <span className="font-anotasi text-anotasi uppercase tracking-widest text-lontar/65">
             {copy.common.tryExample}
           </span>
