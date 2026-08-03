@@ -76,6 +76,15 @@ export type Copy = {
     openQuestions: string
     provisional: string
   }
+  corpus: {
+    title: string
+    lead: string
+    claim: string
+    agrees: string
+    disagrees: string
+    disagreesNote: string
+    agreementLine: (agreeing: number, total: number) => string
+  }
   attestation: {
     corpus: string
     dictionary: string
@@ -226,6 +235,18 @@ const id: Copy = {
     lead: 'Sisi Latin butuh spesifikasi sama ketatnya dengan sisi Lontara. Ejaan Latin yang kurang tegas membuat seluruh penyebutan bacaan tidak sahih.',
     openQuestions: 'Pertanyaan yang belum terjawab',
     provisional: 'Sementara — menunggu penelaah',
+  },
+  corpus: {
+    title: 'Bentuk yang terbukti dalam korpus',
+    lead: 'Bentuk-bentuk ini sungguh muncul di Wikipedia Basa Ugi, ditulis beraksara Lontara dan Latin oleh penyuntingnya. Tekan salah satunya untuk membacanya di sini.',
+    claim:
+      'Yang diklaim sebuah pasangan hanya ini: seorang penyunting Wikipedia menuliskan aksara ini dan Latin ini untuk satu sama lain. Itu praktik komunitas, bukan otoritas — belum ada penelaah yang menandatanganinya, dan sebagian pasangan memang keliru.',
+    agrees: 'sesuai',
+    disagrees: 'berbeda',
+    disagreesNote:
+      'Aturan di repositori ini menghasilkan aksara yang berbeda dari yang tertulis di korpus. Bisa jadi aturannya yang salah, bisa jadi praktiknya memang beragam. Ditampilkan apa adanya, bukan disembunyikan.',
+    agreementLine: (agreeing, total) =>
+      `Aturan di sini sesuai dengan ${agreeing} dari ${total} pasangan terbukti.`,
   },
   attestation: {
     corpus: 'korpus',
@@ -380,6 +401,18 @@ const en: Copy = {
     lead: 'The Latin side needs as much specification as the Lontara side. An underspecified Latin orthography makes the whole enumeration unsound.',
     openQuestions: 'Open questions',
     provisional: 'Provisional — awaiting a reviewer',
+  },
+  corpus: {
+    title: 'Forms attested in the corpus',
+    lead: 'These forms genuinely occur in Bugis Wikipedia, written in both Lontara and Latin by its editors. Press one to read it here.',
+    claim:
+      'What a pair claims is only this: a Wikipedia editor wrote this aksara and this Latin for each other. That is community practice, not authority — no reviewer has signed any of it off, and some pairs are plainly wrong.',
+    agrees: 'agrees',
+    disagrees: 'differs',
+    disagreesNote:
+      'This repository\'s rules produce different aksara from what the corpus records. Either the rules are wrong or practice varies. Shown as it is, rather than hidden.',
+    agreementLine: (agreeing, total) =>
+      `These rules agree with ${agreeing} of ${total} attested pairs.`,
   },
   attestation: {
     corpus: 'corpus',

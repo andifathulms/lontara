@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import corpus from '@/data/corpus/bugwiki-pairs.json'
 import { interpret } from '@/lib/engine/interpret'
 import { toCodepoint } from '@/lib/rules/inventory'
+import { ATTESTED_FORMS, attestedSample } from '@/lib/corpus/loader'
 
 /**
  * Conformance against attested Lontara↔Latin pairs from Bugis Wikipedia.
@@ -142,5 +143,40 @@ describe('specific attested pairs, as regression cases', () => {
     expect(trace.ambiguities.map((a) => a.class)).toEqual(['prenasal'])
     expect(trace.ambiguities[0]?.ruleId).toBe('lontara.prenasal.drop')
     expect(trace.ambiguities[0]?.reason.length).toBeGreaterThan(0)
+  })
+})
+
+/*
+ * The reader shows a sample of these pairs. Taking the top N by occurrence
+ * would show twelve successes and no failures, because the rule set happens to
+ * handle every one of the commonest forms — a true list making a false
+ * impression about the tool.
+ *
+ * So the sample leads with every disagreeing pair. This asserts it stays that
+ * way: a future rule change that introduces a new disagreement must not
+ * quietly push it out of view.
+ */
+describe('the shown sample does not hide the failures', () => {
+  const SHOWN = 12
+
+  it('includes every pair the rule set disagrees with', () => {
+    const sample = attestedSample(SHOWN)
+    const missing = ATTESTED_FORMS.filter(
+      (form) => !form.agrees && !sample.some((s) => s.lontara === form.lontara && s.latin === form.latin),
+    )
+    expect(
+      missing.map((f) => f.latin),
+      'these attested pairs disagree with the rule set but are not shown to the reader',
+    ).toEqual([])
+  })
+
+  it('leaves room for agreeing pairs too, so it is a sample and not a defect list', () => {
+    const sample = attestedSample(SHOWN)
+    expect(sample.length).toBe(SHOWN)
+    expect(sample.some((f) => f.agrees)).toBe(true)
+  })
+
+  it('is deterministic — same build, same list', () => {
+    expect(attestedSample(SHOWN)).toEqual(attestedSample(SHOWN))
   })
 })

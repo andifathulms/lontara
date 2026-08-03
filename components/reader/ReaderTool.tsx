@@ -16,6 +16,7 @@ import { Rhombus } from '@/components/ambiguity/Rhombus'
 import { ShareLink } from '@/components/share/ShareLink'
 import { useHashState } from '@/components/share/useHashState'
 import { ToolInput } from '@/components/tool/ToolInput'
+import { AttestedForms } from '@/components/corpus/AttestedForms'
 import { eyebrow } from '@/components/chrome/eyebrow'
 
 const CLASSES = ['final', 'gemination', 'prenasal', 'glottal'] as const
@@ -180,6 +181,8 @@ export function ReaderTool({ locale }: { locale: Locale }) {
           />
         </section>
       ) : null}
+
+      <AttestedForms locale={locale} onPick={setLontara} />
 
       {/* Reference tier. Always present (invariant 10) and always complete,
           but ruled off from the answer above it so it reads as apparatus
