@@ -104,6 +104,7 @@ export type Copy = {
     unverified: string
     clear: string
     tryExample: string
+    backspace: string
     skipToContent: string
     currentPage: string
     opensInNewTab: string
@@ -251,6 +252,7 @@ const id: Copy = {
     unverified: 'belum terverifikasi',
     clear: 'Kosongkan',
     tryExample: 'Coba',
+    backspace: 'Hapus satu aksara',
     skipToContent: 'Langsung ke isi',
     currentPage: 'halaman ini',
     opensInNewTab: 'membuka tab baru',
@@ -398,6 +400,7 @@ const en: Copy = {
     unverified: 'unverified',
     clear: 'Clear',
     tryExample: 'Try',
+    backspace: 'Delete one character',
     skipToContent: 'Skip to content',
     currentPage: 'current page',
     opensInNewTab: 'opens in a new tab',
