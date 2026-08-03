@@ -112,10 +112,31 @@ repository weight.
 }
 ```
 
-`gloss` is optional and is **for reviewer verification only**. It is never
-rendered anywhere in the UI, and `tests/invariants.test.ts` asserts it cannot
-leak into an enumeration result. Transliteration is not translation
-(invariant 16).
+### On `gloss`
+
+`gloss` is optional and is **for reviewer verification only**. PRD §6.4 asks
+for it; invariant 16 forbids the UI from producing, implying or labelling
+meaning. Both hold at once, and only because the field stops at the data layer:
+a gloss exists so a reviewer can confirm *which word* an entry is, and for
+nothing else. Transliteration is not translation.
+
+That used to rest on a comment in `lib/lexicon/loader.ts`, which is a wish
+rather than a guarantee — one `{entry.gloss}` in a reading tree and this tool
+starts looking like a dictionary that also converts script, which is exactly
+the confusion PRD §4 says users already arrive with.
+
+It is now enforced. `tests/invariants.test.ts` asserts that:
+
+- no file under `components/` or `app/` mentions `gloss` at all;
+- no file under `components/` or `app/` contains the word *translate* or
+  *terjemah* in any form;
+- `copy.ts` contains the denial in both locales, and only the denial;
+- `lib/lexicon/loader.ts` still carries the field, so enforcing the first point
+  can never be "solved" by deleting the reviewer's column.
+
+`pnpm lexicon:validate` reports how many entries carry a gloss, so the day a
+dictionary source starts supplying them it is a visible change rather than a
+quiet one.
 
 ## What would actually improve this
 

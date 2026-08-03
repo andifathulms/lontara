@@ -225,3 +225,73 @@ describe('invariant 16 — transliteration is not translation', () => {
     expect(serialised).not.toMatch(/"gloss"/)
   })
 })
+
+describe('invariant 16 — transliteration is not translation', () => {
+  /*
+   * PRD §6.4 wants a gloss per lexicon entry; invariant 16 forbids the UI from
+   * producing, implying or labelling meaning. Both hold at once only because
+   * the field stops at the data layer: a gloss is there so a reviewer can
+   * confirm which word an entry is, and for nothing else.
+   *
+   * That is currently true by a comment on the schema, which is not a
+   * guarantee. One `{entry.gloss}` in a reading tree and this tool starts
+   * looking like a dictionary that also converts script — which is precisely
+   * the confusion §4 says users already arrive with.
+   */
+  function walkUi(dir: string): string[] {
+    const out: string[] = []
+    for (const entry of readdirSync(join(process.cwd(), dir), { withFileTypes: true })) {
+      const path = `${dir}/${entry.name}`
+      if (entry.isDirectory()) out.push(...walkUi(path))
+      else if (/\.tsx?$/.test(entry.name)) out.push(path)
+    }
+    return out
+  }
+
+  const uiFiles = [...walkUi('components'), ...walkUi('app')]
+
+  it('finds the UI tree', () => {
+    expect(uiFiles.length).toBeGreaterThan(10)
+  })
+
+  it('no component or page reads a gloss', () => {
+    for (const file of uiFiles) {
+      const source = readFileSync(join(process.cwd(), file), 'utf8')
+      expect(source, `${file} touches a gloss; invariant 16 says the UI never shows meaning`).not.toMatch(
+        /\bgloss\b/,
+      )
+    }
+  })
+
+  it('the lexicon type still carries gloss, so reviewers keep their field', () => {
+    const schema = readFileSync(join(process.cwd(), 'lib/lexicon/loader.ts'), 'utf8')
+    expect(schema).toMatch(/gloss:/)
+  })
+
+  it('no UI string offers to translate', () => {
+    /*
+     * The word belongs in exactly one place in this project — the sentence
+     * that denies it, which lives in copy.ts and is checked separately below.
+     *
+     * `\b` is too blunt here: Tailwind's `-translate-x-1/2` and
+     * `translate-y-0.5` are transforms, and a hyphen is a word boundary. So
+     * the English forms must not be adjacent to `-` or a word character on
+     * either side. No CSS class contains `terjemah`, so the Indonesian form
+     * needs no such care and is matched anywhere, prefixes included.
+     */
+    const ENGLISH = /(?<![-\w])(translate|translated|translating|translation)(?![-\w])/i
+    const INDONESIAN = /terjemah/i
+
+    for (const file of uiFiles) {
+      const source = readFileSync(join(process.cwd(), file), 'utf8')
+      expect(source, `${file} uses the word "translate"`).not.toMatch(ENGLISH)
+      expect(source, `${file} uses the word "terjemah"`).not.toMatch(INDONESIAN)
+    }
+  })
+
+  it('copy.ts uses the word only to deny it', () => {
+    const copySource = readFileSync(join(process.cwd(), 'lib/i18n/copy.ts'), 'utf8')
+    const denials = copySource.match(/(does not translate|tidak menerjemahkan)/g) ?? []
+    expect(denials.length, 'both locales must carry the denial').toBe(2)
+  })
+})

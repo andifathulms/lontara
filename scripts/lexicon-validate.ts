@@ -135,6 +135,25 @@ if (lexicon.entries.length === 0) {
     notes.push(`  keterbuktian ${attestation}: ${count}`)
   }
 
+  /*
+   * Gloss is carried for reviewer verification and never rendered — PRD §6.4
+   * asks for it, invariant 16 forbids the UI implying meaning, and the two
+   * coexist only because the field stops at the data layer. Reported here so
+   * that if glosses ever start arriving with a dictionary source, the count is
+   * visible rather than a quiet change in what the file contains.
+   *
+   * `tests/invariants.test.ts` is what actually enforces the "never rendered"
+   * half; this is the disclosure half.
+   */
+  const glossed = lexicon.entries.filter((e) => e.gloss).length
+  if (glossed > 0) {
+    notes.push(
+      `${glossed} lema membawa gloss. Gloss TIDAK PERNAH ditampilkan (invariant 16) — ` +
+        'ia ada untuk verifikasi penelaah, bukan untuk pengguna. Alat ini mengalihkan aksara, ' +
+        'bukan menerjemahkan.',
+    )
+  }
+
   const corpusShare = (byAttestation.get('corpus') ?? 0) / lexicon.entries.length
   if (corpusShare > 0.9) {
     notes.push(
