@@ -72,38 +72,74 @@ function Node({
       ) : null}
 
       {isLeaf && node.reading ? (
-        <div className="mb-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          {/* What is actually behind this reading. A corpus attestation means the
-              form occurs in text — not that it is a Bugis word — so it is
-              badged in sabbe rather than gold, and never looks like a
-              confirmation. */}
-          {node.reading.attestation ? (
-            <span
-              className={`border px-1.5 ${
-                node.reading.attestation === 'corpus'
-                  ? `border-sabbe ${eyebrow('sabbe', 'sm')}`
-                  : `border-gold/50 ${eyebrow('gold', 'sm')}`
-              }`}
-            >
-              {copy.attestation[node.reading.attestation]}
-            </span>
-          ) : null}
-          {node.reading.band && node.reading.band !== 'unknown' ? (
-            <span className={`border border-gold/50 px-1.5 ${eyebrow('gold', 'sm')}`}>
-              {node.reading.band}
-            </span>
-          ) : null}
-          <span
-            className="font-anotasi text-anotasi text-lontar/65"
-            title={node.reading.score.components.map((c) => `${c.label}: ${c.value} — ${c.why}`).join('\n')}
-          >
-            skor {node.reading.score.total}
-          </span>
-          {node.reading.entries[0] ? (
-            <span className="font-anotasi text-anotasi text-lontar/65">
-              {node.reading.entries[0].provenance.source}
-            </span>
-          ) : null}
+        <div className="mb-2 space-y-1">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            {/* What is actually behind this reading. A corpus attestation means the
+                form occurs in text — not that it is a Bugis word — so it is
+                badged in sabbe rather than gold, and never looks like a
+                confirmation. */}
+            {node.reading.attestation ? (
+              <span
+                className={`border px-1.5 ${
+                  node.reading.attestation === 'corpus'
+                    ? `border-sabbe ${eyebrow('sabbe', 'sm')}`
+                    : `border-gold/50 ${eyebrow('gold', 'sm')}`
+                }`}
+              >
+                {copy.attestation[node.reading.attestation]}
+              </span>
+            ) : null}
+            {node.reading.band && node.reading.band !== 'unknown' ? (
+              <span className={`border border-gold/50 px-1.5 ${eyebrow('gold', 'sm')}`}>
+                {node.reading.band}
+              </span>
+            ) : null}
+          </div>
+
+          {/*
+            Every component of a score is named so that a ranking can be argued
+            with (rank.ts) — and all of it was reaching the user through a
+            `title` tooltip, which no touch device has ever shown. A ranking you
+            cannot inspect is exactly the black box this project is a reaction
+            to.
+
+            `<details>` rather than state: it needs no hydration, it is one tap,
+            and it is a disclosure widget every screen reader already knows.
+          */}
+          <details className="group">
+            <summary className="cursor-pointer list-none font-anotasi text-anotasi text-lontar/65 marker:content-[''] hover:text-gold">
+              <span aria-hidden="true" className="inline-block w-3">
+                {/* No animation — PRD §10 permits two, and this is not one. */}
+                <span className="group-open:hidden">+</span>
+                <span className="hidden group-open:inline">−</span>
+              </span>{' '}
+              {copy.reader.scoreLabel} {node.reading.score.total}
+            </summary>
+
+            <dl className="mt-1 space-y-1 border-l-2 border-gold/30 pl-3">
+              <div className={eyebrow('quiet', 'sm')}>{copy.reader.scoreBasis}</div>
+              {node.reading.score.components.map((component) => (
+                <div key={component.label} className="text-xs">
+                  <dt className="font-anotasi text-anotasi text-gold">
+                    {component.label} · {component.value}
+                  </dt>
+                  <dd className="max-w-measure text-lontar/75">{component.why}</dd>
+                </div>
+              ))}
+              {node.reading.entries[0] ? (
+                <div className="text-xs">
+                  <dt className={eyebrow('quiet', 'sm')}>{copy.reader.provenanceLabel}</dt>
+                  <dd className="max-w-measure font-anotasi text-anotasi text-lontar/75">
+                    {node.reading.entries[0].provenance.source}
+                    {' · '}
+                    {node.reading.entries[0].provenance.locator}
+                    {' · '}
+                    {node.reading.entries[0].provenance.licence}
+                  </dd>
+                </div>
+              ) : null}
+            </dl>
+          </details>
         </div>
       ) : null}
 

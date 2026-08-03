@@ -56,6 +56,9 @@ export type Copy = {
     readingCount: (n: number) => string
     capReported: (depth: number) => string
     undetermined: string
+    scoreLabel: string
+    scoreBasis: string
+    provenanceLabel: string
   }
   aksara: {
     title: string
@@ -204,6 +207,9 @@ const id: Copy = {
     readingCount: (n) => `${n} kemungkinan bacaan`,
     capReported: (depth) => `Penyebutan dibatasi pada kedalaman ${depth}. Batas ini dilaporkan, bukan diterapkan diam-diam.`,
     undetermined: 'Tidak ditentukan oleh aksara',
+    scoreLabel: 'skor',
+    scoreBasis: 'Dasar peringkat ini',
+    provenanceLabel: 'Sumber',
   },
   aksara: {
     title: 'Aksara',
@@ -355,6 +361,9 @@ const en: Copy = {
     readingCount: (n) => `${n} possible readings`,
     capReported: (depth) => `Enumeration was capped at depth ${depth}. The cap is reported, never silently applied.`,
     undetermined: 'Not determined by the script',
+    scoreLabel: 'score',
+    scoreBasis: 'What this ranking rests on',
+    provenanceLabel: 'Source',
   },
   aksara: {
     title: 'Aksara',
