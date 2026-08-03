@@ -43,7 +43,7 @@ export function WriterTool({ locale }: { locale: Locale }) {
           autoCapitalize="off"
           autoComplete="off"
           spellCheck={false}
-          className="w-full border-2 border-lontar/30 bg-transparent px-4 py-3 text-2xl text-lontar placeholder:text-lontar/30 focus:border-gold"
+          className="w-full border-2 border-lontar/30 bg-transparent px-4 py-3 text-2xl text-lontar placeholder:text-lontar/65 focus:border-gold"
         />
         <ShareLink locale={locale} value={latin} />
       </div>
@@ -57,7 +57,7 @@ export function WriterTool({ locale }: { locale: Locale }) {
 
       <div className="grid gap-8 md:grid-cols-2">
         <section className="space-y-3">
-          <h2 className="font-anotasi text-xs uppercase tracking-widest text-daun">
+          <h2 className="font-anotasi text-xs uppercase tracking-widest text-daun-ink">
             {copy.writer.lossTitle}
           </h2>
           <AmbiguityPanel

@@ -29,29 +29,29 @@ export default function ConformancePage({ params }: { params: { locale: string }
   return (
     <div className="mx-auto max-w-5xl px-5 py-10 space-y-8">
       <header className="space-y-3">
-        <h1 className="text-3xl text-lontar">{copy.aksara.conformanceLink}</h1>
-        <p className="max-w-3xl text-lontar/75">
+        <h1 className="text-title text-lontar">{copy.aksara.conformanceLink}</h1>
+        <p className="max-w-measure text-lead text-lontar/75">
           {locale === 'id'
             ? 'Buka halaman ini di perangkat sungguhan. Setiap kasus menampilkan rangkaiannya besar-besar, titik kodenya di bawah, dan apa yang dihitung lulus. Rangkaian aksara di bawah dibangun dari daftar titik kode, bukan dari teks harfiah, jadi keduanya tidak mungkin berbeda.'
             : 'Open this page on a real device. Each case shows its string large, its codepoints beneath, and what counts as a pass. The aksara below is built from the codepoint list rather than from a literal, so the two cannot drift apart.'}
         </p>
-        <dl className="font-anotasi text-xs text-lontar/60 space-y-1">
+        <dl className="font-anotasi text-xs text-lontar/65 space-y-1">
           <div>
-            <dt className="inline text-gold/70">face </dt>
+            <dt className="inline text-gold/80">face </dt>
             <dd className="inline">
               {HARD_STRINGS.font.face} {HARD_STRINGS.font.version}
             </dd>
           </div>
           <div>
-            <dt className="inline text-gold/70">shipped </dt>
+            <dt className="inline text-gold/80">shipped </dt>
             <dd className="inline">{HARD_STRINGS.font.shipped}</dd>
           </div>
           <div>
-            <dt className="inline text-gold/70">features </dt>
+            <dt className="inline text-gold/80">features </dt>
             <dd className="inline">{HARD_STRINGS.font.features.join(' · ')}</dd>
           </div>
           <div>
-            <dt className="inline text-gold/70">check on </dt>
+            <dt className="inline text-gold/80">check on </dt>
             <dd className="inline">{HARD_STRINGS.devices.join(' · ')}</dd>
           </div>
         </dl>
@@ -68,20 +68,20 @@ export default function ConformancePage({ params }: { params: { locale: string }
               <div className="aksara bg-lontar text-grid px-4 py-5 text-5xl leading-relaxed break-words">
                 {c.text}
               </div>
-              <p className="font-anotasi text-[11px] leading-relaxed text-lontar/55 break-words">
+              <p className="font-anotasi text-anotasi leading-relaxed text-lontar/65 break-words">
                 {c.codepoints.join(' ')}
               </p>
             </div>
 
             <div className="space-y-3 text-sm">
               <div>
-                <h2 className="font-anotasi text-xs uppercase tracking-widest text-lontar/50">
+                <h2 className="font-anotasi text-xs uppercase tracking-widest text-lontar/65">
                   {locale === 'id' ? 'Mengapa kasus ini' : 'Why this case'}
                 </h2>
                 <p className="mt-1 text-lontar/75">{c.why}</p>
               </div>
               <div>
-                <h2 className="font-anotasi text-xs uppercase tracking-widest text-lontar/50">
+                <h2 className="font-anotasi text-xs uppercase tracking-widest text-lontar/65">
                   {locale === 'id' ? 'Lulus berarti' : 'A pass means'}
                 </h2>
                 <p className="mt-1 text-lontar/85">{c.expect}</p>
@@ -96,7 +96,7 @@ export default function ConformancePage({ params }: { params: { locale: string }
           {locale === 'id' ? 'Kasus yang belum diketahui' : 'Cases not yet identified'}
         </h2>
         {HARD_STRINGS.openCases.map((o) => (
-          <p key={o.note} className="text-sm text-lontar/80">
+          <p key={o.note} className="text-sm text-lontar/85">
             {o.note}
           </p>
         ))}

@@ -19,7 +19,7 @@ export function Band({ band, locale }: { band: BandLayout; locale: Locale }) {
   const copy = getCopy(locale)
 
   if (band.columns.length === 0) {
-    return <p className="text-sm text-lontar/55">{copy.writer.emptyState}</p>
+    return <p className="text-sm text-lontar/65">{copy.writer.emptyState}</p>
   }
 
   return (
@@ -60,7 +60,7 @@ export function Band({ band, locale }: { band: BandLayout; locale: Locale }) {
                     title={loss.ruleId}
                   >
                     <Rhombus size={9} tone="daun" />
-                    <span className="font-anotasi text-[11px] text-daun">
+                    <span className="font-anotasi text-anotasi text-daun-ink">
                       <span className="line-through">{loss.latin}</span>{' '}
                       {copy.ambiguityClass[loss.ambiguityClass]}
                     </span>
@@ -77,14 +77,14 @@ export function Band({ band, locale }: { band: BandLayout; locale: Locale }) {
         {band.columns.map((column) => (
           <span
             key={column.index}
-            className="flex flex-1 flex-col items-center font-anotasi text-xs text-lontar/80"
+            className="flex flex-1 flex-col items-center font-anotasi text-xs text-lontar/85"
           >
             {column.latin}
           </span>
         ))}
       </div>
 
-      <figcaption className="mt-3 font-anotasi text-[11px] text-lontar/45">
+      <figcaption className="mt-3 font-anotasi text-anotasi text-lontar/65">
         {locale === 'id'
           ? 'Aksara tidak memakai spasi antarkata. Garis penghubung yang menandai batasnya.'
           : 'The script uses no word spacing. The connector strokes mark the boundaries instead.'}

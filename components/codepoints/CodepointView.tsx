@@ -23,21 +23,21 @@ export function CodepointView({ text, locale }: { text: string; locale: Locale }
         {copy.common.codepointView}
       </h3>
       {points.length === 0 ? (
-        <p className="mt-1 text-sm text-lontar/55">{copy.writer.emptyState}</p>
+        <p className="mt-1 text-sm text-lontar/65">{copy.writer.emptyState}</p>
       ) : (
         <ul className="mt-2 space-y-1">
           {points.map((char, index) => (
             <li
               key={`${index}-${char}`}
-              className="flex flex-wrap items-baseline gap-x-3 font-anotasi text-[11px] text-lontar/65"
+              className="flex flex-wrap items-baseline gap-x-3 font-anotasi text-anotasi text-lontar/65"
             >
-              <span className="text-gold/70">{toCodepoint(char)}</span>
+              <span className="text-gold/80">{toCodepoint(char)}</span>
               <span>{UNICODE_NAME_BY_CHAR.get(char) ?? '—'}</span>
             </li>
           ))}
         </ul>
       )}
-      <p className="mt-2 font-anotasi text-[11px] text-lontar/40">
+      <p className="mt-2 font-anotasi text-anotasi text-lontar/65">
         {locale === 'id'
           ? 'Selalu tersedia. Kalau aksara gagal tampil di perangkat Anda, titik kode ini tetap membawa jawabannya.'
           : 'Always available. If the aksara fails to render on your device, these codepoints still carry the answer.'}

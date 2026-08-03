@@ -61,9 +61,30 @@ body {
   background-color: theme('colors.grid');
   color: theme('colors.lontar');
   font-family: var(--font-latin), Georgia, serif;
-  font-size: 17px;
+  /* 16px on a phone so iOS never zooms a focused input, opening up to 17.5px
+     where there is room for it. */
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.09375rem);
   line-height: 1.65;
+  /* Gentium is a text face with real serifs; on the dark ground the default
+     macOS rendering thickens it enough to look muddy at annotation sizes. */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
+
+/*
+ * Text contrast floor, measured against the grid ground (#1A1614):
+ *
+ *   text-lontar        10.86:1   primary
+ *   text-lontar/85      8.13:1   emphasis inside a panel
+ *   text-lontar/75      6.58:1   secondary
+ *   text-lontar/65      5.25:1   annotation — THE FLOOR, do not go below
+ *   text-gold           6.94:1   / text-gold/80 4.88:1 — gold's floor
+ *   text-daun-ink       4.53:1   ambiguity type (plain `daun` is 2.28:1)
+ *   text-sabbe-ink      4.51:1   warning type (plain `sabbe` is 2.42:1)
+ *
+ * `daun` and `sabbe` themselves stay exactly as PRD §10 fixes them, and keep
+ * every border, fill and marker. They just no longer set type.
+ */
 
 /* Hard grid lines borrowed from the sarong: structural division, not ornament
    (PRD §10). No gradients, no shadows, no rounded corners — `borderRadius` is

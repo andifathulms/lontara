@@ -41,12 +41,12 @@ export function ShareLink({ locale, value }: { locale: Locale; value: string }) 
       <button
         type="button"
         onClick={onCopy}
-        className="border border-gold/50 px-2 py-1 font-anotasi text-[11px] uppercase tracking-widest text-gold hover:bg-gold/10"
+        className="border border-gold/50 px-2 py-1 font-anotasi text-anotasi uppercase tracking-widest text-gold hover:bg-gold/10"
       >
         {copied ? copy.share.copied : copy.share.copyLink}
       </button>
-      <code className="min-w-0 break-all font-anotasi text-[11px] text-lontar/45">{url}</code>
-      <span className="font-anotasi text-[11px] text-lontar/35">{copy.share.fragmentNote}</span>
+      <code className="min-w-0 break-all font-anotasi text-anotasi text-lontar/65">{url}</code>
+      <span className="font-anotasi text-anotasi text-lontar/65">{copy.share.fragmentNote}</span>
     </div>
   )
 }

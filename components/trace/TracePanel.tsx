@@ -23,13 +23,13 @@ function StatusBadge({ status, locale }: { status: string; locale: Locale }) {
   const copy = getCopy(locale)
   if (status === 'provisional') {
     return (
-      <span className="border border-sabbe px-1.5 font-anotasi text-[10px] uppercase tracking-widest text-sabbe">
+      <span className="border border-sabbe px-1.5 font-anotasi text-anotasi uppercase tracking-widest text-sabbe-ink">
         {copy.trace.provisionalBadge}
       </span>
     )
   }
   return (
-    <span className="font-anotasi text-[10px] uppercase tracking-widest text-lontar/40">
+    <span className="font-anotasi text-anotasi uppercase tracking-widest text-lontar/65">
       {status}
     </span>
   )
@@ -65,7 +65,7 @@ export function TracePanel({
   const copy = getCopy(locale)
 
   if (trace.steps.length === 0) {
-    return <p className="text-sm text-lontar/55">{copy.writer.emptyState}</p>
+    return <p className="text-sm text-lontar/65">{copy.writer.emptyState}</p>
   }
 
   return (
@@ -81,20 +81,20 @@ export function TracePanel({
               {step.type === 'loss' ? <Rhombus size={10} tone="daun" /> : null}
               <span
                 className={`font-anotasi text-xs ${
-                  step.type === 'loss' ? 'text-daun' : 'text-gold'
+                  step.type === 'loss' ? 'text-daun-ink' : 'text-gold'
                 }`}
               >
                 {step.ruleId}
               </span>
               <StatusBadge status={meta.status} locale={locale} />
-              <span className="font-anotasi text-[10px] uppercase tracking-widest text-lontar/35">
+              <span className="font-anotasi text-anotasi uppercase tracking-widest text-lontar/65">
                 {step.type}
               </span>
             </div>
 
             <p className="mt-1 text-sm text-lontar/85">{describe(step, locale)}</p>
 
-            <dl className="mt-1 flex flex-wrap gap-x-5 font-anotasi text-[11px] text-lontar/50">
+            <dl className="mt-1 flex flex-wrap gap-x-5 font-anotasi text-anotasi text-lontar/65">
               <span>
                 <dt className="inline">{copy.trace.input} </dt>
                 <dd className="inline">
@@ -110,15 +110,15 @@ export function TracePanel({
               </span>
             </dl>
 
-            <p className="mt-2 border-l-2 border-lontar/20 pl-3 text-xs text-lontar/60">
-              <span className="font-anotasi uppercase tracking-widest text-lontar/40">
+            <p className="mt-2 border-l-2 border-lontar/20 pl-3 text-xs text-lontar/65">
+              <span className="font-anotasi uppercase tracking-widest text-lontar/65">
                 {copy.trace.citation}
               </span>{' '}
               {meta.citation}
             </p>
 
             {meta.note ? (
-              <p className="mt-1 border-l-2 border-sabbe pl-3 text-xs text-sabbe/90">
+              <p className="mt-1 border-l-2 border-sabbe pl-3 text-xs text-sabbe-ink">
                 {meta.note}
               </p>
             ) : null}

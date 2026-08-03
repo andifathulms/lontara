@@ -38,20 +38,20 @@ function Node({
 
         <span
           className={`font-anotasi ${
-            node.classes.length > 0 ? 'text-daun' : 'text-lontar/85'
+            node.classes.length > 0 ? 'text-daun-ink' : 'text-lontar/85'
           }`}
         >
           {node.latin || '∅'}
         </span>
 
         {node.classes.length > 0 ? (
-          <span className="font-anotasi text-[10px] uppercase tracking-widest text-daun/80">
+          <span className="font-anotasi text-anotasi uppercase tracking-widest text-daun-ink">
             {node.classes.map((c) => copy.ambiguityClass[c]).join(' + ')}
           </span>
         ) : null}
 
         {isBranch ? (
-          <span className="font-anotasi text-[10px] uppercase tracking-widest text-lontar/40">
+          <span className="font-anotasi text-anotasi uppercase tracking-widest text-lontar/65">
             {copy.reader.readingCount(node.readingCount)}
           </span>
         ) : null}
@@ -61,7 +61,7 @@ function Node({
         <div className="mb-1 ml-1 border-l-2 border-daun pl-3">
           {node.ambiguities.map((a, index) => (
             <p key={`${a.ruleId}-${index}`} className="text-xs text-lontar/65">
-              <span className="font-anotasi uppercase tracking-widest text-daun">
+              <span className="font-anotasi uppercase tracking-widest text-daun-ink">
                 {copy.ambiguityClass[a.class]}
               </span>{' '}
               {a.reason}
@@ -78,9 +78,9 @@ function Node({
               confirmation. */}
           {node.reading.attestation ? (
             <span
-              className={`border px-1.5 font-anotasi text-[10px] uppercase tracking-widest ${
+              className={`border px-1.5 font-anotasi text-anotasi uppercase tracking-widest ${
                 node.reading.attestation === 'corpus'
-                  ? 'border-sabbe text-sabbe'
+                  ? 'border-sabbe text-sabbe-ink'
                   : 'border-gold/50 text-gold'
               }`}
             >
@@ -88,18 +88,18 @@ function Node({
             </span>
           ) : null}
           {node.reading.band && node.reading.band !== 'unknown' ? (
-            <span className="border border-gold/50 px-1.5 font-anotasi text-[10px] uppercase tracking-widest text-gold">
+            <span className="border border-gold/50 px-1.5 font-anotasi text-anotasi uppercase tracking-widest text-gold">
               {node.reading.band}
             </span>
           ) : null}
           <span
-            className="font-anotasi text-[11px] text-lontar/45"
+            className="font-anotasi text-anotasi text-lontar/65"
             title={node.reading.score.components.map((c) => `${c.label}: ${c.value} — ${c.why}`).join('\n')}
           >
             skor {node.reading.score.total}
           </span>
           {node.reading.entries[0] ? (
-            <span className="font-anotasi text-[11px] text-lontar/40">
+            <span className="font-anotasi text-anotasi text-lontar/65">
               {node.reading.entries[0].provenance.source}
             </span>
           ) : null}

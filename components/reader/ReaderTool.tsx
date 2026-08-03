@@ -52,7 +52,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
           autoCapitalize="off"
           autoComplete="off"
           spellCheck={false}
-          className="aksara w-full border-2 border-lontar/30 bg-lontar/5 px-4 py-3 text-3xl text-lontar placeholder:font-latin placeholder:text-base placeholder:text-lontar/30 focus:border-gold"
+          className="aksara w-full border-2 border-lontar/30 bg-lontar/5 px-4 py-3 text-3xl text-lontar placeholder:font-latin placeholder:text-base placeholder:text-lontar/65 focus:border-gold"
         />
         <button
           type="button"
@@ -75,12 +75,12 @@ export function ReaderTool({ locale }: { locale: Locale }) {
         </h2>
         <p className="border-l-4 border-gold/50 bg-gold/5 px-4 py-3 text-2xl text-lontar">
           {empty ? (
-            <span className="text-base text-lontar/50">{copy.reader.emptyState}</span>
+            <span className="text-base text-lontar/65">{copy.reader.emptyState}</span>
           ) : (
-            result.skeleton.latin || <span className="text-base text-lontar/50">∅</span>
+            result.skeleton.latin || <span className="text-base text-lontar/65">∅</span>
           )}
         </p>
-        <p className="text-xs text-lontar/55">
+        <p className="text-xs text-lontar/65">
           {locale === 'id'
             ? 'Vokal inheren /a/ di seluruh rangka, tanpa konsonan akhir, tanpa konsonan ganda, tanpa hamzah. Inilah yang benar-benar dinyatakan aksara — bukan bacaan yang dipilih.'
             : 'The inherent vowel /a/ throughout, no finals, no gemination, no glottal stop. This is what the script actually states — not a chosen reading.'}
@@ -94,7 +94,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
 
         {result.readings.length > 0 ? (
           <>
-            <p className="font-anotasi text-xs text-lontar/55">
+            <p className="font-anotasi text-xs text-lontar/65">
               {copy.reader.readingCount(result.readings.length)}
             </p>
             {/* Every reading here rests on a corpus occurrence and nothing
@@ -118,7 +118,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
         )}
 
         {result.cap.applied ? (
-          <p className="font-anotasi text-xs text-sabbe">
+          <p className="font-anotasi text-xs text-sabbe-ink">
             {copy.reader.capReported(result.cap.maxDepth)}
             {result.cap.dropped > 0 ? ` ${copy.reader.hiddenCount(result.cap.dropped)}.` : ''}
           </p>
@@ -130,7 +130,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
           is lexicon-driven, so every reading it can produce is already a known
           word. Saying so beats shipping a toggle that does nothing.
         */}
-        <p className="font-anotasi text-[11px] text-lontar/40">
+        <p className="font-anotasi text-anotasi text-lontar/65">
           {locale === 'id'
             ? 'Tidak ada saklar “hanya kata terdaftar” di sini: penyebutan bacaan digerakkan oleh leksikon, jadi setiap bacaan yang muncul memang kata terdaftar. Himpunan tak terfilter menuntut penyebutan struktural, yang tertahan pada openQuestions.final-inventory.'
             : 'There is no “known words only” switch here: enumeration is lexicon-driven, so every reading shown is already a known word. An unfiltered set would need structural enumeration, which is blocked on openQuestions.final-inventory.'}
@@ -138,26 +138,26 @@ export function ReaderTool({ locale }: { locale: Locale }) {
       </section>
 
       <section className="space-y-3">
-        <h2 className="flex items-center gap-2 font-anotasi text-xs uppercase tracking-widest text-daun">
+        <h2 className="flex items-center gap-2 font-anotasi text-xs uppercase tracking-widest text-daun-ink">
           <Rhombus size={11} tone="daun" />
           {copy.reader.undetermined}
         </h2>
         <ul className="grid gap-2 sm:grid-cols-2">
           {CLASSES.map((cls) => (
             <li key={cls} className="border-l-2 border-daun pl-3">
-              <span className="font-anotasi text-[11px] uppercase tracking-widest text-daun">
+              <span className="font-anotasi text-anotasi uppercase tracking-widest text-daun-ink">
                 {copy.ambiguityClass[cls]}
               </span>
-              <span className="block text-xs text-lontar/70">{copy.ambiguityClassBody[cls]}</span>
+              <span className="block text-xs text-lontar/75">{copy.ambiguityClassBody[cls]}</span>
             </li>
           ))}
         </ul>
-        <p className="text-xs text-lontar/60">{result.basisNote}</p>
+        <p className="text-xs text-lontar/65">{result.basisNote}</p>
       </section>
 
       {result.ambiguities.length > 0 ? (
         <section className="space-y-3">
-          <h2 className="font-anotasi text-xs uppercase tracking-widest text-daun">
+          <h2 className="font-anotasi text-xs uppercase tracking-widest text-daun-ink">
             {copy.reader.treeLabel} — {copy.reader.undetermined}
           </h2>
           <AmbiguityPanel

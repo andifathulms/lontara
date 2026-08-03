@@ -15,13 +15,13 @@ export function SiteFooter({ locale }: { locale: Locale }) {
     <footer className="mt-16 border-t-2 border-gold/40">
       <div className="mx-auto max-w-5xl px-5 py-8 grid gap-6 md:grid-cols-2">
         <div>
-          <h2 className="font-anotasi text-xs uppercase tracking-widest text-sabbe">
+          <h2 className="font-anotasi text-xs uppercase tracking-widest text-sabbe-ink">
             {copy.disclaimer.title}
           </h2>
-          <p className="mt-2 text-sm text-lontar/70">{copy.disclaimer.body}</p>
+          <p className="mt-2 text-sm text-lontar/75">{copy.disclaimer.body}</p>
         </div>
 
-        <div className="text-sm text-lontar/70">
+        <div className="text-sm text-lontar/75">
           <p>
             {locale === 'id'
               ? 'Untuk aksara Jawa dan Bali, '
@@ -41,7 +41,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           <p className="mt-3">
             <a
               href={REPOSITORY_URL}
-              className="font-anotasi text-xs uppercase tracking-widest text-lontar/55 hover:text-gold no-underline"
+              className="font-anotasi text-xs uppercase tracking-widest text-lontar/65 hover:text-gold no-underline"
               rel="noopener noreferrer"
               target="_blank"
             >

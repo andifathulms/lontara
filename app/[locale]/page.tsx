@@ -21,10 +21,10 @@ export default function HomePage({ params }: { params: { locale: string } }) {
   return (
     <div className="mx-auto max-w-5xl px-5 py-10 space-y-12">
       <section className="space-y-5">
-        <h1 className="text-3xl md:text-4xl leading-tight text-lontar max-w-3xl">
+        <h1 className="text-display text-lontar max-w-measure">
           {copy.tagline}
         </h1>
-        <p className="max-w-2xl text-lontar/75">{copy.home.lead}</p>
+        <p className="max-w-measure text-lead text-lontar/75">{copy.home.lead}</p>
         <NotTranslatorNotice locale={locale} />
         <ReviewerGateNotice locale={locale} />
       </section>
@@ -37,7 +37,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
             className="group bg-grid px-5 py-6 no-underline hover:bg-gold/5"
           >
             <span className="text-xl text-gold">{copy.nav[section]}</span>
-            <span className="mt-1 block text-sm text-lontar/70">
+            <span className="mt-1 block text-sm text-lontar/75">
               {copy.navDescription[section]}
             </span>
           </Link>
@@ -45,8 +45,8 @@ export default function HomePage({ params }: { params: { locale: string } }) {
       </nav>
 
       <section className="space-y-4 border-t-2 border-gold/30 pt-8">
-        <h2 className="text-2xl text-lontar">{copy.home.defective.title}</h2>
-        <p className="max-w-3xl text-lontar/80">{copy.home.defective.body}</p>
+        <h2 className="text-section text-lontar">{copy.home.defective.title}</h2>
+        <p className="max-w-measure text-lontar/85">{copy.home.defective.body}</p>
 
         <figure className="bg-lontar/10 border border-lontar/20 px-5 py-4">
           <p className="font-anotasi text-lg text-lontar">{copy.home.defective.example}</p>
@@ -61,7 +61,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
               {/* daun = ambiguity, and nothing else. PRD §10. */}
               <Rhombus size={13} tone="daun" className="mt-1.5" />
               <span>
-                <span className="text-daun font-anotasi text-xs uppercase tracking-widest">
+                <span className="text-daun-ink font-anotasi text-xs uppercase tracking-widest">
                   {copy.ambiguityClass[cls]}
                 </span>
                 <span className="block text-sm text-lontar/75">
@@ -74,22 +74,22 @@ export default function HomePage({ params }: { params: { locale: string } }) {
       </section>
 
       <section className="space-y-4 border-t-2 border-gold/30 pt-8">
-        <h2 className="text-2xl text-lontar">{copy.home.asymmetry.title}</h2>
+        <h2 className="text-section text-lontar">{copy.home.asymmetry.title}</h2>
         <dl className="grid gap-px bg-gold/30 md:grid-cols-2">
           <div className="bg-grid px-5 py-4">
             <dt className="font-anotasi text-xs uppercase tracking-widest text-gold">
               Latin → Lontara
             </dt>
-            <dd className="mt-1 text-sm text-lontar/80">{copy.home.asymmetry.latinToLontara}</dd>
+            <dd className="mt-1 text-sm text-lontar/85">{copy.home.asymmetry.latinToLontara}</dd>
           </div>
           <div className="bg-grid px-5 py-4">
             <dt className="font-anotasi text-xs uppercase tracking-widest text-gold">
               Lontara → Latin
             </dt>
-            <dd className="mt-1 text-sm text-lontar/80">{copy.home.asymmetry.lontaraToLatin}</dd>
+            <dd className="mt-1 text-sm text-lontar/85">{copy.home.asymmetry.lontaraToLatin}</dd>
           </div>
         </dl>
-        <p className="font-anotasi text-xs uppercase tracking-widest text-lontar/50">
+        <p className="font-anotasi text-xs uppercase tracking-widest text-lontar/65">
           {copy.home.open}
         </p>
       </section>

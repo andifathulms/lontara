@@ -14,7 +14,7 @@ export function NotTranslatorNotice({ locale }: { locale: Locale }) {
   const copy = getCopy(locale)
   return (
     <aside className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
-      <h2 className="font-anotasi text-xs uppercase tracking-widest text-sabbe">
+      <h2 className="font-anotasi text-xs uppercase tracking-widest text-sabbe-ink">
         {copy.notTranslator.title}
       </h2>
       <p className="mt-1 text-sm text-lontar/85">{copy.notTranslator.body}</p>
@@ -40,7 +40,7 @@ export function ReviewerGateNotice({
         <ul className="mt-1 text-sm text-lontar/85">
           {CONSENTING_REVIEWERS.map((r) => (
             <li key={r.name}>
-              {r.name} — {r.affiliation} · <span className="text-lontar/60">{r.scope}</span>
+              {r.name} — {r.affiliation} · <span className="text-lontar/65">{r.scope}</span>
             </li>
           ))}
         </ul>
@@ -55,7 +55,7 @@ export function ReviewerGateNotice({
       </h2>
       <p className="mt-1 text-sm text-lontar/85">{copy.gate.body}</p>
       {strong ? (
-        <p className="mt-2 font-anotasi text-xs text-sabbe">{copy.gate.blocked}</p>
+        <p className="mt-2 font-anotasi text-xs text-sabbe-ink">{copy.gate.blocked}</p>
       ) : null}
     </aside>
   )

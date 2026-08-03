@@ -27,8 +27,8 @@ export default function BacaPage({ params }: { params: { locale: string } }) {
   return (
     <div className="mx-auto max-w-5xl px-5 py-10 space-y-8">
       <header className="space-y-4">
-        <h1 className="text-3xl text-lontar">{copy.reader.title}</h1>
-        <p className="max-w-3xl text-lontar/75">{copy.reader.lead}</p>
+        <h1 className="text-title text-lontar">{copy.reader.title}</h1>
+        <p className="max-w-measure text-lead text-lontar/75">{copy.reader.lead}</p>
         <NotTranslatorNotice locale={locale} />
         <ReviewerGateNotice locale={locale} strong />
       </header>

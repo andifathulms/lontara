@@ -37,16 +37,16 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
   return (
     <div className="mx-auto max-w-5xl px-5 py-10 space-y-12">
       <header className="space-y-3">
-        <h1 className="text-3xl text-lontar">{copy.ejaan.title}</h1>
-        <p className="max-w-3xl text-lontar/75">{copy.ejaan.lead}</p>
-        <p className="font-anotasi text-xs text-lontar/45">
+        <h1 className="text-title text-lontar">{copy.ejaan.title}</h1>
+        <p className="max-w-measure text-lead text-lontar/75">{copy.ejaan.lead}</p>
+        <p className="font-anotasi text-xs text-lontar/65">
           rules.json v{RULE_SET.version} · {RULE_SET.reviewStatus} · {RULES.length}{' '}
           {id ? 'aturan' : 'rules'}
         </p>
       </header>
 
       <aside className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
-        <h2 className="font-anotasi text-xs uppercase tracking-widest text-sabbe">
+        <h2 className="font-anotasi text-xs uppercase tracking-widest text-sabbe-ink">
           {id ? 'Apa yang belum ada di sini' : 'What is not here'}
         </h2>
         <p className="mt-1 text-sm text-lontar/85">
@@ -58,13 +58,13 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
 
       {/* What IS specified. */}
       <section className="space-y-4">
-        <h2 className="text-2xl text-lontar">
+        <h2 className="text-section text-lontar">
           {id ? 'Yang sudah ditetapkan di sini' : 'What is specified here'}
         </h2>
 
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
-            <caption className="pb-2 text-left text-xs text-lontar/55">
+            <caption className="pb-2 text-left text-xs text-lontar/65">
               {id
                 ? 'Onset Latin diambil dari nama karakter Unicode setiap huruf. Vokal inheren /a/ tidak ditulis dengan tanda.'
                 : 'Latin onsets are taken from each letter’s Unicode character name. The inherent vowel /a/ has no sign.'}
@@ -88,7 +88,7 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
                   <td className="py-1.5 pr-4 font-anotasi text-lontar">
                     {c.onset === '' ? '∅' : c.onset}
                     {c.prenasal ? (
-                      <span className="ml-2 text-[10px] uppercase tracking-widest text-gold/70">
+                      <span className="ml-2 text-anotasi uppercase tracking-widest text-gold/80">
                         {id ? 'pranasal' : 'prenasal'}
                       </span>
                     ) : null}
@@ -96,7 +96,7 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
                   <td className="aksara py-1.5 pr-4 text-xl text-lontar">
                     {String.fromCodePoint(Number.parseInt(c.codepoint.slice(2), 16))}
                   </td>
-                  <td className="py-1.5 font-anotasi text-[11px] text-lontar/55">
+                  <td className="py-1.5 font-anotasi text-anotasi text-lontar/65">
                     {c.unicodeName}
                   </td>
                 </tr>
@@ -123,25 +123,25 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
             <tbody>
               <tr className="border-b border-lontar/15">
                 <td className="py-1.5 pr-4 font-anotasi text-lontar">a</td>
-                <td className="py-1.5 pr-4 font-anotasi text-[11px] text-lontar/55">
+                <td className="py-1.5 pr-4 font-anotasi text-anotasi text-lontar/65">
                   {id ? 'tanpa tanda — vokal inheren' : 'no sign — the inherent vowel'}
                 </td>
-                <td className="py-1.5 text-xs text-lontar/60">{INVENTORY.inherentVowel.note}</td>
+                <td className="py-1.5 text-xs text-lontar/65">{INVENTORY.inherentVowel.note}</td>
               </tr>
               {INVENTORY.vowelSigns.map((v) => (
                 <tr key={v.codepoint} className="border-b border-lontar/15">
                   <td className="py-1.5 pr-4 font-anotasi text-lontar">
                     {v.latin}
                     {v.latinNote ? (
-                      <span className="ml-2 text-[10px] uppercase tracking-widest text-sabbe">
+                      <span className="ml-2 text-anotasi uppercase tracking-widest text-sabbe-ink">
                         {copy.ejaan.provisional}
                       </span>
                     ) : null}
                   </td>
-                  <td className="py-1.5 pr-4 font-anotasi text-[11px] text-lontar/55">
+                  <td className="py-1.5 pr-4 font-anotasi text-anotasi text-lontar/65">
                     {v.codepoint} · {v.unicodeName}
                   </td>
-                  <td className="py-1.5 text-xs text-lontar/60">
+                  <td className="py-1.5 text-xs text-lontar/65">
                     {v.latinNote ?? v.positionSource}
                   </td>
                 </tr>
@@ -153,12 +153,12 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
 
       {/* The Latin distinctions the classes are defined against. */}
       <section className="space-y-4 border-t-2 border-gold/30 pt-8">
-        <h2 className="text-2xl text-lontar">
+        <h2 className="text-section text-lontar">
           {id
             ? 'Pembeda Latin yang menjadi dasar keempat kelas'
             : 'The Latin distinctions the four classes are defined against'}
         </h2>
-        <p className="max-w-3xl text-sm text-lontar/75">
+        <p className="max-w-measure text-sm text-lontar/75">
           {id
             ? 'Sisi Latin harus menyandikan konsonan akhir, konsonan ganda, pranasalisasi, dan hamzah — justru pembeda-pembeda inilah yang menjadi acuan penetapan kelas kerancuan. Kalau sisi Latin kabur, seluruh penyebutan bacaan menjadi tidak sahih.'
             : 'The Latin side has to encode final consonants, gemination, prenasalisation and the glottal stop — precisely the distinctions the ambiguity classes are defined against. If the Latin side is vague, the whole enumeration is unsound.'}
@@ -171,16 +171,16 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
               <div key={cls} className="bg-grid px-4 py-3">
                 <dt className="flex items-center gap-2">
                   <Rhombus size={11} tone="daun" />
-                  <span className="font-anotasi text-xs uppercase tracking-widest text-daun">
+                  <span className="font-anotasi text-xs uppercase tracking-widest text-daun-ink">
                     {copy.ambiguityClass[cls]}
                   </span>
                 </dt>
                 <dd className="mt-1 space-y-1">
-                  <p className="text-sm text-lontar/80">{declared?.description}</p>
-                  <p className="font-anotasi text-[11px] text-lontar/45">
+                  <p className="text-sm text-lontar/85">{declared?.description}</p>
+                  <p className="font-anotasi text-anotasi text-lontar/65">
                     {lossRule?.id} · {lossRule?.status}
                   </p>
-                  <p className="text-xs text-lontar/60">{declared?.citation}</p>
+                  <p className="text-xs text-lontar/65">{declared?.citation}</p>
                 </dd>
               </div>
             )
@@ -190,11 +190,11 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
 
       {/* Where practice diverges — the provisional rules. */}
       <section className="space-y-4 border-t-2 border-gold/30 pt-8">
-        <h2 className="text-2xl text-lontar">
+        <h2 className="text-section text-lontar">
           {id ? 'Tempat praktik berbeda-beda' : 'Where practice diverges'}
         </h2>
         {PROVISIONAL_RULES.length === 0 ? (
-          <p className="text-sm text-lontar/70">
+          <p className="text-sm text-lontar/75">
             {id ? 'Tidak ada aturan sementara.' : 'No provisional rules.'}
           </p>
         ) : (
@@ -203,13 +203,13 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
               <li key={r.id} className="bg-grid px-4 py-3">
                 <div className="flex flex-wrap items-baseline gap-x-3">
                   <span className="font-anotasi text-xs text-gold">{r.id}</span>
-                  <span className="border border-sabbe px-1.5 font-anotasi text-[10px] uppercase tracking-widest text-sabbe">
+                  <span className="border border-sabbe px-1.5 font-anotasi text-anotasi uppercase tracking-widest text-sabbe-ink">
                     {copy.trace.provisionalBadge}
                   </span>
                 </div>
                 <p className="mt-1 text-sm text-lontar/85">{r.description}</p>
-                <p className="mt-1 text-xs text-lontar/60">{r.citation}</p>
-                {r.note ? <p className="mt-1 text-xs text-sabbe/90">{r.note}</p> : null}
+                <p className="mt-1 text-xs text-lontar/65">{r.citation}</p>
+                {r.note ? <p className="mt-1 text-xs text-sabbe-ink">{r.note}</p> : null}
               </li>
             ))}
           </ul>
@@ -218,8 +218,8 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
 
       {/* Open questions. */}
       <section className="space-y-4 border-t-2 border-gold/30 pt-8">
-        <h2 className="text-2xl text-lontar">{copy.ejaan.openQuestions}</h2>
-        <p className="max-w-3xl text-sm text-lontar/75">
+        <h2 className="text-section text-lontar">{copy.ejaan.openQuestions}</h2>
+        <p className="max-w-measure text-sm text-lontar/75">
           {id
             ? 'Tidak ditebak. Masing-masing menyebut siapa yang harus ditanya.'
             : 'Not guessed at. Each one names who to ask.'}
@@ -228,13 +228,13 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
           {OPEN_QUESTIONS.map((q) => (
             <li key={q.id} className="bg-grid px-4 py-4">
               <p className="font-anotasi text-xs text-gold">{q.id}</p>
-              <p className="mt-1 text-lontar/90">{q.question}</p>
-              <p className="mt-2 text-sm text-lontar/70">{q.why}</p>
-              <p className="mt-2 font-anotasi text-[11px] text-lontar/50">
+              <p className="mt-1 text-lontar/85">{q.question}</p>
+              <p className="mt-2 text-sm text-lontar/75">{q.why}</p>
+              <p className="mt-2 font-anotasi text-anotasi text-lontar/65">
                 {id ? 'Tanya' : 'Ask'}: {q.askWhom}
               </p>
               {q.blocks.length > 0 ? (
-                <p className="mt-1 font-anotasi text-[11px] text-sabbe/80">
+                <p className="mt-1 font-anotasi text-anotasi text-sabbe-ink">
                   {id ? 'Menahan' : 'Blocks'}: {q.blocks.join(', ')}
                 </p>
               ) : null}
@@ -244,8 +244,8 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
       </section>
 
       <section className="space-y-3 border-t-2 border-gold/30 pt-8">
-        <h2 className="text-2xl text-lontar">{id ? 'Menelaah sendiri' : 'Audit it yourself'}</h2>
-        <p className="max-w-3xl text-sm text-lontar/75">
+        <h2 className="text-section text-lontar">{id ? 'Menelaah sendiri' : 'Audit it yourself'}</h2>
+        <p className="max-w-measure text-sm text-lontar/75">
           {id
             ? 'Tidak ada aturan ejaan yang ditulis di dalam kode program. Semuanya ada di data/rules/rules.json beserta id, prioritas, dan rujukan — supaya penelaah yang paham Lontara tetapi tidak memprogram dapat memeriksanya. `pnpm rules:report` mencetaknya sebagai tabel yang bisa dibaca.'
             : 'No orthographic rule is written in application code. All of it is in data/rules/rules.json with an id, a priority and a citation — so that a Bugis-literate reviewer who does not program can audit it. `pnpm rules:report` prints it as a readable table.'}

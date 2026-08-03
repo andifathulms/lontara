@@ -62,7 +62,7 @@ export function Keyboard({
                   title={`${letter.unicodeName} · ${codepoint}`}
                 >
                   <span className="aksara text-2xl text-lontar">{fromCodepoint(codepoint)}</span>
-                  <span className="font-anotasi text-[10px] text-lontar/55">
+                  <span className="font-anotasi text-anotasi text-lontar/65">
                     {letter.onset}a
                   </span>
                 </button>
@@ -73,7 +73,7 @@ export function Keyboard({
       </div>
 
       <div className="space-y-1">
-        <p className="font-anotasi text-[11px] text-lontar/45">
+        <p className="font-anotasi text-anotasi text-lontar/65">
           {locale === 'id'
             ? 'Tanda vokal mengubah huruf terakhir. Vokal inheren /a/ tidak punya tanda.'
             : 'A vowel sign modifies the last letter. The inherent vowel /a/ has no sign.'}
@@ -91,7 +91,7 @@ export function Keyboard({
               <span className="aksara text-2xl text-lontar">
                 {'◌' + fromCodepoint(sign.codepoint)}
               </span>
-              <span className="font-anotasi text-[10px] text-lontar/55">{sign.latin}</span>
+              <span className="font-anotasi text-anotasi text-lontar/65">{sign.latin}</span>
             </button>
           ))}
         </div>
@@ -107,7 +107,7 @@ export function Keyboard({
             title={`${mark.unicodeName} · ${mark.codepoint}`}
           >
             <span className="aksara text-2xl text-lontar">{fromCodepoint(mark.codepoint)}</span>
-            <span className="font-anotasi text-[10px] text-lontar/55">
+            <span className="font-anotasi text-anotasi text-lontar/65">
               {mark.unicodeName.replace('BUGINESE ', '').toLowerCase()}
             </span>
           </button>
@@ -116,7 +116,7 @@ export function Keyboard({
           type="button"
           onClick={backspace}
           disabled={value.length === 0}
-          className="flex flex-1 items-center justify-center bg-grid px-2 py-2 font-anotasi text-xs text-lontar/70 hover:bg-sabbe/15 disabled:opacity-30"
+          className="flex flex-1 items-center justify-center bg-grid px-2 py-2 font-anotasi text-xs text-lontar/75 hover:bg-sabbe/15 disabled:opacity-30"
         >
           ⌫
         </button>

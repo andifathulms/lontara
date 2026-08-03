@@ -34,7 +34,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
         <Link
           href={href(other)}
           hrefLang={other}
-          className="ml-auto font-anotasi text-xs uppercase tracking-widest text-lontar/55 hover:text-gold no-underline"
+          className="ml-auto font-anotasi text-xs uppercase tracking-widest text-lontar/65 hover:text-gold no-underline"
         >
           {copy.common.switchLocale}
         </Link>

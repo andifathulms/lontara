@@ -25,10 +25,10 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
   return (
     <div className="mx-auto max-w-5xl px-5 py-10 space-y-10">
       <header className="space-y-3">
-        <h1 className="text-3xl text-lontar">{copy.aksara.title}</h1>
-        <p className="max-w-3xl text-lontar/75">{copy.aksara.lead}</p>
-        <p className="max-w-3xl text-sm text-lontar/70">{copy.aksara.inherentVowel}</p>
-        <p className="font-anotasi text-xs text-lontar/50">
+        <h1 className="text-title text-lontar">{copy.aksara.title}</h1>
+        <p className="max-w-measure text-lead text-lontar/75">{copy.aksara.lead}</p>
+        <p className="max-w-measure text-sm text-lontar/75">{copy.aksara.inherentVowel}</p>
+        <p className="font-anotasi text-xs text-lontar/65">
           {INVENTORY.source.citation}
         </p>
         <Link
@@ -42,14 +42,14 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
       {/* No virama. This is the fact the whole project follows from, so it is
           stated on the reference page and not only in the prose. */}
       <aside className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
-        <h2 className="font-anotasi text-xs uppercase tracking-widest text-sabbe">
+        <h2 className="font-anotasi text-xs uppercase tracking-widest text-sabbe-ink">
           {locale === 'id' ? 'Tidak ada virama' : 'No virama'}
         </h2>
         <p className="mt-1 text-sm text-lontar/85">{INVENTORY.block.viramaNote}</p>
       </aside>
 
       <section className="space-y-4">
-        <h2 className="text-2xl text-lontar">{copy.aksara.consonants}</h2>
+        <h2 className="text-section text-lontar">{copy.aksara.consonants}</h2>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
             <thead>
@@ -78,11 +78,11 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
                     {fromCodepoint(c.codepoint)}
                   </td>
                   <td className="py-2 pr-4 text-lontar">{`${c.onset}a`}</td>
-                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/60">{c.codepoint}</td>
-                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/60">
+                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/65">{c.codepoint}</td>
+                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/65">
                     {c.unicodeName}
                   </td>
-                  <td className="py-2 text-xs text-lontar/70">
+                  <td className="py-2 text-xs text-lontar/75">
                     {c.onset === ''
                       ? locale === 'id'
                         ? 'Pengusung vokal — vokal mandiri /a/.'
@@ -101,8 +101,8 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-2xl text-lontar">{copy.aksara.vowelSigns}</h2>
-        <p className="max-w-3xl text-sm text-lontar/70">
+        <h2 className="text-section text-lontar">{copy.aksara.vowelSigns}</h2>
+        <p className="max-w-measure text-sm text-lontar/75">
           {locale === 'id'
             ? 'Setiap tanda ditampilkan pada lingkaran bertitik (U+25CC), supaya perilaku penggabungannya terlihat langsung dan tidak perlu dipercayai dari tabel.'
             : 'Each sign is shown on a dotted circle (U+25CC), so its combining behaviour is visible directly rather than taken on trust from a table.'}
@@ -138,13 +138,13 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
                     {fromCodepoint('U+1A00') + fromCodepoint(v.codepoint)}
                   </td>
                   <td className="py-2 pr-4 text-lontar">{`k${v.latin}`}</td>
-                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/60">
+                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/65">
                     <div>{v.codepoint}</div>
-                    <div className="text-lontar/45">
+                    <div className="text-lontar/65">
                       {v.generalCategory} · ccc {v.combiningClass}
                     </div>
                   </td>
-                  <td className="py-2 text-xs text-lontar/70">
+                  <td className="py-2 text-xs text-lontar/75">
                     <div>{v.positionSource}</div>
                     {v.latinNote ? (
                       <div className="mt-1 text-gold/80">{v.latinNote}</div>
@@ -158,7 +158,7 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-2xl text-lontar">{copy.aksara.punctuation}</h2>
+        <h2 className="text-section text-lontar">{copy.aksara.punctuation}</h2>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
             <thead>
@@ -183,8 +183,8 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
                   <td className="aksara py-2 pr-4 text-3xl text-lontar">
                     {fromCodepoint(p.codepoint)}
                   </td>
-                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/60">{p.codepoint}</td>
-                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/60">
+                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/65">{p.codepoint}</td>
+                  <td className="py-2 pr-4 font-anotasi text-xs text-lontar/65">
                     {p.unicodeName}
                   </td>
                   <td className="py-2 text-xs text-gold/80">
@@ -195,7 +195,7 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
             </tbody>
           </table>
         </div>
-        <p className="max-w-3xl text-sm text-lontar/70">
+        <p className="max-w-measure text-sm text-lontar/75">
           {locale === 'id'
             ? 'Padanan Latin untuk kedua tanda ini belum dapat dirujuk di repositori ini, jadi dibiarkan kosong daripada ditebak. Lihat halaman Ejaan.'
             : 'A Latin representation for either mark cannot yet be cited in this repository, so it is left blank rather than guessed. See the Ejaan page.'}

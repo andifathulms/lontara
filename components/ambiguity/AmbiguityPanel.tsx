@@ -25,7 +25,7 @@ export function AmbiguityPanel({
   const grouped = ambiguitiesByClass(ambiguities)
 
   if (ambiguities.length === 0) {
-    return <p className="text-sm text-lontar/55">{emptyMessage}</p>
+    return <p className="text-sm text-lontar/65">{emptyMessage}</p>
   }
 
   return (
@@ -34,14 +34,14 @@ export function AmbiguityPanel({
         <section key={cls} className="bg-grid px-4 py-3">
           <h3 className="flex items-center gap-2">
             <Rhombus size={12} tone="daun" />
-            <span className="font-anotasi text-xs uppercase tracking-widest text-daun">
+            <span className="font-anotasi text-xs uppercase tracking-widest text-daun-ink">
               {copy.ambiguityClass[cls]}
             </span>
-            <span className="font-anotasi text-[11px] text-lontar/40">
+            <span className="font-anotasi text-anotasi text-lontar/65">
               ×{items.length}
             </span>
           </h3>
-          <p className="mt-1 text-sm text-lontar/70">{copy.ambiguityClassBody[cls]}</p>
+          <p className="mt-1 text-sm text-lontar/75">{copy.ambiguityClassBody[cls]}</p>
 
           <ul className="mt-2 space-y-2">
             {items.map((a, index) => (
@@ -49,8 +49,8 @@ export function AmbiguityPanel({
                 <p className="font-anotasi text-xs text-lontar/85">
                   {a.candidates.map((c) => (c === '' ? '∅' : c)).join('  |  ')}
                 </p>
-                <p className="mt-1 text-xs text-lontar/70">{a.reason}</p>
-                <p className="mt-1 font-anotasi text-[11px] text-lontar/45">
+                <p className="mt-1 text-xs text-lontar/75">{a.reason}</p>
+                <p className="mt-1 font-anotasi text-anotasi text-lontar/65">
                   {copy.trace.ruleId} {a.ruleId} · {copy.trace.input} “
                   {sliceSpan(inputClusters, a.spans.input) || '∅'}”
                   {a.chosen === null ? (
@@ -58,7 +58,7 @@ export function AmbiguityPanel({
                   ) : null}
                 </p>
                 {rule(a.ruleId).note ? (
-                  <p className="mt-1 text-[11px] text-sabbe/90">{rule(a.ruleId).note}</p>
+                  <p className="mt-1 text-anotasi text-sabbe-ink">{rule(a.ruleId).note}</p>
                 ) : null}
               </li>
             ))}

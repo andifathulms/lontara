@@ -47,7 +47,7 @@ export function OfflineReady({ locale }: { locale: Locale }) {
   if (!ready) return null
 
   return (
-    <p className="font-anotasi text-[11px] text-lontar/45">
+    <p className="font-anotasi text-anotasi text-lontar/65">
       {/* gold, not daun — daun is reserved for ambiguity markers and nothing
           else, so that green always means "the script does not decide this". */}
       <span className="text-gold/80">●</span> {copy.offline.ready} — {copy.offline.note}
