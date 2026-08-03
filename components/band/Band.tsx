@@ -2,6 +2,7 @@ import type { Band as BandLayout } from '@/lib/engine/band'
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
+import { eyebrow } from '@/components/chrome/eyebrow'
 
 /**
  * The palm-leaf band (PRD §6.2): aksara on the lontar-leaf ground, the Latin
@@ -14,6 +15,19 @@ import { Rhombus } from '@/components/ambiguity/Rhombus'
  * Discarded information is marked on the connector that dropped it, so loss is
  * visible at the point it happens rather than summarised in a footer. The
  * markers are `daun`, which means ambiguity here and nowhere else.
+ *
+ * ── On the layout ──────────────────────────────────────────────────────────
+ * One grid, four rows, columns declared once. It used to be three independent
+ * flex rows: the aksara sized to its glyphs, the connectors and the Latin line
+ * to `flex-1`. Those two rules do not agree, so every connector after the
+ * first pointed somewhere between two glyphs — the stroke that is supposed to
+ * say "this Latin made that aksara" was quietly saying the wrong thing. A
+ * shared grid makes the misalignment unrepresentable.
+ *
+ * The columns are sized to the aksara and nothing else. A loss marker is
+ * centred out of a zero-width box so that a long label can never push the
+ * glyphs apart — the band has to stay shoulder to shoulder, and what was
+ * dropped is spelled out in full in the ambiguity panel beside it.
  */
 export function Band({ band, locale }: { band: BandLayout; locale: Locale }) {
   const copy = getCopy(locale)
@@ -22,72 +36,113 @@ export function Band({ band, locale }: { band: BandLayout; locale: Locale }) {
     return <p className="text-sm text-lontar/65">{copy.writer.emptyState}</p>
   }
 
+  const columns = band.columns
+  /* A 1rem cell at each end so the leaf runs past the first and last glyph
+     rather than being cropped flush to them. */
+  const template = `1rem repeat(${columns.length}, max-content) 1rem`
+
   return (
-    <figure className="space-y-0 overflow-x-auto">
-      {/* The band itself. One row, no gaps — the glyphs sit shoulder to shoulder. */}
-      <div className="aksara flex bg-lontar px-4 py-4 text-5xl text-grid">
-        {band.columns.map((column) => (
-          <span key={column.index} className="flex flex-col items-center">
-            {/* An empty trailing column still needs to occupy the band, or the
-                connector below it would point at nothing. */}
-            <span aria-hidden={column.aksara === ''}>{column.aksara || ' '}</span>
-          </span>
-        ))}
-      </div>
-
-      {/* Connectors. They draw in briefly, in the direction of writing. */}
-      <div className="flex">
-        {band.columns.map((column, order) => (
-          <span key={column.index} className="flex flex-1 flex-col items-center">
+    <figure className="space-y-0">
+      <div className="overflow-x-auto">
+        <div className="grid w-max" style={{ gridTemplateColumns: template }}>
+          {/* Row 1 — the leaf. The end cells carry the ground too, so it is
+              continuous behind the padding. */}
+          <span className="bg-lontar" aria-hidden="true" />
+          {columns.map((column) => (
             <span
-              className={`block w-px ${
-                column.losses.length > 0 ? 'bg-daun' : 'bg-gold/60'
-              }`}
-              style={{
-                height: '1.75rem',
-                transformOrigin: 'top',
-                animation: 'lontara-stroke 220ms ease-out both',
-                animationDelay: `${order * 45}ms`,
-              }}
-              aria-hidden="true"
-            />
-            {column.losses.length > 0 ? (
-              <span className="flex flex-col items-center gap-1 pb-1">
-                {column.losses.map((loss) => (
-                  <span
-                    key={`${loss.ruleId}-${loss.latin}`}
-                    className="flex items-center gap-1 whitespace-nowrap"
-                    title={loss.ruleId}
-                  >
-                    <Rhombus size={9} tone="daun" />
-                    <span className="font-anotasi text-anotasi text-daun-ink">
-                      <span className="line-through">{loss.latin}</span>{' '}
-                      {copy.ambiguityClass[loss.ambiguityClass]}
+              key={`aksara-${column.index}`}
+              className="aksara bg-lontar py-4 text-center text-5xl leading-none text-grid"
+            >
+              {/* An empty trailing column still has to occupy the band, or the
+                  connector below it would point at nothing. */}
+              {column.aksara === '' ? ' ' : column.aksara}
+            </span>
+          ))}
+          <span className="bg-lontar" aria-hidden="true" />
+
+          {/* Row 2 — connectors. They draw in briefly, in the direction of
+              writing. This is one of the only two things that move (PRD §10). */}
+          <span />
+          {columns.map((column, order) => (
+            <span key={`stroke-${column.index}`} className="flex justify-center">
+              <span
+                className={`block w-px ${
+                  column.losses.length > 0 ? 'bg-daun-ink' : 'bg-gold/60'
+                }`}
+                style={{
+                  height: '1.75rem',
+                  transformOrigin: 'top',
+                  animation: 'lontara-stroke 220ms ease-out both',
+                  animationDelay: `${order * 45}ms`,
+                }}
+                aria-hidden="true"
+              />
+            </span>
+          ))}
+          <span />
+
+          {/* Row 3 — the Latin line. */}
+          <span />
+          {columns.map((column) => (
+            <span
+              key={`latin-${column.index}`}
+              className="text-center font-anotasi text-anotasi text-lontar/85"
+            >
+              {column.latin}
+            </span>
+          ))}
+          <span />
+
+          {/* Row 4 — what was dropped, under the connector that dropped it.
+              Zero-width and centred, so a marker never widens its column. */}
+          <span />
+          {columns.map((column) => (
+            <span key={`loss-${column.index}`} className="relative">
+              {column.losses.length > 0 ? (
+                <span className="absolute left-1/2 top-1 flex -translate-x-1/2 flex-col items-center gap-1">
+                  {column.losses.map((loss) => (
+                    <span
+                      key={`${loss.ruleId}-${loss.latin}`}
+                      className="flex items-center gap-1 whitespace-nowrap"
+                      title={`${loss.ruleId} — ${copy.ambiguityClass[loss.ambiguityClass]}`}
+                    >
+                      <Rhombus size={9} tone="daun" />
+                      <span className="font-anotasi text-anotasi text-daun-ink">
+                        <span className="line-through">{loss.latin}</span>
+                        <span className="sr-only">
+                          {' '}
+                          {copy.ambiguityClass[loss.ambiguityClass]}
+                        </span>
+                      </span>
                     </span>
-                  </span>
-                ))}
-              </span>
-            ) : null}
-          </span>
-        ))}
+                  ))}
+                </span>
+              ) : null}
+            </span>
+          ))}
+          <span />
+        </div>
       </div>
 
-      {/* The Latin line. */}
-      <div className="flex">
-        {band.columns.map((column) => (
-          <span
-            key={column.index}
-            className="flex flex-1 flex-col items-center font-anotasi text-xs text-lontar/85"
-          >
-            {column.latin}
-          </span>
-        ))}
-      </div>
+      {/* Reserves the height the absolutely-positioned markers take out of flow. */}
+      {band.hasLoss ? (
+        <div className="h-6" aria-hidden="true" />
+      ) : null}
 
-      <figcaption className="mt-3 font-anotasi text-anotasi text-lontar/65">
+      <figcaption className="mt-3 max-w-measure font-anotasi text-anotasi text-lontar/65">
         {locale === 'id'
           ? 'Aksara tidak memakai spasi antarkata. Garis penghubung yang menandai batasnya.'
           : 'The script uses no word spacing. The connector strokes mark the boundaries instead.'}
+        {band.hasLoss ? (
+          <>
+            {' '}
+            <span className={eyebrow('daun', 'sm')}>
+              {locale === 'id'
+                ? 'Berlian menandai yang dibuang.'
+                : 'A rhombus marks what was dropped.'}
+            </span>
+          </>
+        ) : null}
       </figcaption>
     </figure>
   )
