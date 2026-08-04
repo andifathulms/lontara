@@ -16,6 +16,10 @@ const MIME = {
   '.js': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
+  // Pages serves this correctly; without it here, `pnpm preview` would hand
+  // back octet-stream and the manifest would be ignored locally but work in
+  // production — the one direction of difference that hides a bug.
+  '.webmanifest': 'application/manifest+json; charset=utf-8',
   '.woff2': 'font/woff2',
   '.ttf': 'font/ttf',
   '.svg': 'image/svg+xml',
