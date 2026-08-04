@@ -196,6 +196,14 @@ specific failure this project has to avoid.
   OFL-1.1, chosen because this project needs `' ə ŋ ñ á` to render consistently.
   **Annotation:** Space Mono, OFL-1.1. All self-hosted and subset — see
   [`public/fonts/LICENSES.md`](public/fonts/LICENSES.md).
+- **Brand:** the mark is *sulapa' eppa'*, the four-cornered form — the same
+  figure the reading tree branches on and the same one in the header. Author's
+  own work. The full kit (vector masters, every size, lockups, wordmarks) lives
+  at `exports/` and is **gitignored**; only what a browser or an installed app
+  requests is vendored, in `public/`, because the service worker precaches
+  everything in the export. See
+  [`public/icon/BRAND.md`](public/icon/BRAND.md) — it also records where the
+  kit's palette differs from PRD §10's, and why that is left alone.
 - **Icons:** the GitHub, LinkedIn and Instagram marks in the footer are the
   official paths from [Simple Icons](https://github.com/simple-icons/simple-icons)
   v16.28.0, CC0-1.0, inlined rather than fetched. The globe is drawn in

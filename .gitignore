@@ -10,3 +10,13 @@ next-env.d.ts
 # Wikipedia dump cache — fetched and checksum-verified by scripts/corpus-fetch.mjs.
 # Not vendored: 2.4 MB, and reproducible from the pinned URL + sha256.
 .corpus/
+
+# Brand asset masters — the full kit: vector masters, every icon size, the
+# lockups, the wordmarks. Only the handful the site actually serves is vendored,
+# in public/ (favicon, the four icon sizes a browser or an installed app asks
+# for, and the OG image). See "Brand" in README.md.
+#
+# NOTE: ignoring this means the masters live nowhere in version control. A clone
+# can serve the site but cannot regenerate an icon at a new size. Keep the kit
+# backed up somewhere that is not this working copy.
+exports/
