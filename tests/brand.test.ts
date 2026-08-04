@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { readFileSync, existsSync } from 'node:fs'
+import { readFileSync, existsSync, readdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 
 /**
@@ -93,5 +93,59 @@ describe('the web app manifest', () => {
     // See public/icon/BRAND.md.
     expect(manifest.background_color).toBe('#1A1614')
     expect(manifest.theme_color).toBe('#1A1614')
+  })
+})
+
+/*
+ * The mark and the marker are the same figure doing two jobs.
+ *
+ * `Rhombus` with the vowel dot knocked out is the brand mark — it signs the
+ * page. `Rhombus` without it is an ambiguity marker: a branch point is a place
+ * the reading has corners (PRD §10), which is a statement about the script and
+ * not a logo. If the dot spreads to the markers, the header stops being a
+ * signature and the markers start looking like branding, and at the 9–12px
+ * they run at the dot is a sub-pixel smudge anyway.
+ *
+ * One call site may pass `dot`. This is what says so.
+ */
+describe('the brand mark is used as a mark, not as decoration', () => {
+  function walk(dir: string): string[] {
+    const out: string[] = []
+    for (const entry of readdirSync(join(process.cwd(), dir), { withFileTypes: true })) {
+      const path = `${dir}/${entry.name}`
+      if (entry.isDirectory()) out.push(...walk(path))
+      else if (/\.tsx$/.test(entry.name)) out.push(path)
+    }
+    return out
+  }
+
+  const callSites = [...walk('components'), ...walk('app')].flatMap((file) => {
+    const source = readFileSync(join(process.cwd(), file), 'utf8')
+    return [...source.matchAll(/<Rhombus[^/>]*\/>/g)].map((m) => ({ file, tag: m[0] }))
+  })
+
+  it('finds the call sites', () => {
+    expect(callSites.length).toBeGreaterThan(5)
+  })
+
+  it('exactly one place draws the dot, and it is the site header', () => {
+    const withDot = callSites.filter((c) => /\bdot\b/.test(c.tag))
+    expect(withDot.map((c) => c.file)).toEqual(['components/chrome/SiteHeader.tsx'])
+  })
+
+  it('the mark is large enough for the dot to survive', () => {
+    // The dot is 8.5% of the mark. Below ~16px it is under 3 device pixels and
+    // fills in, which is why the kit ships a separate solid form for 16 and 32.
+    const header = callSites.find((c) => /\bdot\b/.test(c.tag))
+    const size = Number(/size=\{(\d+)\}/.exec(header?.tag ?? '')?.[1])
+    expect(size).toBeGreaterThanOrEqual(16)
+  })
+
+  it('every ambiguity marker stays plain', () => {
+    for (const site of callSites.filter((c) => /tone="daun"/.test(c.tag))) {
+      expect(site.tag, `${site.file} puts the brand dot on an ambiguity marker`).not.toMatch(
+        /\bdot\b/,
+      )
+    }
   })
 })

@@ -37,8 +37,21 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           className="flex items-center gap-2 pb-3 no-underline"
           aria-current={pathname === href(locale) ? 'page' : undefined}
         >
-          {/* Sulapa' eppa' — the four-cornered form. Structural, not decorative. */}
-          <Rhombus size={11} tone="gold" />
+          {/*
+            Sulapa' eppa' — the four-cornered form. Structural, not decorative.
+
+            The brand mark proper, with the vowel dot knocked out. Drawn rather
+            than served: at this size the kit's own rule applies — "below 40px
+            use the solid form, a 5.5% outline disappears" — and drawing it
+            keeps the mark on the app's `gold` token instead of the kit's
+            near-identical #C9992F, with no rounded tile in an interface that
+            pins `borderRadius` to none. See public/icon/BRAND.md.
+
+            18px, not 11: the dot is 8.5% of the mark, so at 11px it was under
+            two pixels and simply filled in. This is the smallest size at which
+            the mark is still the mark.
+          */}
+          <Rhombus size={18} tone="gold" dot />
           <span className="text-xl tracking-wide text-lontar">{copy.siteName}</span>
         </Link>
 
