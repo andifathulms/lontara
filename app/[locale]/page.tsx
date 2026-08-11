@@ -159,6 +159,26 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         </div>
       </nav>
 
+      {/*
+        Both notices are unmissable, as Notice.tsx intends — but they used to
+        be *first*, stacked above everything, two full-width panels with a red
+        and a gold bar. That is the visual signature of an error state, and a
+        stranger read the site as broken before learning what it did.
+
+        They sit here instead: after the demonstration and the tools, before
+        any of the explanation. Nothing is softened and nothing is collapsed —
+        invariant 16 and PRD §9 both want these on the page, and they are still
+        on it, and still ahead of every claim the site goes on to make. A
+        caveat lands harder once the reader knows what is being disclaimed.
+
+        Both keep their full form on /baca and /tulis, where someone is about
+        to act on the output rather than read about it.
+      */}
+      <div className="space-y-3">
+        <NotTranslatorNotice locale={locale} />
+        <ReviewerGateNotice locale={locale} />
+      </div>
+
       <section className="space-y-4 border-t-2 border-gold/30 pt-8">
         <h2 className="text-section text-lontar">{copy.home.defective.title}</h2>
         <p className="max-w-measure text-lontar/85">{copy.home.defective.body}</p>
