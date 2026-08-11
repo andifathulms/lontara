@@ -87,6 +87,20 @@ body {
  *
  * `daun` and `sabbe` themselves stay exactly as PRD §10 fixes them, and keep
  * every border, fill and marker. They just no longer set type.
+ *
+ * The landing hero sits on `bg-lontar/5` rather than on the bare ground —
+ * #24191B, a fifth of a step lighter — so every ratio there is fractionally
+ * lower. Re-measured, since a table that only covers one ground stops being
+ * true the moment a second one exists:
+ *
+ *   text-lontar         9.88:1
+ *   text-lontar/75      6.16:1
+ *   text-gold           6.32:1
+ *   text-lontar/65      4.98:1   annotation, still over the 4.5:1 floor
+ *
+ * That is the lightest ground in the interface. Anything lighter puts the
+ * annotation tier under the floor, so a panel wanting more separation should
+ * take a border, not a paler fill.
  */
 
 /* Hard grid lines borrowed from the sarong: structural division, not ornament
