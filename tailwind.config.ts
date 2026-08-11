@@ -55,6 +55,17 @@ const config: Config = {
         section: ['clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem)', { lineHeight: '1.25' }],
         title: ['clamp(1.625rem, 1.4rem + 1.1vw, 2.125rem)', { lineHeight: '1.15' }],
         display: ['clamp(2rem, 1.6rem + 2vw, 3rem)', { lineHeight: '1.1' }],
+        /*
+         * One step above `display`, and the only thing set at it: the landing
+         * hero's aksara. Aksara is read by its shape, not skimmed, and the two
+         * glyphs there are the first characters of the script a visitor ever
+         * sees — at `display` they sit level with the heading and read as
+         * decoration beside it.
+         *
+         * A step in the scale rather than an arbitrary value in the component,
+         * so it stays auditable with the rest.
+         */
+        aksara: ['clamp(3.25rem, 2.5rem + 3.5vw, 4.5rem)', { lineHeight: '1' }],
       },
       /*
        * A line of Gentium at this size runs to ~95 characters inside

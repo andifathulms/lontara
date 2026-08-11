@@ -24,6 +24,9 @@ export type Copy = {
      */
     headline: string
     lead: string
+    /** Heads the aksara demonstration. The demonstration itself is the three
+     *  readings and the note, which live under `defective` and are shared. */
+    heroLabel: string
     defective: { title: string; body: string; example: string; exampleNote: string }
     asymmetry: { title: string; latinToLontara: string; lontaraToLatin: string }
     open: string
@@ -163,6 +166,7 @@ const id: Copy = {
   },
   home: {
     headline: 'Penjelas baca-tulis aksara Lontara untuk Basa Ugi.',
+    heroLabel: 'Satu rangkaian, tiga bacaan',
     lead:
       'Ia menyebut satu per satu apa yang tidak ditentukan oleh aksara — pembaca menyebutkan semua bacaan yang mungkin, penulis menyebutkan apa yang dibuang.',
     defective: {
@@ -331,6 +335,7 @@ const en: Copy = {
   },
   home: {
     headline: 'A Lontara reading and writing explainer for Basa Ugi.',
+    heroLabel: 'One string, three readings',
     lead:
       'It enumerates what the script leaves undetermined — the reader lists every possible reading, the writer lists what it discarded.',
     defective: {
