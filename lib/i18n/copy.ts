@@ -11,6 +11,26 @@ export type Copy = {
   tagline: string
   notTranslator: { title: string; body: string }
   nav: { baca: string; tulis: string; aksara: string; ejaan: string }
+  /**
+   * A one-word hint beside each nav label, for the locale that needs one.
+   *
+   * `nav` is byte-identical in both locales, because the sections are named in
+   * the language the site is about and that is the convention here. In `id`
+   * that is four ordinary words. In `en` it is four opaque ones, in the sticky
+   * header, on every page, with the sentences that would explain them living
+   * on the home page only — which is where an English visitor gave up.
+   *
+   * Deliberately not called a gloss. A gloss in this project is a lexicon
+   * entry's meaning, which invariant 16 stops at the data layer and which no
+   * component may ever read. This names a section of a website; the two must
+   * not be confused, and tests/invariants.test.ts is right to refuse the word
+   * anywhere in the UI tree.
+   *
+   * The Bugis term stays primary and stays the link text. `null` where the
+   * locale needs no hint; do not add one for `id`, and do not replace the
+   * terms in either.
+   */
+  navHint: { baca: string; tulis: string; aksara: string; ejaan: string } | null
   navDescription: { baca: string; tulis: string; aksara: string; ejaan: string }
   gate: { title: string; body: string; blocked: string }
   disclaimer: { title: string; body: string }
@@ -154,6 +174,7 @@ const id: Copy = {
       'Alat ini hanya mengalihkan aksara — dari Lontara ke Latin dan sebaliknya. Ia tidak menerjemahkan, tidak memberi arti, dan tidak tahu makna kata apa pun.',
   },
   nav: { baca: 'Baca', tulis: 'Tulis', aksara: 'Aksara', ejaan: 'Ejaan' },
+  navHint: null,
   navDescription: {
     baca: 'Lontara → Latin. Himpunan bacaan yang mungkin, sebagai pohon.',
     tulis: 'Latin → Lontara. Beserta apa yang hilang, dan di mana.',
@@ -326,6 +347,7 @@ const en: Copy = {
       'This tool converts script only — Lontara to Latin and back. It does not translate, does not supply meaning, and does not know what any word means.',
   },
   nav: { baca: 'Baca', tulis: 'Tulis', aksara: 'Aksara', ejaan: 'Ejaan' },
+  navHint: { baca: 'Read', tulis: 'Write', aksara: 'Script', ejaan: 'Orthography' },
   navDescription: {
     baca: 'Lontara → Latin. The set of possible readings, as a tree.',
     tulis: 'Latin → Lontara. Plus what was lost, and where.',

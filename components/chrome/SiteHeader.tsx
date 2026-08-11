@@ -58,11 +58,26 @@ export function SiteHeader({ locale }: { locale: Locale }) {
         <nav aria-label={copy.siteName} className="flex flex-wrap">
           {SECTIONS.map((section) => {
             const current = isCurrent(section)
+            /*
+              The section names are the same four Bugis/Indonesian words in
+              both locales, which is right — but in `en` that is four opaque
+              labels in a header that follows you down every page, while the
+              sentences explaining them sit on the home page only.
+
+              The hint goes into the accessible name unconditionally, and onto
+              the screen from `sm` up. Below that the row is already wrapping
+              and a second word per item would push the locale switch onto a
+              third line. The Bugis term is the label in both cases; the hint
+              never replaces it. See `navHint` in copy.ts for why it is not
+              called what you would expect.
+            */
+            const hint = copy.navHint?.[section]
             return (
               <Link
                 key={section}
                 href={href(locale, section)}
                 aria-current={current ? 'page' : undefined}
+                aria-label={hint ? `${copy.nav[section]} — ${hint}` : undefined}
                 /* The current-page mark is a 2px gold rule landing on the
                    header's own border — the same hard line the rest of the
                    interface divides with, not a pill. Colour is not carrying
@@ -73,6 +88,16 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                 }`}
               >
                 {copy.nav[section]}
+                {hint ? (
+                  <span
+                    aria-hidden="true"
+                    className={`ml-1.5 hidden text-sm sm:inline ${
+                      current ? 'text-gold/80' : 'text-lontar/65'
+                    }`}
+                  >
+                    {hint}
+                  </span>
+                ) : null}
               </Link>
             )
           })}
