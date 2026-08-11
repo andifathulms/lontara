@@ -7,13 +7,18 @@ import { fromCodepoint } from '@/lib/rules/inventory'
 import { NotTranslatorNotice, ReviewerGateNotice } from '@/components/chrome/Notice'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
 import { eyebrow } from '@/components/chrome/eyebrow'
-import { Page, PageHeader } from '@/components/chrome/Page'
+/* The landing page opens with the aksara demonstration rather than with a
+   title and lead, so it does not use `PageHeader` as the other five do. */
+import { Page } from '@/components/chrome/Page'
 
 export function generateStaticParams() {
   return localeParams()
 }
 
-const SECTIONS = ['baca', 'tulis', 'aksara', 'ejaan'] as const
+/** The product. `baca` first — it is the flagship (PRD §3). */
+const TOOLS = ['baca', 'tulis'] as const
+/** Where you go second. */
+const REFERENCE = ['aksara', 'ejaan'] as const
 const CLASSES = ['final', 'gemination', 'prenasal', 'glottal'] as const
 
 /**
@@ -82,28 +87,76 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         </figure>
       </section>
 
-      {/* The two tools lead. `baca` is the flagship (PRD §3) and was one of
-          four equal tiles; the reference pages are where you go second. */}
-      <nav className="grid gap-px bg-gold/30 md:grid-cols-2" aria-label={copy.siteName}>
-        {SECTIONS.map((section) => (
-          <Link
-            key={section}
-            href={href(locale, section)}
-            className="group flex flex-col bg-grid px-5 py-6 no-underline hover:bg-gold/5"
-          >
-            <span className="flex items-baseline gap-2 text-xl text-gold">
-              {copy.nav[section]}
-              {/* A card that looks like a card but gives no sign it is a link
-                  is a dead end until you happen to hover it. */}
-              <span aria-hidden="true" className="text-lontar/65 group-hover:text-gold">
-                →
-              </span>
-            </span>
-            <span className="mt-1 block max-w-measure-tight text-sm text-lontar/75">
-              {copy.navDescription[section]}
-            </span>
-          </Link>
-        ))}
+      {/*
+        The two tools lead. This was four tiles of identical weight in one
+        grid, which made a visitor read all four labels and work out for
+        themselves which were the product and which were the appendix — and
+        `baca` is the flagship (PRD §3), which the layout gave no sign of.
+
+        Two rows now, each under its own label: the tools, then the reference
+        pages you go to second.
+      */}
+      <nav className="space-y-8" aria-label={copy.siteName}>
+        <div className="space-y-3">
+          <h2 className={eyebrow()}>{copy.home.groupTools}</h2>
+          <div className="grid gap-px bg-gold/30 md:grid-cols-2">
+            {TOOLS.map((section) => (
+              <Link
+                key={section}
+                href={href(locale, section)}
+                className="group flex flex-col bg-grid px-5 py-7 no-underline hover:bg-gold/5"
+              >
+                <span className="flex items-baseline gap-2 text-section text-gold">
+                  {copy.nav[section]}
+                  {/* A card that looks like a card but gives no sign it is a
+                      link is a dead end until you happen to hover it. */}
+                  <span aria-hidden="true" className="text-lontar/65 group-hover:text-gold">
+                    →
+                  </span>
+                </span>
+                <span className="mt-2 block max-w-measure-tight text-lontar/75">
+                  {copy.navDescription[section]}
+                </span>
+                {/*
+                  The one marked next action, and it is on `tulis` rather than
+                  on the flagship. `baca` is gated (PRD §9, invariant 12) and
+                  carries the "not publicly released" line; sending a first
+                  visitor there as the primary action lands them on a notice.
+                  The writer works today. When the gate is met this belongs on
+                  `baca`.
+                */}
+                {section === 'tulis' ? (
+                  <span className="mt-4 self-start border-2 border-gold px-3 py-1.5 font-anotasi text-anotasi uppercase tracking-widest text-gold group-hover:bg-gold group-hover:text-grid">
+                    {copy.home.cta}
+                  </span>
+                ) : null}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <h2 className={eyebrow('quiet')}>{copy.home.groupReference}</h2>
+          <div className="grid gap-px bg-gold/30 md:grid-cols-2">
+            {REFERENCE.map((section) => (
+              <Link
+                key={section}
+                href={href(locale, section)}
+                className="group flex flex-col bg-grid px-5 py-4 no-underline hover:bg-gold/5"
+              >
+                <span className="flex items-baseline gap-2 text-gold">
+                  {copy.nav[section]}
+                  <span aria-hidden="true" className="text-lontar/65 group-hover:text-gold">
+                    →
+                  </span>
+                </span>
+                <span className="mt-1 block max-w-measure-tight text-sm text-lontar/75">
+                  {copy.navDescription[section]}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
       </nav>
 
       <section className="space-y-4 border-t-2 border-gold/30 pt-8">

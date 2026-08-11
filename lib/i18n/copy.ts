@@ -27,6 +27,13 @@ export type Copy = {
     /** Heads the aksara demonstration. The demonstration itself is the three
      *  readings and the note, which live under `defective` and are shared. */
     heroLabel: string
+    /** The two rows of destinations. Four equal tiles made a visitor read all
+     *  four labels and rank them; these say which two are the product. */
+    groupTools: string
+    groupReference: string
+    /** On the writer's tile only — the one tool the reviewer gate does not
+     *  hold back, so the one a visitor can act on today. */
+    cta: string
     defective: { title: string; body: string; example: string; exampleNote: string }
     asymmetry: { title: string; latinToLontara: string; lontaraToLatin: string }
     open: string
@@ -167,6 +174,9 @@ const id: Copy = {
   home: {
     headline: 'Penjelas baca-tulis aksara Lontara untuk Basa Ugi.',
     heroLabel: 'Satu rangkaian, tiga bacaan',
+    groupTools: 'Alat',
+    groupReference: 'Rujukan',
+    cta: 'Coba sekarang',
     lead:
       'Ia menyebut satu per satu apa yang tidak ditentukan oleh aksara — pembaca menyebutkan semua bacaan yang mungkin, penulis menyebutkan apa yang dibuang.',
     defective: {
@@ -336,6 +346,9 @@ const en: Copy = {
   home: {
     headline: 'A Lontara reading and writing explainer for Basa Ugi.',
     heroLabel: 'One string, three readings',
+    groupTools: 'Tools',
+    groupReference: 'Reference',
+    cta: 'Try it now',
     lead:
       'It enumerates what the script leaves undetermined — the reader lists every possible reading, the writer lists what it discarded.',
     defective: {
