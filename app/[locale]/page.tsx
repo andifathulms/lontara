@@ -24,7 +24,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
     <Page>
       <section className="space-y-5">
         <h1 className="text-display text-lontar max-w-measure">
-          {copy.tagline}
+          {copy.home.headline}
         </h1>
         <p className="max-w-measure text-lead text-lontar/75">{copy.home.lead}</p>
         <NotTranslatorNotice locale={locale} />

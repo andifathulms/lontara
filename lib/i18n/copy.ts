@@ -15,6 +15,14 @@ export type Copy = {
   gate: { title: string; body: string; blocked: string }
   disclaimer: { title: string; body: string }
   home: {
+    /**
+     * `tagline` is two sentences, because a `<title>` and an OG description
+     * want the whole claim in one string. A page heading does not: set at the
+     * display step it ran to five lines of poster-weight type that nobody
+     * finishes. The heading takes the first sentence; the second folds into
+     * the lead below it.
+     */
+    headline: string
     lead: string
     defective: { title: string; body: string; example: string; exampleNote: string }
     asymmetry: { title: string; latinToLontara: string; lontaraToLatin: string }
@@ -154,8 +162,9 @@ const id: Copy = {
       'Lontara adalah proyek pribadi dan bisa salah. Ia bukan lembaga, bukan standar, dan tidak berbicara untuk siapa pun. Setiap keluaran dapat dilacak ke aturannya, supaya kesalahannya bisa ditunjuk dan diperbaiki.',
   },
   home: {
+    headline: 'Penjelas baca-tulis aksara Lontara untuk Basa Ugi.',
     lead:
-      'Dua alat, satu himpunan aturan. Pembaca menyebutkan semua bacaan yang mungkin; penulis menyebutkan apa yang dibuang.',
+      'Ia menyebut satu per satu apa yang tidak ditentukan oleh aksara — pembaca menyebutkan semua bacaan yang mungkin, penulis menyebutkan apa yang dibuang.',
     defective: {
       title: 'Aksara Lontara bersifat defektif',
       body:
@@ -321,8 +330,9 @@ const en: Copy = {
       'Lontara is a personal project and can be wrong. It is not an institution, not a standard, and speaks for nobody. Every output traces to its rule, so that a mistake can be pointed at and fixed.',
   },
   home: {
+    headline: 'A Lontara reading and writing explainer for Basa Ugi.',
     lead:
-      'Two tools, one rule set. The reader enumerates every possible reading; the writer enumerates what it discarded.',
+      'It enumerates what the script leaves undetermined — the reader lists every possible reading, the writer lists what it discarded.',
     defective: {
       title: 'Lontara is a defective script',
       body:
