@@ -193,7 +193,18 @@ export default function SerupaPage({ params }: { params: { locale: string } }) {
         ) : null}
       </section>
 
-      <section className="space-y-4 border-t-2 border-gold/30 pt-8">
+      {/*
+        Not printed. The print stylesheet exists for the signmaker carrying one
+        short correct string to a workshop (PRD §5); 115 sets is twelve pages
+        of reference that nobody is holding next to a piece of material. The
+        figures, the scope caveat and the class attribution above all print,
+        because those are the parts that travel.
+
+        Omitted, and said so — the same discipline the enumeration cap follows.
+        A printout that quietly stops at the summary would read as though the
+        summary were all there was.
+      */}
+      <section className="space-y-4 border-t-2 border-gold/30 pt-8 print:hidden">
         <h2 className="text-section text-lontar">
           {id ? 'Setiap tumpukan' : 'Every collision set'}
         </h2>
@@ -249,6 +260,14 @@ export default function SerupaPage({ params }: { params: { locale: string } }) {
           </section>
         ))}
       </section>
+
+      {/* The stated omission. Screen-hidden, print-only — the mirror of the
+          section above it. */}
+      <p className="hidden print:block border-l-4 border-gold pl-3 text-sm">
+        {id
+          ? `${n(report.sets.length)} himpunan tumpukan tidak disertakan dalam cetakan ini. Semuanya ada di halaman ini di layar.`
+          : `${n(report.sets.length)} collision sets are omitted from this printout. All of them are on this page on screen.`}
+      </p>
     </Page>
   )
 }

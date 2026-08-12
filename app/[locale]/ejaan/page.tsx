@@ -249,9 +249,9 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
         <ol className="space-y-px bg-gold/25">
           {IMPACT.map(({ question: q, sized, affected, total, samples, basis }) => (
             <li key={q.id} className="bg-grid px-4 py-4">
-              <div className="flex flex-wrap items-baseline gap-x-4">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                 <p className="font-anotasi text-xs text-gold">{q.id}</p>
-                <p className={`ml-auto ${eyebrow(affected > 0 ? 'daun' : 'quiet', 'sm')}`}>
+                <p className={eyebrow(affected > 0 ? 'daun' : 'quiet', 'sm')}>
                   {!sized
                     ? id
                       ? 'belum terukur'
