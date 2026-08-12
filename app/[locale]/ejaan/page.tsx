@@ -116,6 +116,14 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
 
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
+            {/* A caption rather than a name borrowed from the h2 above: that
+                heading covers both tables on this page, so it names neither.
+                This says what only this table holds. */}
+            <caption className="pb-2 text-left text-xs text-lontar/65">
+              {id
+                ? 'Setiap tanda vokal, titik kodenya, dan dasar bentuk Latin yang dipakai di sini.'
+                : 'Each vowel sign, its codepoint, and the basis for the Latin value used here.'}
+            </caption>
             <thead>
               <tr className="border-b-2 border-gold/40 text-left">
                 <th className={`py-2 pr-4 ${eyebrow()}`}>

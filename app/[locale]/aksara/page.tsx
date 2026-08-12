@@ -57,9 +57,9 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
       </aside>
 
       <section className="space-y-4">
-        <h2 className="text-section text-lontar">{copy.aksara.consonants}</h2>
+        <h2 id="tabel-konsonan" className="text-section text-lontar">{copy.aksara.consonants}</h2>
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-sm">
+          <table aria-labelledby="tabel-konsonan" className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-gold/40 text-left">
                 <th className={`py-2 pr-4 ${eyebrow()}`}>
@@ -109,14 +109,14 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-section text-lontar">{copy.aksara.vowelSigns}</h2>
+        <h2 id="tabel-tanda-vokal" className="text-section text-lontar">{copy.aksara.vowelSigns}</h2>
         <p className="max-w-measure text-sm text-lontar/75">
           {locale === 'id'
             ? 'Setiap tanda ditampilkan pada lingkaran bertitik (U+25CC), supaya perilaku penggabungannya terlihat langsung dan tidak perlu dipercayai dari tabel.'
             : 'Each sign is shown on a dotted circle (U+25CC), so its combining behaviour is visible directly rather than taken on trust from a table.'}
         </p>
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-sm">
+          <table aria-labelledby="tabel-tanda-vokal" className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-gold/40 text-left">
                 <th className={`py-2 pr-4 ${eyebrow()}`}>
@@ -166,9 +166,9 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-section text-lontar">{copy.aksara.punctuation}</h2>
+        <h2 id="tabel-tanda-baca" className="text-section text-lontar">{copy.aksara.punctuation}</h2>
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-sm">
+          <table aria-labelledby="tabel-tanda-baca" className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-gold/40 text-left">
                 <th className={`py-2 pr-4 ${eyebrow()}`}>
