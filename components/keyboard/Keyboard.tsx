@@ -1,5 +1,7 @@
 'use client'
 
+import { useCallback, useMemo, useRef, useState } from 'react'
+
 import { INVENTORY, fromCodepoint, CONSONANT_BY_CHAR } from '@/lib/rules/inventory'
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
@@ -49,6 +51,121 @@ export function Keyboard({
     return last !== undefined && CONSONANT_BY_CHAR.has(last)
   })()
 
+  /*
+   * Roving tabindex over every key.
+   *
+   * The keyboard is 31 buttons and each one was a tab stop, so reaching
+   * anything below it cost 31 presses — the exact tax this component exists to
+   * remove for people who have no system keyboard for the script. One stop
+   * enters the keyboard; arrows move inside it.
+   *
+   * Disabled keys are skipped rather than landed on. A vowel sign with no
+   * letter before it, and backspace with an empty field, are genuinely
+   * unavailable — and a disabled button cannot take focus, so a roving index
+   * that pointed at one would strand the whole widget. `activeId` therefore
+   * falls back to the first available key whenever the remembered position is
+   * not focusable.
+   */
+  const rows = useMemo(() => {
+    const consonants = INVENTORY.order.rows.map((row) =>
+      row
+        .filter((codepoint) => INVENTORY.consonants.some((c) => c.codepoint === codepoint))
+        .map((codepoint) => ({ id: codepoint, disabled: false })),
+    )
+    return [
+      ...consonants,
+      INVENTORY.vowelSigns.map((sign) => ({ id: sign.codepoint, disabled: !lastIsLetter })),
+      [
+        ...INVENTORY.punctuation.map((mark) => ({ id: mark.codepoint, disabled: false })),
+        { id: 'backspace', disabled: value.length === 0 },
+      ],
+    ]
+  }, [lastIsLetter, value.length])
+
+  const [pos, setPos] = useState<readonly [number, number]>([0, 0])
+  const keyRefs = useRef(new Map<string, HTMLButtonElement | null>())
+
+  const remembered = rows[pos[0]]?.[pos[1]]
+  const activeId =
+    remembered && !remembered.disabled
+      ? remembered.id
+      : rows.flat().find((k) => !k.disabled)?.id
+
+  const focusKey = useCallback((r: number, c: number) => {
+    setPos([r, c])
+    keyRefs.current.get(rows[r]?.[c]?.id ?? '')?.focus()
+  }, [rows])
+
+  /** Walk the whole layout in reading order, skipping what cannot take focus. */
+  const step = useCallback(
+    (r: number, c: number, delta: 1 | -1) => {
+      const flat = rows.flatMap((row, ri) => row.map((key, ci) => ({ ...key, ri, ci })))
+      const at = flat.findIndex((k) => k.ri === r && k.ci === c)
+      for (let i = 1; i <= flat.length; i += 1) {
+        const next = flat[(at + delta * i + flat.length * i) % flat.length]
+        if (next && !next.disabled) return focusKey(next.ri, next.ci)
+      }
+    },
+    [rows, focusKey],
+  )
+
+  /** Same column one row away, falling back to the nearest available key there. */
+  const jumpRow = useCallback(
+    (r: number, c: number, delta: 1 | -1) => {
+      for (let i = 1; i <= rows.length; i += 1) {
+        const row = rows[(r + delta * i + rows.length * i) % rows.length]
+        if (!row) continue
+        const candidate =
+          (!row[Math.min(c, row.length - 1)]?.disabled && row[Math.min(c, row.length - 1)]) ||
+          row.find((k) => !k.disabled)
+        if (candidate) {
+          return focusKey((r + delta * i + rows.length * i) % rows.length, row.indexOf(candidate))
+        }
+      }
+    },
+    [rows, focusKey],
+  )
+
+  const onKeyDown = useCallback(
+    (event: React.KeyboardEvent, r: number, c: number) => {
+      const row = rows[r]
+      if (!row) return
+      switch (event.key) {
+        case 'ArrowRight': event.preventDefault(); return step(r, c, 1)
+        case 'ArrowLeft': event.preventDefault(); return step(r, c, -1)
+        case 'ArrowDown': event.preventDefault(); return jumpRow(r, c, 1)
+        case 'ArrowUp': event.preventDefault(); return jumpRow(r, c, -1)
+        case 'Home': {
+          event.preventDefault()
+          const first = row.findIndex((k) => !k.disabled)
+          return first >= 0 ? focusKey(r, first) : undefined
+        }
+        case 'End': {
+          event.preventDefault()
+          const last = row.map((k) => k.disabled).lastIndexOf(false)
+          return last >= 0 ? focusKey(r, last) : undefined
+        }
+        default:
+          return
+      }
+    },
+    [rows, step, jumpRow, focusKey],
+  )
+
+  /** Wires one key into the roving group. */
+  const key = (id: string, r: number, c: number) => ({
+    ref: (node: HTMLButtonElement | null) => {
+      keyRefs.current.set(id, node)
+    },
+    tabIndex: id === activeId ? 0 : -1,
+    onKeyDown: (event: React.KeyboardEvent) => onKeyDown(event, r, c),
+    /* Focus arriving from anywhere else — a mouse press, a screen reader
+       moving through the group — becomes the new origin. Without this, arrows
+       after a click would move relative to the last key the ARROWS touched,
+       which is not the one under the cursor. */
+    onFocus: () => setPos([r, c]),
+  })
+
   const append = (codepoint: string) => onChange(value + fromCodepoint(codepoint))
 
   const backspace = () => {
@@ -72,13 +189,18 @@ export function Keyboard({
       >
         {INVENTORY.order.rows.map((row, rowIndex) => (
           <div key={rowIndex} className="flex gap-px">
-            {row.map((codepoint) => {
+            {row
+              .filter((codepoint) =>
+                INVENTORY.consonants.some((c) => c.codepoint === codepoint),
+              )
+              .map((codepoint, colIndex) => {
               const letter = INVENTORY.consonants.find((c) => c.codepoint === codepoint)
               if (!letter) return null
               return (
                 <button
                   key={codepoint}
                   type="button"
+                  {...key(codepoint, rowIndex, colIndex)}
                   onClick={() => append(codepoint)}
                   className={KEY}
                   title={`${letter.unicodeName} · ${codepoint}`}
@@ -104,10 +226,11 @@ export function Keyboard({
             : 'A vowel sign modifies the last letter. The inherent vowel /a/ has no sign.'}
         </p>
         <div className="flex gap-px bg-gold/25 p-px">
-          {INVENTORY.vowelSigns.map((sign) => (
+          {INVENTORY.vowelSigns.map((sign, colIndex) => (
             <button
               key={sign.codepoint}
               type="button"
+              {...key(sign.codepoint, INVENTORY.order.rows.length, colIndex)}
               onClick={() => append(sign.codepoint)}
               disabled={!lastIsLetter}
               /* Refused rather than inserted stranded — and the note above is
@@ -132,10 +255,11 @@ export function Keyboard({
       </div>
 
       <div className="flex gap-px bg-gold/25 p-px">
-        {INVENTORY.punctuation.map((mark) => (
+        {INVENTORY.punctuation.map((mark, colIndex) => (
           <button
             key={mark.codepoint}
             type="button"
+            {...key(mark.codepoint, INVENTORY.order.rows.length + 1, colIndex)}
             onClick={() => append(mark.codepoint)}
             className={KEY}
             title={`${mark.unicodeName} · ${mark.codepoint}`}
@@ -151,6 +275,7 @@ export function Keyboard({
         ))}
         <button
           type="button"
+          {...key('backspace', INVENTORY.order.rows.length + 1, INVENTORY.punctuation.length)}
           onClick={backspace}
           disabled={value.length === 0}
           className={`${KEY} text-lontar/85 hover:bg-sabbe/15 disabled:opacity-40`}
