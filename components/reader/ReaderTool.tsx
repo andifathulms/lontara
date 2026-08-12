@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { enumerate } from '@/lib/engine/enumerate'
 import { interpret } from '@/lib/engine/interpret'
 import { toClusters } from '@/lib/engine/normalize'
+import { fromCodepoint } from '@/lib/rules/inventory'
 import { LEXICON } from '@/lib/lexicon/loader'
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
@@ -36,8 +37,33 @@ export function ReaderTool({ locale }: { locale: Locale }) {
   const [lontara, setLontara] = useHashState()
   const [showKeyboard, setShowKeyboard] = useState(true)
 
-  const result = useMemo(() => enumerate(lontara, LEXICON), [lontara])
-  const empty = lontara.length === 0
+  /*
+   * What the reader works through before anyone has pasted anything.
+   *
+   * The flagship opened on "No input yet." and a "no attested reading" notice
+   * — a void that needed Lontara text the newcomer does not have and cannot
+   * type without first finding the keyboard toggle. It works an example
+   * instead.
+   *
+   * ᨄᨆᨘᨒ is chosen for what it teaches, and it is corpus-attested rather than
+   * invented: three real forms — pammula, pammulang, pamula — diverging on two
+   * different classes at once, so the tree actually branches and both
+   * `gemination` and `final` are on screen in one example.
+   *
+   * Built from codepoints, never a pasted literal, on the same principle as
+   * everything else that shows aksara here.
+   *
+   * NOT prefilled into the field: the URL and the input would then disagree,
+   * and clearing the field would leave a state a refresh silently undoes. The
+   * field stays genuinely empty; only the derivation falls back.
+   */
+  const showingExample = lontara === ''
+  const source = showingExample
+    ? ['U+1A04', 'U+1A06', 'U+1A18', 'U+1A12'].map(fromCodepoint).join('')
+    : lontara
+
+  const result = useMemo(() => enumerate(source, LEXICON), [source])
+  const empty = false
 
   /*
    * The example is written by the writer, not typed out here as a literal.
@@ -95,6 +121,13 @@ export function ReaderTool({ locale }: { locale: Locale }) {
         <div id="papan-tombol">
           <Keyboard locale={locale} value={lontara} onChange={setLontara} />
         </div>
+      ) : null}
+
+      {showingExample ? (
+        <p className="border-l-4 border-gold/50 bg-gold/5 px-4 py-2 text-sm text-lontar/85">
+          <span aria-hidden="true" className="aksara text-aksara-inline text-lontar">{source}</span>{' '}
+          {copy.common.exampleShown}
+        </p>
       ) : null}
 
       <section className="space-y-3">

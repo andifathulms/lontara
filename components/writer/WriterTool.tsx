@@ -23,11 +23,34 @@ import { ReturnTrip } from '@/components/writer/ReturnTrip'
  * the band, the trace panel and the ambiguity panel are all views of that one
  * structure.
  */
+/**
+ * What the writer works through before anyone has typed.
+ *
+ * `matta` rather than `mata`: it is the PRD §2 illustration the landing page
+ * has just walked the reader through, and it actually loses something, so the
+ * loss panel and the return trip below it have real content rather than two
+ * more empty states.
+ */
+const EXAMPLE = 'matta'
+
 export function WriterTool({ locale }: { locale: Locale }) {
   const copy = getCopy(locale)
   const [latin, setLatin] = useHashState()
 
-  const trace = useMemo(() => interpret(latin), [latin])
+  /*
+   * The tool opened on five copies of "No input yet." — output, loss, read
+   * back, codepoints, trace — so a newcomer met it as a void and had to
+   * already know what to type before it would show them anything.
+   *
+   * It works an example instead. Deliberately NOT by prefilling the field:
+   * that would make the URL and the input disagree, and clearing the field
+   * would leave a state that a refresh silently undoes. The field stays empty
+   * and genuinely empty; only the derivation below falls back.
+   */
+  const showingExample = latin === ''
+  const source = showingExample ? EXAMPLE : latin
+
+  const trace = useMemo(() => interpret(source), [source])
   const band = useMemo(() => bandOf(trace), [trace])
 
   /*
@@ -71,6 +94,13 @@ export function WriterTool({ locale }: { locale: Locale }) {
         <ShareLink locale={locale} value={latin} />
       </ToolInput>
 
+      {showingExample ? (
+        <p className="border-l-4 border-gold/50 bg-gold/5 px-4 py-2 text-sm text-lontar/85">
+          <span className={eyebrow()}>{source}</span>{' '}
+          {copy.common.exampleShown}
+        </p>
+      ) : null}
+
       <section className="space-y-3">
         <h2 className="text-section text-lontar">{copy.writer.outputLabel}</h2>
         <Band band={band} locale={locale} activeSpan={activeSpan} />
@@ -87,7 +117,7 @@ export function WriterTool({ locale }: { locale: Locale }) {
           ambiguities={trace.ambiguities}
           inputClusters={trace.input.clusters}
           locale={locale}
-          emptyMessage={latin.length === 0 ? copy.writer.emptyState : copy.writer.lossEmpty}
+          emptyMessage={copy.writer.lossEmpty}
         />
       </section>
 

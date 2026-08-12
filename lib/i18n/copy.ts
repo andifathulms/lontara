@@ -195,6 +195,13 @@ export type Copy = {
     clear: string
     tryExample: string
     backspace: string
+    /**
+     * Marks the derivation a tool shows before anyone has typed. Both tools
+     * used to open on five copies of "No input yet." — a newcomer met the
+     * flagship as a void and had no way to see what it does without already
+     * owning Lontara text.
+     */
+    exampleShown: string
     skipToContent: string
     /** Names the header nav landmark. */
     sections: string
@@ -390,6 +397,7 @@ const id: Copy = {
     clear: 'Kosongkan',
     tryExample: 'Coba',
     backspace: 'Hapus satu aksara',
+    exampleShown: 'Contoh terkerjakan. Ketik di atas untuk menggantinya.',
     skipToContent: 'Langsung ke isi',
     sections: 'Bagian',
     currentPage: 'halaman ini',
@@ -586,6 +594,7 @@ const en: Copy = {
     clear: 'Clear',
     tryExample: 'Try',
     backspace: 'Delete one character',
+    exampleShown: 'A worked example. Type above to replace it.',
     skipToContent: 'Skip to content',
     sections: 'Sections',
     currentPage: 'current page',
