@@ -5,6 +5,7 @@ import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { href } from '@/lib/paths'
 import { INVENTORY, fromCodepoint } from '@/lib/rules/inventory'
 import { eyebrow } from '@/components/chrome/eyebrow'
+import { ScrollRegion } from '@/components/chrome/ScrollRegion'
 import { Page, PageHeader } from '@/components/chrome/Page'
 
 export function generateStaticParams() {
@@ -58,7 +59,7 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
 
       <section className="space-y-4">
         <h2 id="tabel-konsonan" className="text-section text-lontar">{copy.aksara.consonants}</h2>
-        <div className="overflow-x-auto">
+        <ScrollRegion labelledBy="tabel-konsonan">
           <table aria-labelledby="tabel-konsonan" className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-gold/40 text-left">
@@ -105,7 +106,7 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
               ))}
             </tbody>
           </table>
-        </div>
+        </ScrollRegion>
       </section>
 
       <section className="space-y-4">
@@ -115,7 +116,7 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
             ? 'Setiap tanda ditampilkan pada lingkaran bertitik (U+25CC), supaya perilaku penggabungannya terlihat langsung dan tidak perlu dipercayai dari tabel.'
             : 'Each sign is shown on a dotted circle (U+25CC), so its combining behaviour is visible directly rather than taken on trust from a table.'}
         </p>
-        <div className="overflow-x-auto">
+        <ScrollRegion labelledBy="tabel-tanda-vokal">
           <table aria-labelledby="tabel-tanda-vokal" className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-gold/40 text-left">
@@ -162,12 +163,12 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
               ))}
             </tbody>
           </table>
-        </div>
+        </ScrollRegion>
       </section>
 
       <section className="space-y-4">
         <h2 id="tabel-tanda-baca" className="text-section text-lontar">{copy.aksara.punctuation}</h2>
-        <div className="overflow-x-auto">
+        <ScrollRegion labelledBy="tabel-tanda-baca">
           <table aria-labelledby="tabel-tanda-baca" className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-gold/40 text-left">
@@ -202,7 +203,7 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
               ))}
             </tbody>
           </table>
-        </div>
+        </ScrollRegion>
         <p className="max-w-measure text-sm text-lontar/75">
           {locale === 'id'
             ? 'Padanan Latin untuk kedua tanda ini belum dapat dirujuk di repositori ini, jadi dibiarkan kosong daripada ditebak. Lihat halaman Ejaan.'

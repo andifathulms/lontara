@@ -4,6 +4,7 @@ import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
 import { eyebrow } from '@/components/chrome/eyebrow'
+import { ScrollRegion } from '@/components/chrome/ScrollRegion'
 
 /**
  * The palm-leaf band (PRD §6.2): aksara on the lontar-leaf ground, the Latin
@@ -66,7 +67,7 @@ export function Band({
 
   return (
     <figure className="space-y-0">
-      <div className="overflow-x-auto">
+      <ScrollRegion labelledBy="band-caption">
         <div className="grid w-max" style={{ gridTemplateColumns: template }}>
           {/* Row 1 — the leaf. The end cells carry the ground too, so it is
               continuous behind the padding. */}
@@ -151,14 +152,17 @@ export function Band({
           ))}
           <span />
         </div>
-      </div>
+      </ScrollRegion>
 
       {/* Reserves the height the absolutely-positioned markers take out of flow. */}
       {band.hasLoss ? (
         <div className="h-6" aria-hidden="true" />
       ) : null}
 
-      <figcaption className="mt-3 max-w-measure font-anotasi text-anotasi text-lontar/65">
+      <figcaption
+        id="band-caption"
+        className="mt-3 max-w-measure font-anotasi text-anotasi text-lontar/65"
+      >
         {locale === 'id'
           ? 'Aksara tidak memakai spasi antarkata. Garis penghubung yang menandai batasnya.'
           : 'The script uses no word spacing. The connector strokes mark the boundaries instead.'}

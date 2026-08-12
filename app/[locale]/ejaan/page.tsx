@@ -10,6 +10,7 @@ import { LEXICON } from '@/lib/lexicon/loader'
 import { AMBIGUITY_CLASSES } from '@/lib/rules/schema'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
 import { eyebrow } from '@/components/chrome/eyebrow'
+import { ScrollRegion } from '@/components/chrome/ScrollRegion'
 import { Page, PageHeader } from '@/components/chrome/Page'
 
 export function generateStaticParams() {
@@ -71,9 +72,9 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
           {id ? 'Yang sudah ditetapkan di sini' : 'What is specified here'}
         </h2>
 
-        <div className="overflow-x-auto">
+        <ScrollRegion labelledBy="ejaan-onset-caption">
           <table className="w-full border-collapse text-sm">
-            <caption className="pb-2 text-left text-xs text-lontar/65">
+            <caption id="ejaan-onset-caption" className="pb-2 text-left text-xs text-lontar/65">
               {id
                 ? 'Onset Latin diambil dari nama karakter Unicode setiap huruf. Vokal inheren /a/ tidak ditulis dengan tanda.'
                 : 'Latin onsets are taken from each letter’s Unicode character name. The inherent vowel /a/ has no sign.'}
@@ -112,14 +113,14 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
               ))}
             </tbody>
           </table>
-        </div>
+        </ScrollRegion>
 
-        <div className="overflow-x-auto">
+        <ScrollRegion labelledBy="ejaan-vokal-caption">
           <table className="w-full border-collapse text-sm">
             {/* A caption rather than a name borrowed from the h2 above: that
                 heading covers both tables on this page, so it names neither.
                 This says what only this table holds. */}
-            <caption className="pb-2 text-left text-xs text-lontar/65">
+            <caption id="ejaan-vokal-caption" className="pb-2 text-left text-xs text-lontar/65">
               {id
                 ? 'Setiap tanda vokal, titik kodenya, dan dasar bentuk Latin yang dipakai di sini.'
                 : 'Each vowel sign, its codepoint, and the basis for the Latin value used here.'}
@@ -165,7 +166,7 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
               ))}
             </tbody>
           </table>
-        </div>
+        </ScrollRegion>
       </section>
 
       {/* The Latin distinctions the classes are defined against. */}
