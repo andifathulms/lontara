@@ -1,4 +1,18 @@
 import { z } from 'zod'
+import {
+  ATTESTATIONS,
+  BANDS,
+  type Attestation,
+  type FrequencyBand,
+  type Lexicon,
+  type LexiconEntry,
+} from './types'
+
+/* The types live in ./types so the engine can reach ATTESTATION_WEIGHT without
+   pulling Zod into the browser. Everything they describe is still defined by
+   the schemas below, and the assertion at the foot of this file fails
+   compilation if the two ever drift. */
+export * from './types'
 
 /**
  * The curated Bugis wordlist. Modest and honest about coverage (PRD §6.4) —
@@ -14,8 +28,6 @@ import { z } from 'zod'
  * at size zero — the empty case is not dead code, it is what ships the moment
  * this file is regenerated from a source with a different licence answer.
  */
-export const BANDS = ['core', 'common', 'uncommon', 'rare', 'unknown'] as const
-export type FrequencyBand = (typeof BANDS)[number]
 
 /**
  * What kind of claim an entry is. This is NOT frequency — it is how much is
@@ -31,14 +43,7 @@ export type FrequencyBand = (typeof BANDS)[number]
  * Ordered weakest to strongest, and the reader shows the difference rather than
  * flattening it.
  */
-export const ATTESTATIONS = ['corpus', 'dictionary', 'reviewer'] as const
-export type Attestation = (typeof ATTESTATIONS)[number]
 
-export const ATTESTATION_WEIGHT: Record<Attestation, number> = {
-  corpus: 2,
-  dictionary: 30,
-  reviewer: 60,
-}
 
 const ProvenanceSchema = z.object({
   source: z.string().min(1),
@@ -64,7 +69,6 @@ export const LexiconEntrySchema = z.object({
   provenance: ProvenanceSchema,
 })
 
-export type LexiconEntry = z.infer<typeof LexiconEntrySchema>
 
 export const LexiconSchema = z
   .object({
@@ -77,12 +81,6 @@ export const LexiconSchema = z
   })
   .passthrough()
 
-export type Lexicon = {
-  readonly version: string
-  readonly entries: readonly LexiconEntry[]
-  readonly bandWeight: (band: FrequencyBand) => number
-  readonly isEmpty: boolean
-}
 
 function makeLexicon(data: z.infer<typeof LexiconSchema>): Lexicon {
   return {
@@ -108,3 +106,14 @@ export const EMPTY_LEXICON: Lexicon = lexiconFrom({
   bands: { unknown: { weight: 1, description: 'none' } },
   entries: [],
 })
+
+/*
+ * Compile-time proof that the hand-written types in ./types still match the
+ * schemas here. If a schema gains a field, or a type loses one, this fails to
+ * typecheck — which is the whole reason splitting them is safe.
+ */
+type SchemaEntry = z.infer<typeof LexiconEntrySchema>
+const _entryMatchesSchema: SchemaEntry = null as unknown as LexiconEntry
+const _schemaMatchesEntry: LexiconEntry = null as unknown as SchemaEntry
+void _entryMatchesSchema
+void _schemaMatchesEntry

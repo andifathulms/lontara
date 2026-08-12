@@ -1,7 +1,7 @@
 import { INVENTORY } from '@/lib/rules/inventory'
 import { RULE_SET, rule } from '@/lib/rules/loader'
 import type { AmbiguityClass } from '@/lib/rules/schema'
-import type { Attestation, Lexicon, LexiconEntry, FrequencyBand } from '@/lib/lexicon/loader'
+import type { Attestation, Lexicon, LexiconEntry, FrequencyBand } from '@/lib/lexicon/types'
 import { interpret } from './interpret'
 import { normalize, toClusters } from './normalize'
 import { classifyFinal, segmentLatin, segmentLontara, type LatinUnit, type LontaraUnit } from './segment'

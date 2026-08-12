@@ -1,81 +1,10 @@
-import { z } from 'zod'
 import inventoryJson from '@/data/rules/inventory.json'
+/* Type-only, so the schema module — and Zod with it — is erased from the
+   bundle. See lib/rules/inventory.schema.ts. */
+import type { Inventory, Consonant, VowelSign, Punctuation } from './inventory.schema'
+export type { Inventory, Consonant, VowelSign, Punctuation } from './inventory.schema'
 
-/**
- * The Buginese block as encoded. Facts about the script and its encoding —
- * codepoints and Unicode character names — kept separate from orthography,
- * which lives in rules.json.
- *
- * `pnpm rules:validate` checks every codepoint and name here against the
- * vendored font's cmap, so a transcription slip fails the build rather than
- * reaching a reader.
- */
-const CODEPOINT = z.string().regex(/^U\+1A[0-9A-F]{2}$/, 'expected U+1Axx')
-
-const ConsonantSchema = z.object({
-  codepoint: CODEPOINT,
-  unicodeName: z.string().min(1),
-  /** Latin onset. Empty string for U+1A15 BUGINESE LETTER A, the vowel carrier. */
-  onset: z.string(),
-  prenasal: z.boolean(),
-  /** Present where the onset departs from the Unicode character name. */
-  onsetNote: z.string().min(1).optional(),
-})
-
-const VowelSignSchema = z.object({
-  codepoint: CODEPOINT,
-  unicodeName: z.string().min(1),
-  latin: z.string().min(1),
-  generalCategory: z.enum(['Mn', 'Mc']),
-  combiningClass: z.number().int().min(0).max(255),
-  position: z.enum(['above', 'below', 'before', 'after', 'unverified']),
-  positionSource: z.string().min(1),
-  latinNote: z.string().min(1).optional(),
-})
-
-const PunctuationSchema = z.object({
-  codepoint: CODEPOINT,
-  unicodeName: z.string().min(1),
-  /** null where this repo cannot yet cite a Latin representation. */
-  latin: z.string().nullable(),
-})
-
-export const InventorySchema = z
-  .object({
-    source: z.object({
-      standard: z.string().min(1),
-      citation: z.string().min(1),
-      url: z.string().url(),
-      designRationale: z.string().min(1),
-      verifiedAgainstFont: z.string().min(1),
-    }),
-    block: z.object({
-      start: CODEPOINT,
-      end: CODEPOINT,
-      assigned: z.literal(30),
-      since: z.string().min(1),
-      hasVirama: z.literal(false),
-      viramaNote: z.string().min(1),
-    }),
-    inherentVowel: z.object({ latin: z.literal('a'), note: z.string().min(1) }),
-    order: z.object({
-      name: z.literal('ka-ga-nga'),
-      note: z.string().min(1),
-      rows: z.array(z.array(CODEPOINT).nonempty()).nonempty(),
-    }),
-    consonants: z.array(ConsonantSchema).length(23),
-    vowelSigns: z.array(VowelSignSchema).length(5),
-    punctuation: z.array(PunctuationSchema).length(2),
-  })
-  .passthrough()
-
-export type Inventory = z.infer<typeof InventorySchema>
-export type Consonant = z.infer<typeof ConsonantSchema>
-export type VowelSign = z.infer<typeof VowelSignSchema>
-export type Punctuation = z.infer<typeof PunctuationSchema>
-
-/** Parsed once. The inventory is static data and never mutated. */
-export const INVENTORY: Inventory = InventorySchema.parse(inventoryJson)
+export const INVENTORY: Inventory = inventoryJson as unknown as Inventory
 
 /** `"U+1A00"` → `"ᨀ"`. */
 export function fromCodepoint(codepoint: string): string {

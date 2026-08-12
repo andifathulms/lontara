@@ -1,6 +1,6 @@
 import { enumerate } from '@/lib/engine/enumerate'
 import { interpret } from '@/lib/engine/interpret'
-import type { Lexicon } from '@/lib/lexicon/loader'
+import type { Lexicon } from '@/lib/lexicon/types'
 
 /**
  * The return trip: given what the writer produced, which OTHER forms in the

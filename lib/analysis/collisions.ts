@@ -1,5 +1,5 @@
 import { codepointsOf, interpret } from '@/lib/engine/interpret'
-import type { Lexicon } from '@/lib/lexicon/loader'
+import type { Lexicon } from '@/lib/lexicon/types'
 import { RULE_SET } from '@/lib/rules/loader'
 import { AMBIGUITY_CLASSES, type AmbiguityClass } from '@/lib/rules/schema'
 

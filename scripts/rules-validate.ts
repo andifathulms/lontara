@@ -26,7 +26,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { join } from 'node:path'
 import { RuleSetSchema, AMBIGUITY_CLASSES } from '../lib/rules/schema'
-import { InventorySchema } from '../lib/rules/inventory'
+import { InventorySchema } from '../lib/rules/inventory.schema'
 import { readCmap, hex } from './lib/cmap'
 
 const ROOT = process.cwd()

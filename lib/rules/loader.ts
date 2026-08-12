@@ -1,13 +1,12 @@
 import rulesJson from '@/data/rules/rules.json'
-import {
-  RuleSetSchema,
-  type AmbiguityClass,
-  type CompositionRule,
-  type LossRule,
-  type Rule,
-  type RuleSet,
-  type SegmentationRule,
-  type VariantRule,
+import type {
+  AmbiguityClass,
+  CompositionRule,
+  LossRule,
+  Rule,
+  RuleSet,
+  SegmentationRule,
+  VariantRule,
 } from './schema'
 
 /**
@@ -16,7 +15,20 @@ import {
  * here, so no module can hard-code a rule and no module can reach a rule
  * without its citation attached.
  */
-export const RULE_SET: RuleSet = RuleSetSchema.parse(rulesJson)
+/*
+ * Cast, not parsed, at runtime.
+ *
+ * `pnpm build` runs `pnpm rules:validate` before `next build` and it fails the deploy on
+ * malformed data (PRD §8). Re-validating the same bytes in the browser bought a
+ * guarantee already held and shipped Zod — 13.7 kB gzipped — to every visitor
+ * to do it.
+ *
+ * The schema is untouched and still gates the build. It also still runs on this
+ * exact file in tests/schemas.test.ts, so the check moved rather than
+ * disappeared: if this data ever stops satisfying its schema, the suite goes red
+ * before anything is built.
+ */
+export const RULE_SET: RuleSet = rulesJson as unknown as RuleSet
 
 export const RULES: readonly Rule[] = RULE_SET.rules
 

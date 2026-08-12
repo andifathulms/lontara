@@ -1,5 +1,5 @@
 import compactJson from '@/data/lexicon/compact.json'
-import type { Attestation, FrequencyBand, Lexicon, LexiconEntry } from './loader'
+import type { Attestation, FrequencyBand, Lexicon, LexiconEntry } from './types'
 
 /**
  * The lexicon as the browser gets it.

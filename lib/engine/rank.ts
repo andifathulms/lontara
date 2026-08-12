@@ -4,7 +4,7 @@ import {
   type FrequencyBand,
   type Lexicon,
   type LexiconEntry,
-} from '@/lib/lexicon/loader'
+} from '@/lib/lexicon/types'
 import type { AmbiguityClass } from '@/lib/rules/schema'
 
 /**

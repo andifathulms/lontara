@@ -1,47 +1,12 @@
-import { z } from 'zod'
 import corpusJson from '@/data/corpus/bugwiki-pairs.json'
 import { interpret } from '@/lib/engine/interpret'
+/* Type-only, so the schema module — and Zod with it — is erased from the
+   bundle. See ./schema. */
+import type { AttestedPair, Corpus } from './schema'
 
-/**
- * Attested Lontara↔Latin pairs extracted from Bugis Wikipedia.
- *
- * What a pair claims, exactly: *this Lontara string and this Latin string were
- * written for each other by a Wikipedia contributor.* That is community
- * practice, and it is real evidence — it is not authority. `tests/reviewed/`
- * is where a reviewer's sign-off lives and it is still empty. Some of these
- * pairs are plainly wrong, and `tests/corpus.test.ts` names which and why.
- *
- * This is the honest material this project has for "here is real Bugis in
- * Lontara". It is not *pappaseng* and not Sureq Galigo: those need an edition
- * and a translator to credit, and inventing a line of either from general
- * knowledge is precisely the confident wrongness this repository exists to
- * avoid. When an edition can be cited, it belongs here beside this.
- */
-const PairSchema = z.object({
-  lontara: z.string().regex(/^[ᨀ-᨟]+$/, 'the Lontara side must be pure aksara'),
-  latin: z.string().min(1),
-  occurrences: z.number().int().positive(),
-  articles: z.array(z.string().min(1)).min(1),
-})
+const CORPUS = corpusJson as unknown as Corpus
 
-const CorpusSchema = z
-  .object({
-    provenance: z.object({
-      source: z.string().min(1),
-      dumpDate: z.string().regex(/^\d{8}$/),
-      dumpUrl: z.string().url(),
-      dumpSha256: z.string().regex(/^[0-9a-f]{64}$/),
-      licence: z.string().min(1),
-      licenceUrl: z.string().url().optional(),
-      attribution: z.string().min(1),
-    }),
-    pairs: z.array(PairSchema),
-  })
-  .passthrough()
-
-const CORPUS = CorpusSchema.parse(corpusJson)
-
-export type AttestedPair = z.infer<typeof PairSchema>
+export type { AttestedPair } from './schema'
 export const CORPUS_PROVENANCE = CORPUS.provenance
 
 /**

@@ -1,5 +1,5 @@
 import { codepointsOf, interpret } from '@/lib/engine/interpret'
-import type { Lexicon } from '@/lib/lexicon/loader'
+import type { Lexicon } from '@/lib/lexicon/types'
 import { OPEN_QUESTIONS } from '@/lib/rules/loader'
 import type { Affects, OpenQuestion } from '@/lib/rules/schema'
 
