@@ -27,13 +27,21 @@ const config: Config = {
          *
          * These are not a sixth and seventh palette value. Same hue, same
          * saturation; lightness raised only as far as it takes to clear
-         * 4.5:1 on `grid`, and no further. The structural five are unchanged
-         * and still own every border, fill and ground — green still means
-         * "the script does not decide this" (PRD §10), it is now legible
-         * when it says so.
+         * 4.5:1, and no further. The structural five are unchanged and still
+         * own every border, fill and ground — green still means "the script
+         * does not decide this" (PRD §10), it is now legible when it says so.
+         *
+         * Measured against `bg-gold/10`, NOT against bare `grid`. The first
+         * cut of these values cleared 4.5:1 on the bare ground and was used
+         * almost nowhere on it: the reviewer-gate notice puts `sabbe-ink` on
+         * `bg-gold/10` and the active trace row puts `daun-ink` there, where
+         * the old values measured 3.88:1 and 3.90:1. A floor that holds only
+         * on a ground the token is never used on is not a floor. `bg-gold/10`
+         * is the lightest ground in the interface, so clearing it clears
+         * everything — see the matrix in globals.css.
          */
-        'daun-ink': '#498D6A', // 4.53:1 on grid
-        'sabbe-ink': '#D25858', // 4.51:1 on grid
+        'daun-ink': '#509973', // 4.52:1 on bg-gold/10, 5.26:1 on grid
+        'sabbe-ink': '#D66A6A', // 4.51:1 on bg-gold/10, 5.24:1 on grid
       },
       fontFamily: {
         aksara: ['var(--font-aksara)', 'serif'],

@@ -75,32 +75,40 @@ body {
 }
 
 /*
- * Text contrast floor, measured against the grid ground (#1A1614):
+ * Text contrast. The floor is 4.5:1 and nothing in the interface may sit
+ * under it.
  *
- *   text-lontar        10.86:1   primary
- *   text-lontar/85      8.13:1   emphasis inside a panel
- *   text-lontar/75      6.58:1   secondary
- *   text-lontar/65      5.25:1   annotation — THE FLOOR, do not go below
- *   text-gold           6.94:1   / text-gold/80 4.88:1 — gold's floor
- *   text-daun-ink       4.53:1   ambiguity type (plain `daun` is 2.28:1)
- *   text-sabbe-ink      4.51:1   warning type (plain `sabbe` is 2.42:1)
+ * This is a MATRIX, not a list, and it is a matrix because the list version
+ * was wrong. Ratios were quoted against the bare grid ground only, which is
+ * the one ground the two ink colours are hardly ever used on: the reviewer
+ * gate notice sets `sabbe-ink` on `bg-gold/10`, the ambiguity labels on the
+ * collision page set `daun-ink` on `bg-lontar/5`, and the active trace row
+ * sets `daun-ink` on `bg-gold/10`. Measured where they are actually used,
+ * both inks were under the floor — 3.88:1 at worst — while a table on this
+ * very page reported them as passing. Any new ground goes in here with its
+ * column filled, or it does not ship.
+ *
+ *                      grid    lontar/5  sabbe/10  gold/5   gold/10
+ *   ground hex        #1A1614  #241F1B   #271816   #231D16  #2B2318
+ *
+ *   text-lontar        10.86     9.88     10.31     10.12     9.33
+ *   text-lontar/85      8.13     7.51      7.78      7.67     7.15
+ *   text-lontar/75      6.58     6.16      6.35      6.27     5.90
+ *   text-lontar/65      5.25     4.98      5.10      5.05     4.80
+ *   text-gold           6.94     6.32      6.59      6.47     5.97
+ *   text-daun-ink       5.26     4.79      4.99      4.90     4.52
+ *   text-sabbe-ink      5.24     4.77      4.98      4.89     4.51
+ *
+ * `bg-gold/10` is the lightest ground in the interface and therefore the
+ * binding column: every value above is measured to clear 4.5:1 there. A panel
+ * wanting more separation than that takes a border, not a paler fill — one
+ * more step of tint puts the annotation tier and both inks under the floor.
+ *
+ * `text-gold/80` (4.88:1 on grid) is gold's own floor and is only ever used
+ * on the bare ground; it does not survive a tint.
  *
  * `daun` and `sabbe` themselves stay exactly as PRD §10 fixes them, and keep
  * every border, fill and marker. They just no longer set type.
- *
- * The landing hero sits on `bg-lontar/5` rather than on the bare ground —
- * #24191B, a fifth of a step lighter — so every ratio there is fractionally
- * lower. Re-measured, since a table that only covers one ground stops being
- * true the moment a second one exists:
- *
- *   text-lontar         9.88:1
- *   text-lontar/75      6.16:1
- *   text-gold           6.32:1
- *   text-lontar/65      4.98:1   annotation, still over the 4.5:1 floor
- *
- * That is the lightest ground in the interface. Anything lighter puts the
- * annotation tier under the floor, so a panel wanting more separation should
- * take a border, not a paler fill.
  */
 
 /* Hard grid lines borrowed from the sarong: structural division, not ornament
