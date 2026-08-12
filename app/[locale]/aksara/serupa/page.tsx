@@ -1,6 +1,9 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getCopy } from '@/lib/i18n/copy'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
+import { href } from '@/lib/paths'
+import { encodeShareHash } from '@/lib/share/hash'
 import { collisionReport } from '@/lib/analysis/collisions'
 import { LEXICON } from '@/lib/lexicon/loader'
 import { AMBIGUITY_CLASSES } from '@/lib/rules/schema'
@@ -137,6 +140,13 @@ export default function SerupaPage({ params }: { params: { locale: string } }) {
             : `So ${n(report.forms - report.strings)} forms lose a string of their own: written to Lontara, each falls onto a string another form already occupies. That is the script’s defectiveness, counted rather than asserted.`}
         </p>
 
+        {/* The 1,323 -> 1,321 step, explained where it happens. A number that
+            silently shrinks is exactly the arithmetic-without-reason this page
+            is otherwise trying to avoid. */}
+        {report.mergedSpellings > 0 ? (
+          <p className="max-w-measure text-sm text-lontar/75">{copy.aksara.mergeNote}</p>
+        ) : null}
+
         {report.unwritable.length > 0 ? (
           <p className="max-w-measure text-sm text-lontar/65">
             {id
@@ -253,6 +263,21 @@ export default function SerupaPage({ params }: { params: { locale: string } }) {
                         <span className={eyebrow('daun', 'sm')}>{copy.ambiguityClass[cls]}</span>
                       </span>
                     ))}
+                  </p>
+
+                  {/*
+                    A way in. This page was 115 worked examples with no door on
+                    any of them: a reader looking at `ada · adan · anda` and
+                    wanting to ask why had nowhere to click. The set opens in
+                    the reader, which is the tool that answers exactly that.
+                  */}
+                  <p className="mt-2">
+                    <Link
+                      href={`${href(locale, 'baca')}${encodeShareHash(set.lontara)}`}
+                      className={`inline-block no-underline ${eyebrow('quiet', 'sm')} hover:text-gold`}
+                    >
+                      {copy.aksara.openInReader} →
+                    </Link>
                   </p>
                 </li>
               ))}

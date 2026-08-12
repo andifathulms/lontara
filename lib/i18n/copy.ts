@@ -145,6 +145,11 @@ export type Copy = {
     /** The collision index. Prose for that page is written inline there, as the
      *  conformance page does — only the shared label lives here. */
     collisionsLink: string
+    /** Why 1,323 entries become fewer distinct forms, said where the number
+     *  shrinks rather than left as an unexplained subtraction. */
+    mergeNote: string
+    /** Invitation on each collision set. */
+    openInReader: string
   }
   ejaan: {
     title: string
@@ -342,6 +347,9 @@ const id: Copy = {
     columns: { glyph: 'Bentuk', codepoint: 'Titik kode', unicodeName: 'Nama Unicode', latin: 'Latin', note: 'Catatan' },
     conformanceLink: 'Uji ketepatan tampilan',
     collisionsLink: 'Kata yang ditulis serupa',
+    mergeNote:
+      'Dua lema digabung karena aturan menganggapnya satu kata: `aba\'` dan `abaq` sama di bawah latin.glottal.q, begitu pula `untu\'` dan `untuq`. Menghitung ejaannya satu per satu akan melaporkan sebuah kata bertumpuk dengan dirinya sendiri.',
+    openInReader: 'Baca rangkaian ini',
   },
   ejaan: {
     title: 'Ejaan',
@@ -540,6 +548,9 @@ const en: Copy = {
     columns: { glyph: 'Glyph', codepoint: 'Codepoint', unicodeName: 'Unicode name', latin: 'Latin', note: 'Note' },
     conformanceLink: 'Rendering conformance',
     collisionsLink: 'Words written alike',
+    mergeNote:
+      'Two entries merge because the rules treat them as one word: `aba\'` and `abaq` are the same under latin.glottal.q, as are `untu\'` and `untuq`. Counting the spellings separately would report a word colliding with itself.',
+    openInReader: 'Read this string',
   },
   ejaan: {
     title: 'Ejaan',
