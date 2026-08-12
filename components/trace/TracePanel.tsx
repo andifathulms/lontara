@@ -103,22 +103,41 @@ export function TracePanel({
           >
             <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
               {step.type === 'loss' ? <Rhombus size={10} tone="daun" /> : null}
-              {/* Only the rule id is a control. The rest of the step is a `dl`
-                  and a couple of paragraphs, which cannot legally live inside
-                  a button. */}
-              <button
-                type="button"
-                disabled={!linked}
-                aria-pressed={linked ? active : undefined}
-                onFocus={linked ? () => onActiveChange(index) : undefined}
-                onBlur={linked ? () => onActiveChange(null) : undefined}
-                onClick={linked ? () => onActiveChange(active ? null : index) : undefined}
-                className={`font-anotasi text-xs disabled:cursor-text ${
-                  step.type === 'loss' ? 'text-daun-ink' : 'text-gold'
-                } ${linked ? 'underline decoration-dotted underline-offset-4' : ''}`}
-              >
-                {step.ruleId}
-              </button>
+              {/*
+                Only the rule id is a control, and only where there is
+                something for it to control. The rest of the step is a `dl` and
+                a couple of paragraphs, which cannot legally live inside a
+                button.
+
+                Where the panel is read-only it renders as text, not as a
+                disabled button. A `disabled` control is announced as a
+                control that cannot be used and is skipped in the tab order —
+                which described the styling (`disabled:cursor-text`) rather
+                than the thing: this was never a broken button, it was always
+                a rule id.
+              */}
+              {linked ? (
+                <button
+                  type="button"
+                  aria-pressed={active}
+                  onFocus={() => onActiveChange(index)}
+                  onBlur={() => onActiveChange(null)}
+                  onClick={() => onActiveChange(active ? null : index)}
+                  className={`font-anotasi text-xs underline decoration-dotted underline-offset-4 ${
+                    step.type === 'loss' ? 'text-daun-ink' : 'text-gold'
+                  }`}
+                >
+                  {step.ruleId}
+                </button>
+              ) : (
+                <span
+                  className={`font-anotasi text-xs ${
+                    step.type === 'loss' ? 'text-daun-ink' : 'text-gold'
+                  }`}
+                >
+                  {step.ruleId}
+                </span>
+              )}
               <StatusBadge status={meta.status} locale={locale} />
               <span className={eyebrow('quiet', 'sm')}>
                 {step.type}
