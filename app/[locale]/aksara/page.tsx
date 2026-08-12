@@ -16,7 +16,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id'
   const copy = getCopy(locale)
-  return pageMetadata({ locale, segments: ['aksara'], title: copy.aksara.title, description: copy.aksara.lead })
+  return pageMetadata({ locale, segments: ['aksara'], page: 'aksara', description: copy.aksara.lead })
 }
 
 const DOTTED_CIRCLE = '◌'

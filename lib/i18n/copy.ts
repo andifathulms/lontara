@@ -30,6 +30,35 @@ export type Copy = {
    * locale needs no hint; do not add one for `id`, and do not replace the
    * terms in either.
    */
+  /**
+   * Document titles, for a search result rather than for the page.
+   *
+   * The <title> is the one string a search engine shows before anyone has
+   * chosen to visit, and it was carrying almost nothing: "Tulis — Lontara",
+   * "Baca — Lontara" — fourteen characters, no word anyone searches. The home
+   * page had the opposite problem at 122 characters, truncated well before the
+   * sentence finished.
+   *
+   * These name what the page is in the words a person would actually type. The
+   * H1 stays the Bugis term — `nav` and the page headings are unchanged, per
+   * the convention that sections are named in the language the site is about —
+   * because a title labels a document and a heading labels content; they are
+   * allowed to differ as long as the title is true.
+   *
+   * NOTHING HERE IMPLIES TRANSLATION. Invariant 16 is not relaxed for search
+   * traffic: `terjemah` / `translate` are the highest-volume queries adjacent
+   * to this app and they are exactly what it does not do. Every one of these
+   * says script, letters, or reading and writing.
+   */
+  seoTitle: {
+    home: string
+    baca: string
+    tulis: string
+    aksara: string
+    ejaan: string
+    serupa: string
+    konformansi: string
+  }
   navHint: { baca: string; tulis: string; aksara: string; ejaan: string } | null
   navDescription: { baca: string; tulis: string; aksara: string; ejaan: string }
   gate: { title: string; body: string; blocked: string }
@@ -231,6 +260,15 @@ const id: Copy = {
       'Alat ini hanya mengalihkan aksara — dari Lontara ke Latin dan sebaliknya. Ia tidak menerjemahkan, tidak memberi arti, dan tidak tahu makna kata apa pun.',
   },
   nav: { baca: 'Baca', tulis: 'Tulis', aksara: 'Aksara', ejaan: 'Ejaan' },
+  seoTitle: {
+    home: 'Lontara — baca-tulis aksara Lontara untuk Basa Ugi',
+    baca: 'Baca aksara Lontara: semua bacaan Latin yang mungkin',
+    tulis: 'Tulis aksara Lontara dari Latin (Basa Ugi)',
+    aksara: 'Aksara Lontara: 23 huruf dan lima tanda vokal',
+    ejaan: 'Ejaan Latin Bugis yang dipakai di sini, beserta rujukannya',
+    serupa: 'Kata Bugis yang ditulis serupa dalam aksara Lontara',
+    konformansi: 'Uji ketepatan tampilan aksara Lontara di perangkat',
+  },
   navHint: null,
   navDescription: {
     baca: 'Lontara → Latin. Himpunan bacaan yang mungkin, sebagai pohon.',
@@ -434,6 +472,15 @@ const en: Copy = {
       'This tool converts script only — Lontara to Latin and back. It does not translate, does not supply meaning, and does not know what any word means.',
   },
   nav: { baca: 'Baca', tulis: 'Tulis', aksara: 'Aksara', ejaan: 'Ejaan' },
+  seoTitle: {
+    home: 'Lontara — reading and writing the Bugis script',
+    baca: 'Read Lontara: every possible Latin reading',
+    tulis: 'Write Lontara from Latin (Basa Ugi)',
+    aksara: 'The Lontara script: 23 letters and five vowel signs',
+    ejaan: 'The Bugis Latin orthography used here, with citations',
+    serupa: 'Bugis words written alike in Lontara',
+    konformansi: 'Lontara rendering conformance on real devices',
+  },
   navHint: { baca: 'Read', tulis: 'Write', aksara: 'Script', ejaan: 'Orthography' },
   navDescription: {
     baca: 'Lontara → Latin. The set of possible readings, as a tree.',

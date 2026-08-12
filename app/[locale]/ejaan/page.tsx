@@ -21,7 +21,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id'
   const copy = getCopy(locale)
-  return pageMetadata({ locale, segments: ['ejaan'], title: copy.ejaan.title, description: copy.ejaan.lead })
+  return pageMetadata({ locale, segments: ['ejaan'], page: 'ejaan', description: copy.ejaan.lead })
 }
 
 /**

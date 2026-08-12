@@ -13,7 +13,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id'
   const copy = getCopy(locale)
-  return pageMetadata({ locale, segments: ['tulis'], title: copy.writer.title, description: copy.writer.lead })
+  return pageMetadata({ locale, segments: ['tulis'], page: 'tulis', description: copy.writer.lead })
 }
 
 export default function TulisPage({ params }: { params: { locale: string } }) {

@@ -20,7 +20,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id'
   // No `title`: the home page IS the site, so it keeps the full site title.
-  return pageMetadata({ locale, description: getCopy(locale).tagline })
+  return pageMetadata({ locale, page: 'home', description: getCopy(locale).tagline })
 }
 
 /** The product. `baca` first — it is the flagship (PRD §3). */

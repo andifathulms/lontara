@@ -40,14 +40,14 @@ function path(locale: Locale, segments: readonly string[]): string {
 export function pageMetadata({
   locale,
   segments = [],
-  title,
+  page,
   description,
 }: {
   locale: Locale
   /** Route segments below the locale, e.g. `['aksara', 'serupa']`. */
   segments?: readonly string[]
-  /** The page's own heading. Omit on the home page, which is the site itself. */
-  title?: string
+  /** Which `seoTitle` this page uses. */
+  page: keyof ReturnType<typeof getCopy>['seoTitle']
   /** The page's own lead paragraph. */
   description: string
 }): Metadata {
@@ -55,14 +55,15 @@ export function pageMetadata({
   const here = path(locale, segments)
 
   /*
-   * `title` here is the bare page name; the root layout's template turns it
-   * into "Tulis — Lontara". Open Graph has no template, so it gets the
-   * composed form — otherwise a shared link would read just "Tulis".
+   * Absolute, so the root layout's "%s — Lontara" template does not append the
+   * site name to a title that already carries it. These are written to be read
+   * in a search result, where the whole string is the only thing shown and
+   * anything past ~60 characters is cut.
    */
-  const composed = title ? `${title} — ${copy.siteName}` : `${copy.siteName} — ${copy.tagline}`
+  const composed = copy.seoTitle[page]
 
   return {
-    ...(title ? { title } : {}),
+    title: { absolute: composed },
     description,
     alternates: {
       canonical: here,

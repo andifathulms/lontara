@@ -4,6 +4,7 @@ import '../globals.css'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { getCopy } from '@/lib/i18n/copy'
 import { SiteHeader } from '@/components/chrome/SiteHeader'
+import { StructuredData } from '@/components/chrome/StructuredData'
 import { SiteFooter } from '@/components/chrome/SiteFooter'
 import { asset, SITE_URL } from '@/lib/paths'
 
@@ -119,6 +120,7 @@ export default function LocaleLayout({
           href={asset('/fonts/noto-sans-buginese-subset.woff2')}
           crossOrigin="anonymous"
         />
+        <StructuredData locale={locale} />
       </head>
       <body className="flex min-h-screen flex-col">
         {/* The nav is four links deep before the tool starts, and the reader's

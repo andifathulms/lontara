@@ -19,7 +19,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id'
   const copy = getCopy(locale)
-  return pageMetadata({ locale, segments: ['aksara', 'serupa'], title: copy.aksara.collisionsLink, description: copy.aksara.collisionsLead })
+  return pageMetadata({ locale, segments: ['aksara', 'serupa'], page: 'serupa', description: copy.aksara.collisionsLead })
 }
 
 /**
