@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation'
 import { getCopy } from '@/lib/i18n/copy'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { href } from '@/lib/paths'
-import { fromCodepoint } from '@/lib/rules/inventory'
+import { INVENTORY, fromCodepoint } from '@/lib/rules/inventory'
+import { interpret } from '@/lib/engine/interpret'
 import { NotTranslatorNotice, ReviewerGateNotice } from '@/components/chrome/Notice'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
 import { eyebrow } from '@/components/chrome/eyebrow'
@@ -32,9 +33,9 @@ const CLASSES = ['final', 'gemination', 'prenasal', 'glottal'] as const
  * These are not chosen here. `mata`, `matta` and `manta` are the fixtures
  * `prd.mata`, `prd.matta.gemination` and `prd.manta.final` in
  * tests/fixtures/writer.fixture.json, all three cited to PRD §2 and all three
- * asserted to produce exactly this pair. The three readings and the note below
- * them are `home.defective.example` / `exampleNote`, so the page cannot show
- * one word here and a different one in the section that explains it.
+ * asserted to produce exactly this pair. HERO_ROWS below re-checks that at
+ * build time and refuses to render if it ever stops being true, so the page
+ * cannot outlive the fixture it illustrates.
  *
  * Built through `fromCodepoint` rather than pasted as a literal, on the same
  * principle as lib/rendering/hardStrings.ts: the glyphs on screen and the
@@ -42,6 +43,52 @@ const CLASSES = ['final', 'gemination', 'prenasal', 'glottal'] as const
  */
 const HERO_CODEPOINTS = ['U+1A06', 'U+1A08'] as const
 const HERO_AKSARA = HERO_CODEPOINTS.map(fromCodepoint).join('')
+
+/**
+ * The two letters, each with the syllable it spells.
+ *
+ * This is the step the page used to skip. It showed ᨆᨈ beside `mata · matta ·
+ * manta` and asked the reader to accept a relation between them — but nothing
+ * said ᨆ is `ma`, and the codepoints underneath say so only to someone who
+ * already has the inventory memorised. A newcomer met the thesis stated in
+ * terms they had no way to decode.
+ *
+ * The Latin is derived, not written here: onset + the inherent vowel, both out
+ * of inventory.json. If the inventory ever disagreed with this page, this page
+ * would change.
+ */
+const HERO_LETTERS = HERO_CODEPOINTS.map((codepoint) => {
+  const letter = INVENTORY.consonants.find((c) => c.codepoint === codepoint)
+  if (!letter) throw new Error(`hero: ${codepoint} is not a consonant in the inventory`)
+  return {
+    codepoint,
+    aksara: fromCodepoint(codepoint),
+    latin: `${letter.onset}${INVENTORY.inherentVowel.latin}`,
+    unicodeName: letter.unicodeName,
+  }
+})
+
+/**
+ * The three words, each run through the shipped writer at build time.
+ *
+ * Every one of them produces HERO_AKSARA, and showing that column three times
+ * over is the demonstration: the identity is on screen at once rather than
+ * being something the reader has to establish by pressing three example chips
+ * in turn and noticing that nothing changed.
+ *
+ * What vanished comes from the trace's own ambiguities, so the page cannot
+ * claim a loss the engine did not declare.
+ */
+const HERO_ROWS = ['mata', 'matta', 'manta'].map((latin) => {
+  const trace = interpret(latin)
+  if (trace.output.text !== HERO_AKSARA) {
+    throw new Error(`hero: ${latin} no longer writes to ${HERO_AKSARA}`)
+  }
+  return {
+    latin,
+    lost: trace.ambiguities.map((a) => ({ dropped: a.chosen ?? '', cls: a.class })),
+  }
+})
 
 export default function HomePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound()
@@ -57,31 +104,95 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         <p className="max-w-measure text-lead text-lontar/75">{copy.home.lead}</p>
 
         {/*
-          The whole premise, without a sentence of it. Two glyphs, three words
-          that all write to them.
+          The whole premise, worked rather than asserted: what each letter is,
+          the rule that lets two letters spell four sounds, then three words
+          landing on the same two letters with their differences struck out.
 
-          The aksara is aria-hidden and the codepoints carry it instead — a
-          screen reader announces U+1A06 as whatever its fallback font makes of
-          it, which is nothing. Same reasoning as the OG image's alt text in
-          layout.tsx. The three readings below are real text and say the thing.
+          Every aksara here is aria-hidden and a codepoint carries it instead —
+          a screen reader announces U+1A06 as whatever its fallback font makes
+          of it, which is nothing. Same reasoning as the OG image's alt text in
+          layout.tsx. The Latin in every row is real text and says the thing.
 
-          The codepoint line is also invariant 10: this is the first aksara a
-          visitor meets, and on the device where the font fails it is the only
-          part of this figure that still carries the answer.
+          The codepoints are also invariant 10: this is the first aksara a
+          visitor meets, and on the device where the font fails they are the
+          only part of this figure that still carries the answer.
         */}
         <figure className="border-2 border-gold/30 bg-lontar/5 px-5 py-6 sm:px-8 sm:py-8">
-          <figcaption className={eyebrow()}>{copy.home.heroLabel}</figcaption>
-          <p
-            aria-hidden="true"
-            className="aksara mt-3 text-aksara-hero text-lontar"
-          >
-            {HERO_AKSARA}
-          </p>
-          <p className="mt-2 font-anotasi text-anotasi text-lontar/65">
-            {HERO_CODEPOINTS.join(' ')}
-          </p>
-          <p className="mt-4 text-lead text-lontar">{copy.home.defective.example}</p>
-          <p className="mt-2 max-w-measure text-sm text-lontar/75">
+          <figcaption id="hero-label" className={eyebrow()}>
+            {copy.home.heroLabel}
+          </figcaption>
+
+          {/* Step one: what each letter is. Two glyphs, each above its own
+              syllable, so the example below can actually be read. */}
+          <ul className="mt-3 flex flex-wrap gap-x-8 gap-y-4">
+            {HERO_LETTERS.map((letter) => (
+              <li key={letter.codepoint}>
+                <span aria-hidden="true" className="aksara block text-aksara-hero text-lontar">
+                  {letter.aksara}
+                </span>
+                <span className="mt-1 block text-lead text-lontar">{letter.latin}</span>
+                <span className="block font-anotasi text-anotasi text-lontar/65">
+                  {letter.codepoint} · {letter.unicodeName}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          {/* Step two: the fact the whole example rests on, and which appeared
+              nowhere on this page before — a consonant letter carries its own
+              vowel. Without it, "ᨆᨈ is mata" is not merely unexplained, it is
+              undecodable. Borrowed from the Aksara page rather than restated,
+              so the two cannot drift. */}
+          <p className="mt-5 max-w-measure text-lontar/85">{copy.aksara.inherentVowel}</p>
+
+          {/* Step three: all three words at once, each with what the script
+              threw away. The middle column is identical down all three rows,
+              which IS the thesis — shown, rather than asserted and left for the
+              reader to verify by pressing chips and noticing a non-event. */}
+          <table aria-labelledby="hero-label" className="mt-5 w-full border-collapse">
+            <thead>
+              <tr className="border-b border-lontar/20 text-left">
+                <th scope="col" className={`py-1 pr-6 ${eyebrow('quiet', 'sm')}`}>
+                  {copy.home.heroLatin}
+                </th>
+                <th scope="col" className={`py-1 pr-6 ${eyebrow('quiet', 'sm')}`}>
+                  {copy.home.heroWrites}
+                </th>
+                <th scope="col" className={`py-1 ${eyebrow('quiet', 'sm')}`}>
+                  {copy.home.heroLost}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {HERO_ROWS.map((row) => (
+                <tr key={row.latin} className="border-b border-lontar/10 last:border-0">
+                  <td className="py-2 pr-6 text-lead text-lontar">{row.latin}</td>
+                  <td aria-hidden="true" className="aksara py-2 pr-6 text-aksara-row text-lontar">
+                    {HERO_AKSARA}
+                  </td>
+                  <td className="py-2 text-sm">
+                    {row.lost.length === 0 ? (
+                      <span className="text-lontar/65">{copy.home.heroNothingLost}</span>
+                    ) : (
+                      row.lost.map((loss) => (
+                        <span key={loss.cls} className="flex items-center gap-1.5">
+                          <Rhombus size={9} tone="daun" />
+                          <span className="text-lontar">
+                            <span className="line-through">{loss.dropped}</span>{' '}
+                            <span className={eyebrow('daun', 'sm')}>
+                              {copy.ambiguityClass[loss.cls]}
+                            </span>
+                          </span>
+                        </span>
+                      ))
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <p className="mt-4 max-w-measure text-sm text-lontar/75">
             {copy.home.defective.exampleNote}
           </p>
         </figure>

@@ -47,6 +47,19 @@ export type Copy = {
     /** Heads the aksara demonstration. The demonstration itself is the three
      *  readings and the note, which live under `defective` and are shared. */
     heroLabel: string
+    /**
+     * Column headings and cells for the worked derivation in the hero.
+     *
+     * The hero used to show two glyphs and three words and assert a relation
+     * between them. A reader who does not already know the script cannot
+     * decode that: nothing said ᨆ is `ma`, and nothing anywhere on the landing
+     * page said a consonant letter carries its own vowel — which is the fact
+     * the whole example rests on.
+     */
+    heroLatin: string
+    heroWrites: string
+    heroLost: string
+    heroNothingLost: string
     /** The two rows of destinations. Four equal tiles made a visitor read all
      *  four labels and rank them; these say which two are the product. */
     groupTools: string
@@ -54,7 +67,7 @@ export type Copy = {
     /** On the writer's tile only — the one tool the reviewer gate does not
      *  hold back, so the one a visitor can act on today. */
     cta: string
-    defective: { title: string; body: string; example: string; exampleNote: string }
+    defective: { title: string; body: string; exampleNote: string }
     asymmetry: { title: string; latinToLontara: string; lontaraToLatin: string }
     open: string
   }
@@ -222,6 +235,10 @@ const id: Copy = {
   home: {
     headline: 'Penjelas baca-tulis aksara Lontara untuk Basa Ugi.',
     heroLabel: 'Satu rangkaian, tiga bacaan',
+    heroLatin: 'Latin',
+    heroWrites: 'ditulis menjadi',
+    heroLost: 'yang hilang',
+    heroNothingLost: 'tidak ada',
     groupTools: 'Alat',
     groupReference: 'Rujukan',
     cta: 'Coba sekarang',
@@ -231,7 +248,6 @@ const id: Copy = {
       title: 'Aksara Lontara bersifat defektif',
       body:
         'Blok Buginese di Unicode (U+1A00–U+1A1F) memuat 23 huruf konsonan, lima tanda vokal, dan dua tanda baca — dan tidak ada virama. Tidak ada mekanisme dalam pengkodean untuk konsonan tanpa vokal. Akibatnya aksara tidak menuliskan konsonan akhir, konsonan ganda, pranasalisasi, maupun hamzah.',
-      example: 'mata · matta · manta',
       exampleNote: 'Ketiganya ditulis serupa. Pembaca memulihkan kata yang dimaksud dari kosakata dan konteks.',
     },
     asymmetry: {
@@ -413,6 +429,10 @@ const en: Copy = {
   home: {
     headline: 'A Lontara reading and writing explainer for Basa Ugi.',
     heroLabel: 'One string, three readings',
+    heroLatin: 'Latin',
+    heroWrites: 'writes to',
+    heroLost: 'what vanished',
+    heroNothingLost: 'nothing',
     groupTools: 'Tools',
     groupReference: 'Reference',
     cta: 'Try it now',
@@ -422,7 +442,6 @@ const en: Copy = {
       title: 'Lontara is a defective script',
       body:
         'The Unicode Buginese block (U+1A00–U+1A1F) contains 23 consonant letters, five vowel signs, and two punctuation marks — and no virama. There is no mechanism in the encoding for a bare consonant. Consequently the orthography does not write syllable-final consonants, geminates, prenasalisation, or the glottal stop.',
-      example: 'mata · matta · manta',
       exampleNote: 'All three are written alike. Readers recover the intended word from vocabulary and context.',
     },
     asymmetry: {
