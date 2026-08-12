@@ -5,7 +5,7 @@ import { enumerate } from '@/lib/engine/enumerate'
 import { interpret } from '@/lib/engine/interpret'
 import { toClusters } from '@/lib/engine/normalize'
 import { fromCodepoint } from '@/lib/rules/inventory'
-import { LEXICON } from '@/lib/lexicon/loader'
+import { CLIENT_LEXICON } from '@/lib/lexicon/client'
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
 import { Keyboard } from '@/components/keyboard/Keyboard'
@@ -78,7 +78,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
   const deferredSource = useDeferredValue(source)
   const settling = deferredSource !== source
 
-  const result = useMemo(() => enumerate(deferredSource, LEXICON), [deferredSource])
+  const result = useMemo(() => enumerate(deferredSource, CLIENT_LEXICON), [deferredSource])
   const empty = false
 
   /*

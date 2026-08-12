@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import lexiconJson from '@/data/lexicon/entries.json'
 
 /**
  * The curated Bugis wordlist. Modest and honest about coverage (PRD §6.4) —
@@ -85,8 +84,6 @@ export type Lexicon = {
   readonly isEmpty: boolean
 }
 
-const parsed = LexiconSchema.parse(lexiconJson)
-
 function makeLexicon(data: z.infer<typeof LexiconSchema>): Lexicon {
   return {
     version: data.version,
@@ -95,8 +92,6 @@ function makeLexicon(data: z.infer<typeof LexiconSchema>): Lexicon {
     isEmpty: data.entries.length === 0,
   }
 }
-
-export const LEXICON: Lexicon = makeLexicon(parsed)
 
 /**
  * Build a lexicon from arbitrary data. The engine takes the lexicon as an

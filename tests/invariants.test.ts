@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { RULES, RULE_SET, OPEN_QUESTIONS } from '@/lib/rules/loader'
 import { INVENTORY } from '@/lib/rules/inventory'
 import { AMBIGUITY_CLASSES } from '@/lib/rules/schema'
-import { LEXICON } from '@/lib/lexicon/loader'
+import { LEXICON } from '@/lib/lexicon/shipped'
 import { interpret } from '@/lib/engine/interpret'
 import { enumerate } from '@/lib/engine/enumerate'
 

@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm rules:validate && pnpm lexicon:validate && next build && node scripts/build-service-worker.mjs",
+    "build": "pnpm rules:validate && pnpm lexicon:validate && pnpm lexicon:compact && next build && node scripts/build-service-worker.mjs",
     "preview": "node scripts/preview.mjs",
     "test": "vitest",
     "test:run": "vitest run",
@@ -26,7 +26,8 @@
     "render:conformance": "tsx scripts/render-conformance.ts",
     "budget": "next build > .next/build.log && node scripts/check-js-budget.mjs .next/build.log",
     "typecheck": "tsc --noEmit",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lexicon:compact": "tsx scripts/lexicon-compact.ts"
   },
   "dependencies": {
     "next": "14.2.15",

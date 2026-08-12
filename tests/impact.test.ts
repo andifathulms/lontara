@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { openQuestionImpact } from '@/lib/analysis/impact'
 import { codepointsOf, interpret } from '@/lib/engine/interpret'
-import { LEXICON, EMPTY_LEXICON } from '@/lib/lexicon/loader'
+import { LEXICON } from '@/lib/lexicon/shipped'
+import { EMPTY_LEXICON } from '@/lib/lexicon/loader'
 import { OPEN_QUESTIONS } from '@/lib/rules/loader'
 
 /**

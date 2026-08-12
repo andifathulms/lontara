@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useDeferredValue, useMemo } from 'react'
 import { returnTrip } from '@/lib/analysis/returnTrip'
-import { LEXICON } from '@/lib/lexicon/loader'
+import { CLIENT_LEXICON } from '@/lib/lexicon/client'
 import { getCopy } from '@/lib/i18n/copy'
 import type { Locale } from '@/lib/i18n/locales'
 import { href } from '@/lib/paths'
@@ -57,7 +57,7 @@ export function ReturnTrip({
   const settling = deferred !== lontara
 
   const result = useMemo(
-    () => returnTrip(deferred, LEXICON, normalizedLatin),
+    () => returnTrip(deferred, CLIENT_LEXICON, normalizedLatin),
     [deferred, normalizedLatin],
   )
   const others = result.rivals
@@ -100,7 +100,7 @@ export function ReturnTrip({
         <>
           <p className="text-lontar/85">{copy.returnTrip.none}</p>
           <p className="mt-2 max-w-measure text-sm text-lontar/65">
-            {copy.returnTrip.noneNote(LEXICON.entries.length)}
+            {copy.returnTrip.noneNote(CLIENT_LEXICON.entries.length)}
           </p>
         </>
       ) : (

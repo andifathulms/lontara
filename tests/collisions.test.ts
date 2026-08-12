@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { collisionReport } from '@/lib/analysis/collisions'
 import { interpret } from '@/lib/engine/interpret'
-import { LEXICON, lexiconFrom, EMPTY_LEXICON } from '@/lib/lexicon/loader'
+import { LEXICON } from '@/lib/lexicon/shipped'
+import { lexiconFrom, EMPTY_LEXICON } from '@/lib/lexicon/loader'
 import { returnTrip } from '@/lib/analysis/returnTrip'
 
 /**
