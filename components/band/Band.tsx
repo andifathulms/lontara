@@ -75,6 +75,20 @@ export function Band({
           {columns.map((column) => (
             <span
               key={`aksara-${column.index}`}
+              /*
+               * Hidden from assistive technology, on the same reasoning as the
+               * landing hero: a screen reader announces a Buginese code point
+               * as whatever its fallback font makes of it, which is nothing
+               * useful. Reading the band aloud produced a string of nothings
+               * between the Latin cells that do carry the answer.
+               *
+               * Nothing is lost by hiding it. The Latin row below is real text,
+               * the figcaption names what the band is, the loss markers carry
+               * their class in an sr-only span, and the codepoint list — always
+               * present, invariant 10 — states every one of these glyphs by
+               * name a few sections down.
+               */
+              aria-hidden="true"
               /* The highlight is a block of gold on the leaf, not a glow or a
                  rounded pill — the same hard-edged vocabulary as the rest. */
               className={`aksara py-4 text-center text-aksara-band text-grid ${
