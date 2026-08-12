@@ -58,6 +58,23 @@ export function AmbiguityPanel({
                     <> · {copy.reader.undetermined}</>
                   ) : null}
                 </p>
+
+                {/*
+                  The source, here, where the rule was applied.
+
+                  This panel is where a user meets a loss: it named the rule
+                  and explained the consequence, and then asked anyone who
+                  wanted to know on what authority to go and find the trace —
+                  which sits below the fold in a reference tier deliberately
+                  presented as apparatus. A rule id without its citation is the
+                  black box this project is a reaction to, one indirection
+                  later.
+                */}
+                <p className="mt-1 border-l-2 border-lontar/20 pl-3 text-xs text-lontar/65">
+                  <span className={eyebrow('quiet', 'sm')}>{copy.trace.citation}</span>{' '}
+                  {rule(a.ruleId).citation}
+                </p>
+
                 {rule(a.ruleId).note ? (
                   <p className="mt-1 text-anotasi text-sabbe-ink">{rule(a.ruleId).note}</p>
                 ) : null}
