@@ -78,6 +78,19 @@ export type Copy = {
     /** Worked examples. PRD §2's illustration: all three are written alike. */
     examples: readonly string[]
   }
+  /**
+   * The return trip, on the writer. Says who you are now indistinguishable
+   * from — forms only, never meanings (invariant 16), and never treating an
+   * empty result as a clean bill of health.
+   */
+  returnTrip: {
+    title: string
+    none: string
+    noneNote: (lexiconSize: number) => string
+    others: (n: number) => string
+    othersNote: string
+    openInReader: string
+  }
   reader: {
     title: string
     lead: string
@@ -245,6 +258,18 @@ const id: Copy = {
     copy: 'Salin',
     copied: 'Tersalin',
     examples: ['mata', 'matta', 'manta'],
+  },
+  returnTrip: {
+    title: 'Kalau dibaca kembali',
+    none: 'Tidak ada bentuk lain di leksikon ini yang ditulis serupa.',
+    noneNote: (size) =>
+      `Itu bukan berarti tidak ada. Leksikon di sini hanya memuat ${size.toLocaleString('id')} bentuk dari Wikipedia Basa Ugi, ` +
+      'jadi bentuk sah yang belum masuk ke dalamnya tidak akan muncul di sini. Ketiadaan di sini bukan bukti ketiadaan.',
+    others: (n) => `${n} bentuk lain ditulis serupa`,
+    othersNote:
+      'Ditulis ke Lontara, kata Anda jatuh ke rangkaian yang sama dengan bentuk-bentuk ini. Pembaca harus memilih di antaranya ' +
+      'dari kosakata dan konteks — aksara tidak menentukannya. Bentuk-bentuk ini datang dari leksikon, bukan dari terkaan.',
+    openInReader: 'Buka di Baca',
   },
   reader: {
     title: 'Baca',
@@ -419,6 +444,18 @@ const en: Copy = {
     copy: 'Copy',
     copied: 'Copied',
     examples: ['mata', 'matta', 'manta'],
+  },
+  returnTrip: {
+    title: 'Read back',
+    none: 'No other form in this lexicon is written the same way.',
+    noneNote: (size) =>
+      `That does not mean none exists. This lexicon holds only ${size.toLocaleString('en')} forms drawn from Bugis Wikipedia, ` +
+      'so a valid form that is not in it will not appear here. Absence here is not evidence of absence.',
+    others: (n) => (n === 1 ? '1 other form is written the same way' : `${n} other forms are written the same way`),
+    othersNote:
+      'Written to Lontara, your word lands on the same string as these. A reader has to choose between them from vocabulary ' +
+      'and context — the script does not decide it. These forms come from the lexicon, not from a guess.',
+    openInReader: 'Open in Baca',
   },
   reader: {
     title: 'Baca',

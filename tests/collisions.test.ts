@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { collisionReport } from '@/lib/analysis/collisions'
 import { interpret } from '@/lib/engine/interpret'
 import { LEXICON, lexiconFrom, EMPTY_LEXICON } from '@/lib/lexicon/loader'
+import { returnTrip } from '@/lib/analysis/returnTrip'
 
 /**
  * The collision index renders one claim: these forms are written the same way.
@@ -96,6 +97,68 @@ describe('the classes attributed to a set are the ones its members lose', () => 
     for (const [cls, count] of Object.entries(REPORT.setsByClass)) {
       expect(REPORT.sets.filter((s) => s.classes.includes(cls as never)).length).toBe(count)
     }
+  })
+})
+
+/**
+ * The return trip on the writer (components/writer/ReturnTrip.tsx) makes one
+ * claim: "these other forms are written the same way". It reaches them by
+ * enumerating its own output over the lexicon and dropping its own form.
+ *
+ * Asserted here against the real engine rather than by rendering the component,
+ * because the claim is a property of the engine and not of the markup: whatever
+ * the panel lists must be exactly the rest of that form's collision set.
+ */
+describe('the writer’s return trip lists the rest of the collision set', () => {
+  /*
+   * Every set, one member each. A full `returnTrip` is a full enumeration over
+   * the lexicon — ~1,300 `interpret` calls, ~29 ms — so checking all 268
+   * members put 15 seconds into a suite that otherwise runs in two. One member
+   * per set still exercises all 115 sets, and the members of a set are
+   * symmetric by construction: they were grouped by producing the same string.
+   */
+  it('agrees with the collision report on every set, and never lists the writer’s own form', () => {
+    for (const set of REPORT.sets) {
+      const member = set.members[0]!
+      const { rivals } = returnTrip(set.lontara, LEXICON, member.latin)
+
+      const expected = set.members
+        .map((m) => m.latin)
+        .filter((latin) => latin !== member.latin)
+        .sort((a, b) => a.localeCompare(b))
+
+      expect(rivals, `return trip for ${member.latin}`).toEqual(expected)
+      expect(rivals).not.toContain(member.latin)
+    }
+  })
+
+  it('collapses spelling variants instead of counting them twice', () => {
+    /*
+     * `aba'` and `abaq` are one word under latin.glottal.q. The engine keys
+     * readings on the raw spelling and so offers both; the panel must not
+     * report two rival forms where the script leaves one. This is the
+     * workaround described in lib/analysis/returnTrip.ts — when the engine
+     * question is settled, this test says what the panel has to keep doing.
+     */
+    const lontara = interpret("aba'").output.text
+    const { rivals } = returnTrip(lontara, LEXICON, 'aba')
+    expect(rivals).toContain("aba'")
+    expect(rivals).not.toContain('abaq')
+    expect(new Set(rivals).size).toBe(rivals.length)
+  })
+
+  it('lists nothing for a form that collides with nothing', () => {
+    const colliding = new Set(REPORT.sets.flatMap((s) => s.members.map((m) => m.latin)))
+    const alone = LEXICON.entries.find((e) => !colliding.has(interpret(e.latin).input.normalized))
+    expect(alone, 'the lexicon should hold at least one form that collides with nothing').toBeDefined()
+
+    const normalized = interpret(alone!.latin).input.normalized
+    const lontara = interpret(normalized).output.text
+    expect(returnTrip(lontara, LEXICON, normalized).rivals).toEqual([])
+  })
+
+  it('says nothing at all for empty input', () => {
+    expect(returnTrip('', LEXICON, '')).toEqual({ rivals: [], capApplied: false, maxDepth: 0 })
   })
 })
 

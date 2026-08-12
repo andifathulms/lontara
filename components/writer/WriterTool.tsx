@@ -14,6 +14,7 @@ import { CopyAksara } from '@/components/share/CopyAksara'
 import { useHashState } from '@/components/share/useHashState'
 import { eyebrow } from '@/components/chrome/eyebrow'
 import { ToolInput } from '@/components/tool/ToolInput'
+import { ReturnTrip } from '@/components/writer/ReturnTrip'
 
 /**
  * Nothing is computed here (invariant 9). The component holds the input string,
@@ -81,6 +82,19 @@ export function WriterTool({ locale }: { locale: Locale }) {
           inputClusters={trace.input.clusters}
           locale={locale}
           emptyMessage={latin.length === 0 ? copy.writer.emptyState : copy.writer.lossEmpty}
+        />
+      </section>
+
+      {/* The consequence of the loss above. "gemination was dropped here" tells
+          you something went missing; this tells you who you are now written
+          identically to — which is the question someone about to cut a name
+          into a signboard is actually asking. */}
+      <section className="space-y-3">
+        <h2 className="text-section text-lontar">{copy.returnTrip.title}</h2>
+        <ReturnTrip
+          locale={locale}
+          normalizedLatin={trace.input.normalized}
+          lontara={trace.output.text}
         />
       </section>
 
