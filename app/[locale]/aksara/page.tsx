@@ -31,12 +31,20 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
         <p className="font-anotasi text-xs text-lontar/65">
           {INVENTORY.source.citation}
         </p>
-        <Link
-          href={href(locale, 'aksara/konformansi')}
-          className={`inline-block no-underline ${eyebrow()}`}
-        >
-          {copy.aksara.conformanceLink} →
-        </Link>
+        <p className="flex flex-wrap gap-x-6 gap-y-1">
+          <Link
+            href={href(locale, 'aksara/konformansi')}
+            className={`inline-block no-underline ${eyebrow()}`}
+          >
+            {copy.aksara.conformanceLink} →
+          </Link>
+          <Link
+            href={href(locale, 'aksara/serupa')}
+            className={`inline-block no-underline ${eyebrow()}`}
+          >
+            {copy.aksara.collisionsLink} →
+          </Link>
+        </p>
       </PageHeader>
 
       {/* No virama. This is the fact the whole project follows from, so it is

@@ -107,6 +107,9 @@ export type Copy = {
     inherentVowel: string
     columns: { glyph: string; codepoint: string; unicodeName: string; latin: string; note: string }
     conformanceLink: string
+    /** The collision index. Prose for that page is written inline there, as the
+     *  conformance page does — only the shared label lives here. */
+    collisionsLink: string
   }
   ejaan: {
     title: string
@@ -274,6 +277,7 @@ const id: Copy = {
     inherentVowel: 'Setiap huruf konsonan membawa vokal inheren /a/. Tanda vokal menggantikannya.',
     columns: { glyph: 'Bentuk', codepoint: 'Titik kode', unicodeName: 'Nama Unicode', latin: 'Latin', note: 'Catatan' },
     conformanceLink: 'Uji ketepatan tampilan',
+    collisionsLink: 'Kata yang ditulis serupa',
   },
   ejaan: {
     title: 'Ejaan',
@@ -447,6 +451,7 @@ const en: Copy = {
     inherentVowel: 'Every consonant letter carries the inherent vowel /a/. A vowel sign replaces it.',
     columns: { glyph: 'Glyph', codepoint: 'Codepoint', unicodeName: 'Unicode name', latin: 'Latin', note: 'Note' },
     conformanceLink: 'Rendering conformance',
+    collisionsLink: 'Words written alike',
   },
   ejaan: {
     title: 'Ejaan',
