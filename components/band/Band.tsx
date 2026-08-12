@@ -144,11 +144,19 @@ export function Band({
             <span key={`loss-${column.index}`} className="relative">
               {column.losses.length > 0 ? (
                 <span className="absolute left-1/2 top-1 flex -translate-x-1/2 flex-col items-center gap-1">
+                  {/*
+                    No `title` on these markers. On a non-focusable span it was
+                    unreachable by keyboard, and the screen readers that do
+                    announce a span's title read the ambiguity class twice —
+                    once from the title and once from the sr-only span below,
+                    which is the accessible copy that belongs to the marker.
+                    The rule id it also carried is in the trace panel, named
+                    and cited, which is where someone looking for it goes.
+                  */}
                   {column.losses.map((loss) => (
                     <span
                       key={`${loss.ruleId}-${loss.latin}`}
                       className="flex items-center gap-1 whitespace-nowrap"
-                      title={`${loss.ruleId} — ${copy.ambiguityClass[loss.ambiguityClass]}`}
                     >
                       <Rhombus size={9} tone="daun" />
                       <span className="font-anotasi text-anotasi text-daun-ink">

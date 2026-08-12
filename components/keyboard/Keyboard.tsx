@@ -21,6 +21,13 @@ import { eyebrow } from '@/components/chrome/eyebrow'
  * Every key names itself to assistive technology. A grid of glyphs a screen
  * reader can only announce as "button" is not a keyboard — and the people
  * using one here are the least likely to have the script installed at all.
+ *
+ * The `title` on each key is kept deliberately. It sits on a button that
+ * already carries an `aria-label`, so a screen reader uses the label and
+ * ignores it — no duplication — while a mouse user gets the code point on
+ * hover. Nothing is title-only: what a key *is* comes from its label, and the
+ * code points are all on the Aksara page. On a non-focusable element a title
+ * would be a genuine problem, which is why the band no longer has one.
  */
 const KEY =
   'flex min-h-[52px] flex-1 flex-col items-center justify-center bg-grid px-2 py-2 hover:bg-gold/10 active:bg-gold/20'
