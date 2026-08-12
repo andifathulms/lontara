@@ -100,7 +100,7 @@ export function ToolInput({
               type="button"
               onClick={() => onChange(example.value)}
               className={`min-h-[36px] border border-gold/50 px-3 py-1 text-lontar/85 hover:border-gold hover:bg-gold/10 hover:text-lontar ${
-                example.aksara ? 'aksara text-2xl leading-tight' : 'font-anotasi text-sm'
+                example.aksara ? 'aksara text-aksara-key' : 'font-anotasi text-sm'
               }`}
             >
               {example.label}

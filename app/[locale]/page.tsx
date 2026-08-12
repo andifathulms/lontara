@@ -73,7 +73,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
           <figcaption className={eyebrow()}>{copy.home.heroLabel}</figcaption>
           <p
             aria-hidden="true"
-            className="aksara mt-3 text-aksara text-lontar"
+            className="aksara mt-3 text-aksara-hero text-lontar"
           >
             {HERO_AKSARA}
           </p>

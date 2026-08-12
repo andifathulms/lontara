@@ -76,7 +76,7 @@ export function Band({
               key={`aksara-${column.index}`}
               /* The highlight is a block of gold on the leaf, not a glow or a
                  rounded pill — the same hard-edged vocabulary as the rest. */
-              className={`aksara py-4 text-center text-5xl leading-none text-grid ${
+              className={`aksara py-4 text-center text-aksara-band text-grid ${
                 isActive(column.index) ? 'bg-gold' : 'bg-lontar'
               }`}
             >

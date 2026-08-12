@@ -44,7 +44,7 @@ export function AttestedForms({
               onClick={() => onPick(form.lontara)}
               className="flex w-full flex-col items-start gap-1 px-4 py-3 text-left hover:bg-gold/10"
             >
-              <span className="aksara text-3xl leading-tight text-lontar">{form.lontara}</span>
+              <span className="aksara text-aksara-row text-lontar">{form.lontara}</span>
               <span className="font-anotasi text-sm text-lontar/85">{form.latin}</span>
               <span className="flex flex-wrap items-center gap-2">
                 <span
@@ -59,7 +59,7 @@ export function AttestedForms({
                 {/* When the rules disagree, say what they produce instead.
                     "differs" without the difference is just a shrug. */}
                 {!form.agrees ? (
-                  <span className="aksara text-xl text-sabbe-ink">{form.produced}</span>
+                  <span className="aksara text-aksara-row text-sabbe-ink">{form.produced}</span>
                 ) : null}
               </span>
             </button>

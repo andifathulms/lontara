@@ -74,7 +74,7 @@ export function Keyboard({
                   title={`${letter.unicodeName} · ${codepoint}`}
                   aria-label={`${letter.onset}a — ${letter.unicodeName}`}
                 >
-                  <span className="aksara text-2xl text-lontar" aria-hidden="true">
+                  <span className="aksara text-aksara-key text-lontar" aria-hidden="true">
                     {fromCodepoint(codepoint)}
                   </span>
                   <span className="font-anotasi text-anotasi text-lontar/65" aria-hidden="true">
@@ -110,7 +110,7 @@ export function Keyboard({
               aria-label={`${sign.latin} — ${sign.unicodeName}`}
               aria-describedby="tanda-vokal-catatan"
             >
-              <span className="aksara text-2xl text-lontar" aria-hidden="true">
+              <span className="aksara text-aksara-key text-lontar" aria-hidden="true">
                 {'◌' + fromCodepoint(sign.codepoint)}
               </span>
               <span className="font-anotasi text-anotasi text-lontar/65" aria-hidden="true">
@@ -131,7 +131,7 @@ export function Keyboard({
             title={`${mark.unicodeName} · ${mark.codepoint}`}
             aria-label={mark.unicodeName}
           >
-            <span className="aksara text-2xl text-lontar" aria-hidden="true">
+            <span className="aksara text-aksara-key text-lontar" aria-hidden="true">
               {fromCodepoint(mark.codepoint)}
             </span>
             <span className="font-anotasi text-anotasi text-lontar/65" aria-hidden="true">

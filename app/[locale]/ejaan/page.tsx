@@ -102,7 +102,7 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
                       </span>
                     ) : null}
                   </td>
-                  <td className="aksara py-1.5 pr-4 text-xl text-lontar">
+                  <td className="aksara py-1.5 pr-4 text-aksara-inline text-lontar">
                     {String.fromCodePoint(Number.parseInt(c.codepoint.slice(2), 16))}
                   </td>
                   <td className="py-1.5 font-anotasi text-anotasi text-lontar/65">

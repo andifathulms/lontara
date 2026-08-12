@@ -198,7 +198,7 @@ export default function SerupaPage({ params }: { params: { locale: string } }) {
           {report.sets.map((set) => (
             <li key={set.lontara} className="bg-grid px-5 py-4">
               <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                <span className="aksara text-3xl text-lontar">{set.lontara}</span>
+                <span className="aksara text-aksara-row text-lontar">{set.lontara}</span>
                 <span className="font-anotasi text-anotasi text-lontar/65">
                   {set.codepoints.join(' ')}
                 </span>

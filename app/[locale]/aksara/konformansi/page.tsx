@@ -68,7 +68,7 @@ export default function ConformancePage({ params }: { params: { locale: string }
                 {String(index + 1).padStart(2, '0')} · {c.id}
               </p>
               {/* The lontar-leaf band the aksara sits on. PRD §10. */}
-              <div className="aksara bg-lontar text-grid px-4 py-5 text-5xl leading-relaxed break-words">
+              <div className="aksara bg-lontar text-grid px-4 py-5 text-aksara-band leading-relaxed break-words">
                 {c.text}
               </div>
               <p className="font-anotasi text-anotasi leading-relaxed text-lontar/65 break-words">

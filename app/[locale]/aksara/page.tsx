@@ -82,7 +82,7 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
             <tbody>
               {INVENTORY.consonants.map((c) => (
                 <tr key={c.codepoint} className="border-b border-lontar/15">
-                  <td className="aksara py-2 pr-4 text-3xl text-lontar">
+                  <td className="aksara py-2 pr-4 text-aksara-row text-lontar">
                     {fromCodepoint(c.codepoint)}
                   </td>
                   <td className="py-2 pr-4 text-lontar">{`${c.onset}a`}</td>
@@ -139,10 +139,10 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
             <tbody>
               {INVENTORY.vowelSigns.map((v) => (
                 <tr key={v.codepoint} className="border-b border-lontar/15">
-                  <td className="aksara py-2 pr-4 text-3xl text-lontar">
+                  <td className="aksara py-2 pr-4 text-aksara-row text-lontar">
                     {DOTTED_CIRCLE + fromCodepoint(v.codepoint)}
                   </td>
-                  <td className="aksara py-2 pr-4 text-3xl text-lontar">
+                  <td className="aksara py-2 pr-4 text-aksara-row text-lontar">
                     {fromCodepoint('U+1A00') + fromCodepoint(v.codepoint)}
                   </td>
                   <td className="py-2 pr-4 text-lontar">{`k${v.latin}`}</td>
@@ -188,7 +188,7 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
             <tbody>
               {INVENTORY.punctuation.map((p) => (
                 <tr key={p.codepoint} className="border-b border-lontar/15">
-                  <td className="aksara py-2 pr-4 text-3xl text-lontar">
+                  <td className="aksara py-2 pr-4 text-aksara-row text-lontar">
                     {fromCodepoint(p.codepoint)}
                   </td>
                   <td className="py-2 pr-4 font-anotasi text-xs text-lontar/65">{p.codepoint}</td>

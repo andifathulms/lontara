@@ -64,16 +64,34 @@ const config: Config = {
         title: ['clamp(1.625rem, 1.4rem + 1.1vw, 2.125rem)', { lineHeight: '1.15' }],
         display: ['clamp(2rem, 1.6rem + 2vw, 3rem)', { lineHeight: '1.1' }],
         /*
-         * One step above `display`, and the only thing set at it: the landing
-         * hero's aksara. Aksara is read by its shape, not skimmed, and the two
-         * glyphs there are the first characters of the script a visitor ever
-         * sees — at `display` they sit level with the heading and read as
-         * decoration beside it.
+         * The aksara scale.
          *
-         * A step in the scale rather than an arbitrary value in the component,
-         * so it stays auditable with the rest.
+         * The script is the one thing every user is here to look at, and it was
+         * set at five different sizes through five different Tailwind defaults
+         * — text-5xl, -3xl, -2xl, -xl and one real step — with nothing saying
+         * which size meant what. The sizes were not wrong; they were ungoverned,
+         * so "how big is aksara in a table row" had six answers and no owner.
+         *
+         * Named by role, not by magnitude, so the question a component asks is
+         * "what is this glyph for" and not "how big should this be". Sizes are
+         * unchanged from what those defaults rendered, except where the old
+         * value was a bug — see AttestedForms.
+         *
+         * Line heights are baked in at what the defaults produced, so no
+         * component needs a `leading-*` beside the size. `.aksara` in
+         * globals.css sets 1.9 for running aksara inside prose; every step here
+         * is a display context and overrides it deliberately.
          */
-        aksara: ['clamp(3.25rem, 2.5rem + 3.5vw, 4.5rem)', { lineHeight: '1' }],
+        /** The specimen. The landing hero — the first characters anyone sees. */
+        'aksara-hero': ['clamp(3.25rem, 2.5rem + 3.5vw, 4.5rem)', { lineHeight: '1' }],
+        /** The writer's output band, and the conformance page's test strings. */
+        'aksara-band': ['3rem', { lineHeight: '1' }],
+        /** A row in a table or a list: the inventory, the collision sets. */
+        'aksara-row': ['1.875rem', { lineHeight: '1.2' }],
+        /** A tap target — keyboard keys, example chips. */
+        'aksara-key': ['1.5rem', { lineHeight: '1.333' }],
+        /** Dense inline glyph inside running text or a tight table cell. */
+        'aksara-inline': ['1.25rem', { lineHeight: '1.4' }],
       },
       /*
        * A line of Gentium at this size runs to ~95 characters inside
