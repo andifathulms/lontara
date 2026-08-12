@@ -107,7 +107,7 @@ export function WriterTool({ locale }: { locale: Locale }) {
         </section>
 
         <section className="space-y-3">
-          <h2 className={eyebrow()}>{copy.writer.traceLabel}</h2>
+          <h3 className={eyebrow()}>{copy.writer.traceLabel}</h3>
           <TracePanel
             trace={trace}
             locale={locale}

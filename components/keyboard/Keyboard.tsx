@@ -51,9 +51,12 @@ export function Keyboard({
 
   return (
     <div className="space-y-3 print:hidden">
-      <h3 className={eyebrow()} id="papan-tombol-judul">
+      {/* A label, not a heading. It already names the key group through
+          `aria-labelledby` below, and as an <h3> sitting above the reader's
+          first <h2> it skipped a level in the page outline for no gain. */}
+      <p className={eyebrow()} id="papan-tombol-judul">
         {copy.writer.keyboardLabel}
-      </h3>
+      </p>
 
       <div
         className="space-y-px bg-gold/25 p-px"

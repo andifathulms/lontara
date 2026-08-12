@@ -120,14 +120,17 @@ export function ReaderTool({ locale }: { locale: Locale }) {
             <ReadingTree tree={result.tree} locale={locale} />
           </>
         ) : (
-          <div className="border-l-4 border-gold bg-gold/10 px-4 py-3 space-y-2">
-            <h3 className={eyebrow()}>
+          <aside
+            aria-labelledby="reader-no-attested"
+            className="border-l-4 border-gold bg-gold/10 px-4 py-3 space-y-2"
+          >
+            <p id="reader-no-attested" className={eyebrow()}>
               {copy.reader.noAttested}
-            </h3>
+            </p>
             <p className="text-sm text-lontar/85">
               {result.lexicon.empty ? copy.reader.lexiconEmpty : copy.reader.noAttestedBody}
             </p>
-          </div>
+          </aside>
         )}
 
         {result.cap.applied ? (
@@ -170,7 +173,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
 
       {result.ambiguities.length > 0 ? (
         <section className="space-y-3">
-          <h2 className={eyebrow('daun')}>
+          <h2 className="text-section text-daun-ink">
             {copy.reader.treeLabel} — {copy.reader.undetermined}
           </h2>
           <AmbiguityPanel
@@ -192,9 +195,9 @@ export function ReaderTool({ locale }: { locale: Locale }) {
           <CodepointView text={result.input.normalized} locale={locale} />
         </section>
         <section className="space-y-3">
-          <h2 className={eyebrow()}>
+          <h3 className={eyebrow()}>
             {copy.writer.traceLabel}
-          </h2>
+          </h3>
           <TracePanel
             trace={{
               input: result.input,

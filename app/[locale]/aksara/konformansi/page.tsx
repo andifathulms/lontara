@@ -60,7 +60,11 @@ export default function ConformancePage({ params }: { params: { locale: string }
         </dl>
       </PageHeader>
 
-      <ol className="space-y-px bg-gold/30">
+      <section className="space-y-4">
+        <h2 className="text-section text-lontar">
+          {locale === 'id' ? 'Kasus uji' : 'Test cases'}
+        </h2>
+        <ol className="space-y-px bg-gold/30">
         {HARD_STRINGS.cases.map((c, index) => (
           <li key={c.id} className="bg-grid px-5 py-6 grid gap-4 md:grid-cols-[1fr_1.2fr]">
             <div className="space-y-3">
@@ -78,32 +82,33 @@ export default function ConformancePage({ params }: { params: { locale: string }
 
             <div className="space-y-3 text-sm">
               <div>
-                <h2 className={eyebrow('quiet')}>
+                <h3 className={eyebrow('quiet')}>
                   {locale === 'id' ? 'Mengapa kasus ini' : 'Why this case'}
-                </h2>
+                </h3>
                 <p className="mt-1 text-lontar/75">{c.why}</p>
               </div>
               <div>
-                <h2 className={eyebrow('quiet')}>
+                <h3 className={eyebrow('quiet')}>
                   {locale === 'id' ? 'Lulus berarti' : 'A pass means'}
-                </h2>
+                </h3>
                 <p className="mt-1 text-lontar/85">{c.expect}</p>
               </div>
             </div>
           </li>
         ))}
-      </ol>
+        </ol>
+      </section>
 
-      <section className="border-l-4 border-gold bg-gold/10 px-4 py-3 space-y-2">
-        <h2 className={eyebrow()}>
+      <aside aria-labelledby="konformansi-open" className="border-l-4 border-gold bg-gold/10 px-4 py-3 space-y-2">
+        <p id="konformansi-open" className={eyebrow()}>
           {locale === 'id' ? 'Kasus yang belum diketahui' : 'Cases not yet identified'}
-        </h2>
+        </p>
         {HARD_STRINGS.openCases.map((o) => (
           <p key={o.note} className="text-sm text-lontar/85">
             {o.note}
           </p>
         ))}
-      </section>
+      </aside>
     </Page>
   )
 }

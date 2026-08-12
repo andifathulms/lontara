@@ -105,10 +105,10 @@ export default function SerupaPage({ params }: { params: { locale: string } }) {
         untrustworthy word list, and a reader who meets the arithmetic first
         will carry away a claim about Bugis that nothing here supports.
       */}
-      <aside className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
-        <h2 className={eyebrow('sabbe')}>
+      <aside aria-labelledby="serupa-scope" className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
+        <p id="serupa-scope" className={eyebrow('sabbe')}>
           {id ? 'Apa yang diukur di sini' : 'What is being measured'}
-        </h2>
+        </p>
         <p className="mt-1 text-sm text-lontar/85">
           {id
             ? 'Yang diukur adalah leksikon ini di bawah himpunan aturan ini — bukan Basa Ugi. Seluruh 1.323 lema diambil dari Wikipedia Basa Ugi dan semuanya berstatus attestation: "corpus": bentuknya muncul di teks, dan tidak lebih dari itu. Korpus yang sama memuat kata Indonesia, Inggris, dan nama tempat asing, dan tidak ada apa pun di repositori ini yang bisa membedakannya. Itu terlihat jelas di bawah: himpunan terbesar di halaman ini berisi delapan kata Inggris. Mekanisme yang diperagakan nyata dan dihitung dengan benar; kosakata tempat ia dihitung belum layak dipercaya.'
@@ -180,10 +180,10 @@ export default function SerupaPage({ params }: { params: { locale: string } }) {
         </ul>
 
         {report.setsByClass.prenasal === 0 ? (
-          <aside className="border-l-4 border-gold bg-gold/10 px-4 py-3">
-            <h3 className={eyebrow()}>
+          <aside aria-labelledby="serupa-prenasal" className="border-l-4 border-gold bg-gold/10 px-4 py-3">
+            <p id="serupa-prenasal" className={eyebrow()}>
               {id ? 'Pranasalisasi tidak muncul sama sekali' : 'Prenasalisation does not appear'}
-            </h3>
+            </p>
             <p className="mt-1 max-w-measure text-sm text-lontar/85">
               {id
                 ? 'Tidak satu pun tumpukan di leksikon ini disebabkan oleh pranasalisasi. Itu temuan, bukan bukti bahwa kelasnya tidak perlu — bisa jadi leksikon Wikipedia ini memang tidak memuat gugus nasal+hambat yang relevan, bisa jadi cakupan pranasal di aturan memang belum tepat. Pertanyaannya masih terbuka: lihat openQuestions.prenasal-coverage di halaman Ejaan.'

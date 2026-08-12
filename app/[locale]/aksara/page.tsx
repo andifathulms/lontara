@@ -49,10 +49,10 @@ export default function AksaraPage({ params }: { params: { locale: string } }) {
 
       {/* No virama. This is the fact the whole project follows from, so it is
           stated on the reference page and not only in the prose. */}
-      <aside className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
-        <h2 className={eyebrow('sabbe')}>
+      <aside aria-labelledby="aksara-virama" className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
+        <p id="aksara-virama" className={eyebrow('sabbe')}>
           {locale === 'id' ? 'Tidak ada virama' : 'No virama'}
-        </h2>
+        </p>
         <p className="mt-1 text-sm text-lontar/85">{INVENTORY.block.viramaNote}</p>
       </aside>
 

@@ -54,10 +54,10 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
         </p>
       </PageHeader>
 
-      <aside className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
-        <h2 className={eyebrow('sabbe')}>
+      <aside aria-labelledby="ejaan-scope" className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3">
+        <p id="ejaan-scope" className={eyebrow('sabbe')}>
           {id ? 'Apa yang belum ada di sini' : 'What is not here'}
-        </h2>
+        </p>
         <p className="mt-1 text-sm text-lontar/85">
           {id
             ? 'Halaman ini belum dapat menyebut satu pun ejaan Latin Bugis yang baku, karena belum ada satu pun sumber ejaan yang dibaca. Yang ada di bawah diturunkan dari pengkodean Unicode — nama karakter dan ketiadaan virama — bukan dari kamus, buku ajar, atau ketetapan Badan Bahasa. Itu perbedaan yang besar, dan tidak disamarkan.'

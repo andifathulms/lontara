@@ -96,9 +96,17 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         Two rows now, each under its own label: the tools, then the reference
         pages you go to second.
       */}
-      <nav className="space-y-8" aria-label={copy.siteName}>
-        <div className="space-y-3">
-          <h2 className={eyebrow()}>{copy.home.groupTools}</h2>
+      {/*
+        Two labelled regions rather than one nav holding two eyebrow-sized
+        <h2>s. The labels are labels — 12px and letterspaced — and as headings
+        they ranked level with section headings three times their size, so the
+        page outline read as five equal siblings that plainly were not. Each
+        group now names its own nav, which also replaces an outer landmark
+        labelled "Lontara", the site's name rather than the region's.
+      */}
+      <div className="space-y-8">
+        <nav aria-labelledby="nav-tools" className="space-y-3">
+          <p id="nav-tools" className={eyebrow()}>{copy.home.groupTools}</p>
           <div className="grid gap-px bg-gold/30 md:grid-cols-2">
             {TOOLS.map((section) => (
               <Link
@@ -133,10 +141,10 @@ export default function HomePage({ params }: { params: { locale: string } }) {
               </Link>
             ))}
           </div>
-        </div>
+        </nav>
 
-        <div className="space-y-3">
-          <h2 className={eyebrow('quiet')}>{copy.home.groupReference}</h2>
+        <nav aria-labelledby="nav-reference" className="space-y-3">
+          <p id="nav-reference" className={eyebrow('quiet')}>{copy.home.groupReference}</p>
           <div className="grid gap-px bg-gold/30 md:grid-cols-2">
             {REFERENCE.map((section) => (
               <Link
@@ -156,8 +164,8 @@ export default function HomePage({ params }: { params: { locale: string } }) {
               </Link>
             ))}
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       {/*
         Both notices are unmissable, as Notice.tsx intends — but they used to
