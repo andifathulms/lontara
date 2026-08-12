@@ -55,7 +55,10 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           <span className="text-wordmark tracking-wide text-lontar">{copy.siteName}</span>
         </Link>
 
-        <nav aria-label={copy.siteName} className="flex flex-wrap">
+        {/* Named for what the region is, not for the site it is on. The site
+            name is already the link immediately before this, so repeating it
+            here labelled the landmark with the one word it did not need. */}
+        <nav aria-label={copy.common.sections} className="flex flex-wrap">
           {SECTIONS.map((section) => {
             const current = isCurrent(section)
             /*

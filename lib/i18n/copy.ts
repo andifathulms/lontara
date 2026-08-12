@@ -183,6 +183,8 @@ export type Copy = {
     tryExample: string
     backspace: string
     skipToContent: string
+    /** Names the header nav landmark. */
+    sections: string
     currentPage: string
     opensInNewTab: string
     builtBy: string
@@ -373,6 +375,7 @@ const id: Copy = {
     tryExample: 'Coba',
     backspace: 'Hapus satu aksara',
     skipToContent: 'Langsung ke isi',
+    sections: 'Bagian',
     currentPage: 'halaman ini',
     opensInNewTab: 'membuka tab baru',
     builtBy: 'Dirancang & dibangun oleh',
@@ -565,6 +568,7 @@ const en: Copy = {
     tryExample: 'Try',
     backspace: 'Delete one character',
     skipToContent: 'Skip to content',
+    sections: 'Sections',
     currentPage: 'current page',
     opensInNewTab: 'opens in a new tab',
     builtBy: 'Designed & built by',
