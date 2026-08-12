@@ -93,12 +93,61 @@ export type SegmentationRule = z.infer<typeof SegmentationRule>
 export type CompositionRule = z.infer<typeof CompositionRule>
 export type LossRule = z.infer<typeof LossRule>
 
+/**
+ * Which forms an unanswered question actually decides.
+ *
+ * A question recorded as prose says *that* something is unknown. It never says
+ * what turns on it, so the cost of not knowing stays invisible and "please
+ * review our orthography" stays an unbounded request that a reviewer defers.
+ * This is the declarative half of the answer: a selector over the engine's own
+ * output, so the affected set is computed from what the writer really does
+ * rather than estimated.
+ *
+ * Deliberately NOT a second rule set. Running the counterfactual — actually
+ * writing every form under the *other* answer — would need the engine
+ * parameterised by rule set, which it is not, and for
+ * `openQuestions.prenasal-coverage` it would need a prenasal-generalisation
+ * rule that this repository has explicitly declined to write on two pieces of
+ * evidence. Sizing the question needs neither, and claims only what it can
+ * compute: these are the forms whose output depends on the answer.
+ *
+ * `basis` carries the same burden `citation` carries on a rule — it has to say
+ * why this selector is the right set for this question, so the choice is
+ * auditable rather than asserted.
+ *
+ * Optional. A question that cannot be sized honestly does not get a selector,
+ * and the page says it is not sized rather than inventing a number.
+ */
+const AffectsSchema = z.discriminatedUnion('kind', [
+  z.object({
+    kind: z.literal('outputCodepoint'),
+    /** The written form contains any of these. */
+    codepoints: z.array(z.string().regex(/^U\+1A[0-9A-F]{2}$/)).nonempty(),
+    basis: z.string().min(20, 'a basis this short does not explain the selector'),
+  }),
+  z.object({
+    kind: z.literal('ambiguityClass'),
+    /** The writer declared a loss of this class for the form. */
+    ambiguityClass: z.enum(AMBIGUITY_CLASSES),
+    basis: z.string().min(20, 'a basis this short does not explain the selector'),
+  }),
+  z.object({
+    kind: z.literal('latinContains'),
+    /** The lexicon's own spelling contains any of these. */
+    substrings: z.array(z.string().min(1)).nonempty(),
+    basis: z.string().min(20, 'a basis this short does not explain the selector'),
+  }),
+])
+
+export type Affects = z.infer<typeof AffectsSchema>
+
 const OpenQuestionSchema = z.object({
   id: z.string().regex(/^openQuestions\.[a-z][a-z0-9-]*$/),
   blocks: z.array(z.string()),
   question: z.string().min(1),
   why: z.string().min(1),
   askWhom: z.string().min(1),
+  affects: AffectsSchema.optional(),
 })
 
 export type OpenQuestion = z.infer<typeof OpenQuestionSchema>

@@ -178,14 +178,29 @@
       ],
       "question": "Is the Latin form of U+1A13 `w` (as every attested pair writes it) or `v` (as the Unicode character name suggests)?",
       "why": "Settled in practice, not in principle. Every one of the attested pairs in data/corpus/bugwiki-pairs.json writes `w` and none writes `v`, so v0.2.0 takes `w` as the onset and accepts `v` only on input. What is still missing is confirmation that `w` is standard rather than merely what Wikipedia contributors do.",
-      "askWhom": "Badan Bahasa South Sulawesi; the dictionaries in PRD Appendix A"
+      "askWhom": "Badan Bahasa South Sulawesi; the dictionaries in PRD Appendix A",
+      "affects": {
+        "kind": "outputCodepoint",
+        "codepoints": [
+          "U+1A13"
+        ],
+        "basis": "U+1A13 is the only letter whose Latin onset this question disputes, so the forms whose written output contains it are exactly the forms whose reading changes if the answer is `v` rather than `w`."
+      }
     },
     {
       "id": "openQuestions.vowel-sign-e-ae",
       "blocks": [],
       "question": "Which Latin vowels do U+1A19 VOWEL SIGN E and U+1A1B VOWEL SIGN AE correspond to?",
       "why": "Answered in practice and CHANGED in v0.2.0. The Unicode character names gave `e` for U+1A19 and `ae` for U+1A1B; roughly thirty independent attested pairs say the opposite assignment — plain `e` takes U+1A1B (Bekasi, Wettu, Peddang, Jeppang, Halaleng) and `é` takes U+1A19 (Sapéda, Sulawési, Baruné, Watamponé, Sawérigading). The old mapping meant the writer silently dropped every `é`, losing a whole syllable in a word like Sapéda. What remains open is whether this is standard orthography, and what phonemes the two signs represent — /ə/ versus /e/ is the obvious guess and a guess is all it is.",
-      "askWhom": "Badan Bahasa South Sulawesi; a Bugis reviewer"
+      "askWhom": "Badan Bahasa South Sulawesi; a Bugis reviewer",
+      "affects": {
+        "kind": "outputCodepoint",
+        "codepoints": [
+          "U+1A19",
+          "U+1A1B"
+        ],
+        "basis": "The question is which Latin vowel each of these two signs carries, so every form written with either sign is a form whose Latin reading the answer decides. v0.2.0 already swapped them once; this is the set that moved."
+      }
     },
     {
       "id": "openQuestions.prenasal-coverage",
@@ -194,28 +209,54 @@
       ],
       "question": "Four prenasal clusters are written with dedicated letters (ngk, mp, nr, nyc). What happens to every other nasal+stop cluster?",
       "why": "PRD §2 states flatly that prenasalisation is not written, but the block plainly writes four of them. Either the statement is a simplification or the four letters are used differently than their names suggest. The reader's enumeration of the `prenasal` class depends on the answer.\n\nTWO attested pairs bear on it, and both point the same way — that the prenasal letter is chosen by the SECOND element, whichever nasal precedes it: Watangpola → ᨓᨈᨇᨚᨒ writes `ngp` with U+1A07 MPA, and Perancisiq → ᨄᨛᨑᨏᨗᨔᨗ writes `nc` with U+1A0F NYCA. DELIBERATELY NOT ACTED ON. Two instances is thin, either could be an article error, and generalising would change `manka` from MA KA to MA NGKA — a real behaviour change on weak evidence. The rule set still drops such a nasal and declares the loss, and these two pairs are the reason to ask a reviewer rather than the reason to guess.",
-      "askWhom": "A Bugis reviewer who reads manuscript Lontara; Everson's encoding proposals (PRD Appendix A)"
+      "askWhom": "A Bugis reviewer who reads manuscript Lontara; Everson's encoding proposals (PRD Appendix A)",
+      "affects": {
+        "kind": "ambiguityClass",
+        "ambiguityClass": "prenasal",
+        "basis": "A nasal that the writer drops and declares as the prenasal class is precisely a nasal the four dedicated letters did not cover. If the letters generalise, these are the forms that stop losing it."
+      }
     },
     {
       "id": "openQuestions.final-inventory",
       "blocks": [],
       "question": "Which consonants can close a syllable in Bugis, and with what relative frequency?",
       "why": "It would let the reader enumerate `final` readings structurally rather than only where the lexicon attests them. Deliberately NOT guessed at: a structural enumerator seeded with an invented set of possible finals would produce a confident-looking tree of readings that are not Bugis. Until the set is cited, enumeration stays lexicon-driven and says so.",
-      "askWhom": "The dictionaries in PRD Appendix A; a Bugis reviewer"
+      "askWhom": "The dictionaries in PRD Appendix A; a Bugis reviewer",
+      "affects": {
+        "kind": "ambiguityClass",
+        "ambiguityClass": "final",
+        "basis": "The reader cannot branch structurally over syllable-final consonants without a cited inventory of them. Every form the writer records a final loss on is a form that inventory would have to account for."
+      }
     },
     {
       "id": "openQuestions.pallawa",
       "blocks": [],
       "question": "What does PALLAWA (U+1A1E) separate, and how should it and END OF SECTION (U+1A1F) be represented in Latin?",
       "why": "The writer cannot emit either mark and the reader cannot read one back until this is answered. inventory.json carries `latin: null` for both rather than assuming pallawa is a space.",
-      "askWhom": "The dictionaries and textbook sources in PRD Appendix A; a Bugis reviewer"
+      "askWhom": "The dictionaries and textbook sources in PRD Appendix A; a Bugis reviewer",
+      "affects": {
+        "kind": "outputCodepoint",
+        "codepoints": [
+          "U+1A1E",
+          "U+1A1F"
+        ],
+        "basis": "The two punctuation marks are the whole subject of the question. A count of zero over a single-word lexicon is itself the finding: this question cannot be sized until the repository holds running text."
+      }
     },
     {
       "id": "openQuestions.vowel-sign-position",
       "blocks": [],
       "question": "Which side do VOWEL SIGN E (U+1A19) and VOWEL SIGN O (U+1A1A) render on?",
       "why": "Both are spacing marks (Mc) with no UCD combining class, so the encoding does not answer it. This is a rendering question, and the conformance page answers it by eye rather than inventory.json asserting it.",
-      "askWhom": "Nobody — check /aksara/konformansi on a real device and record the answer."
+      "askWhom": "Nobody — check /aksara/konformansi on a real device and record the answer.",
+      "affects": {
+        "kind": "outputCodepoint",
+        "codepoints": [
+          "U+1A19",
+          "U+1A1A"
+        ],
+        "basis": "A rendering question rather than an orthographic one, so the affected set is every form written with either sign — those are the forms that would look wrong on a device that places them on the other side."
+      }
     },
     {
       "id": "openQuestions.glottal-q",
@@ -224,7 +265,14 @@
       ],
       "question": "Is word-final `q` in Bugis Latin the glottal stop, or a final /k/, or does it vary?",
       "why": "It changes which ambiguity class the writer declares, and nothing else — both are unwritten in Lontara, so the aksara output is byte-identical either way. Recorded so the label can be corrected rather than quietly trusted.",
-      "askWhom": "Badan Bahasa South Sulawesi; a Bugis reviewer"
+      "askWhom": "Badan Bahasa South Sulawesi; a Bugis reviewer",
+      "affects": {
+        "kind": "latinContains",
+        "substrings": [
+          "q"
+        ],
+        "basis": "The question is what `q` in Bugis Latin represents, so the affected forms are the ones the lexicon actually spells with it. Matched anywhere in the form rather than word-finally only, which over-selects rather than under-selects — the wider set is the honest one to hand a reviewer."
+      }
     }
   ]
 }

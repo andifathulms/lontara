@@ -4,7 +4,9 @@ import { getCopy } from '@/lib/i18n/copy'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { href } from '@/lib/paths'
 import { INVENTORY } from '@/lib/rules/inventory'
-import { RULE_SET, RULES, OPEN_QUESTIONS, PROVISIONAL_RULES } from '@/lib/rules/loader'
+import { RULE_SET, RULES, PROVISIONAL_RULES } from '@/lib/rules/loader'
+import { openQuestionImpact } from '@/lib/analysis/impact'
+import { LEXICON } from '@/lib/lexicon/loader'
 import { AMBIGUITY_CLASSES } from '@/lib/rules/schema'
 import { Rhombus } from '@/components/ambiguity/Rhombus'
 import { eyebrow } from '@/components/chrome/eyebrow'
@@ -35,6 +37,13 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
   const locale: Locale = params.locale
   const copy = getCopy(locale)
   const id = locale === 'id'
+
+  /* Sized at build time from the shipped engine. Sorted by leverage: an unsized
+     question has no claim on a reviewer's attention ahead of one that decides
+     565 forms, so it sorts last rather than first. */
+  const IMPACT = [...openQuestionImpact(LEXICON)].sort(
+    (a, b) => Number(b.sized) - Number(a.sized) || b.affected - a.affected,
+  )
 
   return (
     <Page>
@@ -221,15 +230,60 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
         <h2 className="text-section text-lontar">{copy.ejaan.openQuestions}</h2>
         <p className="max-w-measure text-sm text-lontar/75">
           {id
-            ? 'Tidak ditebak. Masing-masing menyebut siapa yang harus ditanya.'
-            : 'Not guessed at. Each one names who to ask.'}
+            ? 'Tidak ditebak. Masing-masing menyebut siapa yang harus ditanya — dan berapa banyak bentuk yang jawabannya menentukan.'
+            : 'Not guessed at. Each one names who to ask — and how many forms its answer decides.'}
         </p>
+
+        {/*
+          Ordered by how much each question decides, not by the order they were
+          written down. A reviewer with twenty minutes should meet the question
+          with the most leverage first; that ordering is the point of sizing
+          them at all.
+        */}
+        <p className="max-w-measure text-sm text-lontar/65">
+          {id
+            ? `Diurutkan menurut jumlah bentuk yang terpengaruh, dari ${IMPACT[0]?.total.toLocaleString('id') ?? 0} bentuk berbeda di leksikon. Angka ini menyebutkan bentuk mana yang bergantung pada jawaban — bukan akan jadi apa bentuk itu nanti. Untuk mengetahuinya, pertanyaannya harus dijawab dahulu.`
+            : `Ordered by how many forms each affects, out of the ${IMPACT[0]?.total.toLocaleString('en') ?? 0} distinct forms in the lexicon. The number says which forms depend on the answer — not what they would become. Knowing that requires the answer first.`}
+        </p>
+
         <ol className="space-y-px bg-gold/25">
-          {OPEN_QUESTIONS.map((q) => (
+          {IMPACT.map(({ question: q, sized, affected, total, samples, basis }) => (
             <li key={q.id} className="bg-grid px-4 py-4">
-              <p className="font-anotasi text-xs text-gold">{q.id}</p>
+              <div className="flex flex-wrap items-baseline gap-x-4">
+                <p className="font-anotasi text-xs text-gold">{q.id}</p>
+                <p className={`ml-auto ${eyebrow(affected > 0 ? 'daun' : 'quiet', 'sm')}`}>
+                  {!sized
+                    ? id
+                      ? 'belum terukur'
+                      : 'not sized'
+                    : id
+                      ? `${affected.toLocaleString('id')} dari ${total.toLocaleString('id')} bentuk`
+                      : `${affected.toLocaleString('en')} of ${total.toLocaleString('en')} forms`}
+                </p>
+              </div>
+
               <p className="mt-1 text-lontar/85">{q.question}</p>
               <p className="mt-2 text-sm text-lontar/75">{q.why}</p>
+
+              {/* Forms only, never meanings (invariant 16). */}
+              {samples.length > 0 ? (
+                <p className="mt-2 text-sm text-lontar/85">
+                  <span className={eyebrow('quiet', 'sm')}>
+                    {id ? 'Misalnya' : 'For example'}{' '}
+                  </span>
+                  {samples.join(' · ')}
+                  {affected > samples.length ? (
+                    <span className="text-lontar/65">
+                      {id ? ` … dan ${(affected - samples.length).toLocaleString('id')} lagi` : ` … and ${(affected - samples.length).toLocaleString('en')} more`}
+                    </span>
+                  ) : null}
+                </p>
+              ) : null}
+
+              {/* Why this is the right set to count. The same burden a rule's
+                  citation carries, and validated the same way. */}
+              {basis ? <p className="mt-2 text-xs text-lontar/65">{basis}</p> : null}
+
               <p className="mt-2 font-anotasi text-anotasi text-lontar/65">
                 {id ? 'Tanya' : 'Ask'}: {q.askWhom}
               </p>

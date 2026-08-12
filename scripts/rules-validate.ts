@@ -12,7 +12,10 @@
  *      used, and the set is exactly the four in the schema (invariant 3).
  *   5. Every `provisional` rule carries a note saying what is unverified.
  *   6. Open questions reference rules that exist; every provisional rule is
- *      covered by an open question, so nothing unverified ships unasked.
+ *      covered by an open question, so nothing unverified ships unasked. An
+ *      `affects` selector points only at codepoints and ambiguity classes that
+ *      are really declared — the Ejaan page renders it as a count, and a
+ *      selector aimed at nothing would print a confident zero.
  *   7. Every codepoint in inventory.json exists in the font we ship, read out of
  *      the font's own cmap. A transcription slip fails here, not on a reader's
  *      screen.
@@ -134,6 +137,38 @@ for (const r of ruleSet.rules) {
     fail(
       `${r.id} is provisional but no open question covers it. ` +
         `Nothing unverified ships without a recorded question and someone to ask.`,
+    )
+  }
+}
+
+/*
+ * An `affects` selector is rendered as a count of real forms on the Ejaan page,
+ * so a selector pointing at a codepoint the script does not have would put a
+ * confident zero next to a question — indistinguishable from "nothing depends
+ * on this". Checked against the inventory the same way rules are.
+ */
+const inventoryCodepoints = new Set([
+  ...inventory.consonants.map((c) => c.codepoint),
+  ...inventory.vowelSigns.map((v) => v.codepoint),
+  ...inventory.punctuation.map((p) => p.codepoint),
+])
+
+for (const q of ruleSet.openQuestions) {
+  const affects = q.affects
+  if (!affects) continue
+
+  if (affects.kind === 'outputCodepoint') {
+    for (const cp of affects.codepoints) {
+      if (!inventoryCodepoints.has(cp)) {
+        fail(`${q.id} is sized by ${cp}, which inventory.json does not declare`)
+      }
+    }
+  }
+
+  if (affects.kind === 'ambiguityClass' && !declared.has(affects.ambiguityClass)) {
+    fail(
+      `${q.id} is sized by ambiguity class "${affects.ambiguityClass}", ` +
+        `which rules.json does not declare`,
     )
   }
 }
