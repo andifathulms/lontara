@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getCopy } from '@/lib/i18n/copy'
+import { pageMetadata } from '@/lib/metadata'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { HARD_STRINGS } from '@/lib/rendering/hardStrings'
 import { eyebrow } from '@/components/chrome/eyebrow'
@@ -11,7 +12,8 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id'
-  return { title: getCopy(locale).aksara.conformanceLink }
+  const copy = getCopy(locale)
+  return pageMetadata({ locale, segments: ['aksara', 'konformansi'], title: copy.aksara.conformanceLink, description: copy.aksara.conformanceLead })
 }
 
 /**
@@ -32,11 +34,7 @@ export default function ConformancePage({ params }: { params: { locale: string }
     <Page>
       <PageHeader
         title={copy.aksara.conformanceLink}
-        lead={
-          locale === 'id'
-            ? 'Buka halaman ini di perangkat sungguhan. Setiap kasus menampilkan rangkaiannya besar-besar, titik kodenya di bawah, dan apa yang dihitung lulus. Rangkaian aksara di bawah dibangun dari daftar titik kode, bukan dari teks harfiah, jadi keduanya tidak mungkin berbeda.'
-            : 'Open this page on a real device. Each case shows its string large, its codepoints beneath, and what counts as a pass. The aksara below is built from the codepoint list rather than from a literal, so the two cannot drift apart.'
-        }
+        lead={copy.aksara.conformanceLead}
       >
         <dl className="font-anotasi text-xs text-lontar/65 space-y-1">
           <div>

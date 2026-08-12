@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getCopy } from '@/lib/i18n/copy'
+import { pageMetadata } from '@/lib/metadata'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { href } from '@/lib/paths'
 import { encodeShareHash } from '@/lib/share/hash'
@@ -17,7 +18,8 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id'
-  return { title: getCopy(locale).aksara.collisionsLink }
+  const copy = getCopy(locale)
+  return pageMetadata({ locale, segments: ['aksara', 'serupa'], title: copy.aksara.collisionsLink, description: copy.aksara.collisionsLead })
 }
 
 /**
@@ -91,11 +93,7 @@ export default function SerupaPage({ params }: { params: { locale: string } }) {
     <Page>
       <PageHeader
         title={copy.aksara.collisionsLink}
-        lead={
-          id
-            ? 'PRD §2 memperagakan sifat defektif aksara dengan tiga kata pilihan: mata, matta, manta. Halaman ini mengukur sifat yang sama pada kosakata yang benar-benar ada di repositori ini — setiap lema dituliskan dengan penulis yang sama yang dipakai di halaman Tulis, lalu dikelompokkan menurut rangkaian Lontara yang dihasilkannya.'
-            : 'PRD §2 demonstrates the script’s defectiveness with three chosen words: mata, matta, manta. This page measures the same property against the vocabulary the repository actually holds — every entry written with the same writer the Tulis page uses, then grouped by the Lontara string it produced.'
-        }
+        lead={copy.aksara.collisionsLead}
       >
         <p className="font-anotasi text-xs text-lontar/65">
           rules.json v{report.ruleSetVersion} · {report.reviewStatus} · lexicon v

@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getCopy } from '@/lib/i18n/copy'
+import { pageMetadata } from '@/lib/metadata'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { NotTranslatorNotice, ReviewerGateNotice } from '@/components/chrome/Notice'
 import { Page, PageHeader } from '@/components/chrome/Page'
@@ -11,7 +12,8 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id'
-  return { title: getCopy(locale).writer.title, description: getCopy(locale).writer.lead }
+  const copy = getCopy(locale)
+  return pageMetadata({ locale, segments: ['tulis'], title: copy.writer.title, description: copy.writer.lead })
 }
 
 export default function TulisPage({ params }: { params: { locale: string } }) {

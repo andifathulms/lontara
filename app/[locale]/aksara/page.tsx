@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getCopy } from '@/lib/i18n/copy'
+import { pageMetadata } from '@/lib/metadata'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { href } from '@/lib/paths'
 import { INVENTORY, fromCodepoint } from '@/lib/rules/inventory'
@@ -14,7 +15,8 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id'
-  return { title: getCopy(locale).aksara.title, description: getCopy(locale).aksara.lead }
+  const copy = getCopy(locale)
+  return pageMetadata({ locale, segments: ['aksara'], title: copy.aksara.title, description: copy.aksara.lead })
 }
 
 const DOTTED_CIRCLE = '◌'

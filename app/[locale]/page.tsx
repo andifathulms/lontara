@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getCopy } from '@/lib/i18n/copy'
+import { pageMetadata } from '@/lib/metadata'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { href } from '@/lib/paths'
 import { INVENTORY, fromCodepoint } from '@/lib/rules/inventory'
@@ -14,6 +15,12 @@ import { Page } from '@/components/chrome/Page'
 
 export function generateStaticParams() {
   return localeParams()
+}
+
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale: Locale = isLocale(params.locale) ? params.locale : 'id'
+  // No `title`: the home page IS the site, so it keeps the full site title.
+  return pageMetadata({ locale, description: getCopy(locale).tagline })
 }
 
 /** The product. `baca` first — it is the flagship (PRD §3). */

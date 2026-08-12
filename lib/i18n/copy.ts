@@ -142,6 +142,11 @@ export type Copy = {
     inherentVowel: string
     columns: { glyph: string; codepoint: string; unicodeName: string; latin: string; note: string }
     conformanceLink: string
+    /** Lead paragraphs for the two subpages. Held here, not inline in the
+     *  page, so each one's description and its on-page prose are one string —
+     *  a description that drifts from the page is worse than none. */
+    conformanceLead: string
+    collisionsLead: string
     /** The collision index. Prose for that page is written inline there, as the
      *  conformance page does — only the shared label lives here. */
     collisionsLink: string
@@ -346,6 +351,10 @@ const id: Copy = {
     inherentVowel: 'Setiap huruf konsonan membawa vokal inheren /a/. Tanda vokal menggantikannya.',
     columns: { glyph: 'Bentuk', codepoint: 'Titik kode', unicodeName: 'Nama Unicode', latin: 'Latin', note: 'Catatan' },
     conformanceLink: 'Uji ketepatan tampilan',
+    conformanceLead:
+      'Buka halaman ini di perangkat sungguhan. Setiap kasus menampilkan rangkaiannya besar-besar, titik kodenya di bawah, dan apa yang dihitung lulus. Rangkaian aksara di bawah dibangun dari daftar titik kode, bukan dari teks harfiah, jadi keduanya tidak mungkin berbeda.',
+    collisionsLead:
+      'PRD §2 memperagakan sifat defektif aksara dengan tiga kata pilihan: mata, matta, manta. Halaman ini mengukur sifat yang sama pada kosakata yang benar-benar ada di repositori ini — setiap lema dituliskan dengan penulis yang sama yang dipakai di halaman Tulis, lalu dikelompokkan menurut rangkaian Lontara yang dihasilkannya.',
     collisionsLink: 'Kata yang ditulis serupa',
     mergeNote:
       'Dua lema digabung karena aturan menganggapnya satu kata: `aba\'` dan `abaq` sama di bawah latin.glottal.q, begitu pula `untu\'` dan `untuq`. Menghitung ejaannya satu per satu akan melaporkan sebuah kata bertumpuk dengan dirinya sendiri.',
@@ -547,6 +556,10 @@ const en: Copy = {
     inherentVowel: 'Every consonant letter carries the inherent vowel /a/. A vowel sign replaces it.',
     columns: { glyph: 'Glyph', codepoint: 'Codepoint', unicodeName: 'Unicode name', latin: 'Latin', note: 'Note' },
     conformanceLink: 'Rendering conformance',
+    conformanceLead:
+      'Open this page on a real device. Each case shows its string large, its codepoints beneath, and what counts as a pass. The aksara below is built from the codepoint list rather than from a literal, so the two cannot drift apart.',
+    collisionsLead:
+      'PRD §2 demonstrates the script’s defectiveness with three chosen words: mata, matta, manta. This page measures the same property against the vocabulary the repository actually holds — every entry written with the same writer the Tulis page uses, then grouped by the Lontara string it produced.',
     collisionsLink: 'Words written alike',
     mergeNote:
       'Two entries merge because the rules treat them as one word: `aba\'` and `abaq` are the same under latin.glottal.q, as are `untu\'` and `untuq`. Counting the spellings separately would report a word colliding with itself.',
