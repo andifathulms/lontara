@@ -49,14 +49,48 @@ const config: Config = {
         anotasi: ['var(--font-anotasi)', 'ui-monospace', 'monospace'],
       },
       /*
-       * One scale, fluid where it earns it. Before this there were eleven
-       * hand-picked sizes across the app and two of them (10px with
-       * `tracking-widest`) sat under the legible floor.
+       * The type scale. Every size the interface may use is here, and
+       * tests/scale.test.ts fails the build on any that is not.
        *
-       * `anotasi` is that floor: 11px, the smallest size Space Mono stays
+       * It reads as four ladders because the interface has four jobs:
+       *
+       *   prose      xs · sm · base            secondary lines, tables, notes
+       *   semantic   anotasi · eyebrow · lead · section · title · display
+       *   aksara     aksara-hero · -band · -row · -inline
+       *   interface  field · glyph · wordmark
+       *
+       * That is more steps than the comment this replaces admitted to, and
+       * fewer than the interface was actually using. The old note claimed one
+       * scale and eleven consolidated sizes; in practice the semantic ladder
+       * was declared and everything else reached for a Tailwind default —
+       * text-5xl, -3xl, -2xl, -xl, -base, -sm, -xs plus two arbitrary pixel
+       * values leaked in from a comment. Declared or not, they were all in
+       * the stylesheet and all on the screen.
+       *
+       * `anotasi` is the floor: 11px, the smallest size Space Mono stays
        * readable at once letterspaced. Nothing may be smaller.
        */
       fontSize: {
+        /*
+         * Tailwind's own three prose steps, pinned here at exactly their
+         * default values.
+         *
+         * They are not redefined — they are written down. The comment below
+         * claimed this project had one type scale; it had two, this one and
+         * the semantic ladder, and only the second was declared. `text-sm`
+         * carries 54 of the interface's secondary lines and `text-xs` another
+         * 38, so calling them "not part of the scale" described nothing that
+         * was true. Pinning them makes the scale complete in one file and
+         * makes a future change to secondary text one edit rather than 54.
+         *
+         * `xs` is deliberately the same size as `eyebrow`: an eyebrow IS this
+         * size, plus uppercase and letterspacing. That is one size with two
+         * treatments, not two sizes.
+         */
+        xs: ['0.75rem', { lineHeight: '1rem' }],
+        sm: ['0.875rem', { lineHeight: '1.25rem' }],
+        base: ['1rem', { lineHeight: '1.5rem' }],
+
         anotasi: ['0.6875rem', { lineHeight: '1.5' }],
         eyebrow: ['0.75rem', { lineHeight: '1.4', letterSpacing: '0.12em' }],
         lead: ['clamp(1.0625rem, 1.0125rem + 0.25vw, 1.1875rem)', { lineHeight: '1.6' }],
@@ -88,10 +122,25 @@ const config: Config = {
         'aksara-band': ['3rem', { lineHeight: '1' }],
         /** A row in a table or a list: the inventory, the collision sets. */
         'aksara-row': ['1.875rem', { lineHeight: '1.2' }],
-        /** A tap target — keyboard keys, example chips. */
-        'aksara-key': ['1.5rem', { lineHeight: '1.333' }],
         /** Dense inline glyph inside running text or a tight table cell. */
         'aksara-inline': ['1.25rem', { lineHeight: '1.4' }],
+
+        /*
+         * Three interface roles that are not prose and not aksara-specific.
+         * Each was a bare Tailwind default used once or twice with nothing
+         * saying what it was for.
+         */
+        /** The tool input. One size whichever script is being typed into it. */
+        field: ['1.875rem', { lineHeight: '1.2' }],
+        /**
+         * A large single glyph or short string inside a control or panel:
+         * keyboard keys, the backspace mark that has to sit level with them,
+         * example chips, the reader's skeleton line. Script-neutral on
+         * purpose — the backspace ⌫ is not aksara but must match the key row.
+         */
+        glyph: ['1.5rem', { lineHeight: '1.333' }],
+        /** The wordmark beside the mark. Fixed: brand does not scale with the page. */
+        wordmark: ['1.25rem', { lineHeight: '1.2' }],
       },
       /*
        * A line of Gentium at this size runs to ~95 characters inside

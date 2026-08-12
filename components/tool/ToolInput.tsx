@@ -72,7 +72,7 @@ export function ToolInput({
           spellCheck={false}
           /* The border lives on the wrapper so the clear button sits inside
              the same frame; the input's own outline would draw a second box. */
-          className={`min-w-0 flex-1 bg-transparent px-4 py-3 text-3xl text-lontar placeholder:text-base placeholder:text-lontar/65 focus:outline-none ${
+          className={`min-w-0 flex-1 bg-transparent px-4 py-3 text-field text-lontar placeholder:text-base placeholder:text-lontar/65 focus:outline-none ${
             aksara ? 'aksara bg-lontar/5 placeholder:font-latin' : ''
           }`}
         />
@@ -100,7 +100,7 @@ export function ToolInput({
               type="button"
               onClick={() => onChange(example.value)}
               className={`min-h-[36px] border border-gold/50 px-3 py-1 text-lontar/85 hover:border-gold hover:bg-gold/10 hover:text-lontar ${
-                example.aksara ? 'aksara text-aksara-key' : 'font-anotasi text-sm'
+                example.aksara ? 'aksara text-glyph' : 'font-anotasi text-sm'
               }`}
             >
               {example.label}

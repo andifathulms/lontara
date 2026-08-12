@@ -52,7 +52,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             the mark is still the mark.
           */}
           <Rhombus size={18} tone="gold" dot />
-          <span className="text-xl tracking-wide text-lontar">{copy.siteName}</span>
+          <span className="text-wordmark tracking-wide text-lontar">{copy.siteName}</span>
         </Link>
 
         <nav aria-label={copy.siteName} className="flex flex-wrap">

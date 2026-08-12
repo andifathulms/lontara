@@ -88,7 +88,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
 
       <section className="space-y-3">
         <h2 className="text-section text-lontar">{copy.reader.skeletonLabel}</h2>
-        <p className="border-l-4 border-gold/50 bg-gold/5 px-4 py-3 text-2xl text-lontar">
+        <p className="border-l-4 border-gold/50 bg-gold/5 px-4 py-3 text-glyph text-lontar">
           {empty ? (
             <span className="text-base text-lontar/65">{copy.reader.emptyState}</span>
           ) : (
