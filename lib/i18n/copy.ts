@@ -273,7 +273,8 @@ const id: Copy = {
   ambiguityClassBody: {
     final: 'Konsonan penutup suku kata tidak dituliskan.',
     gemination: 'Konsonan tunggal dan konsonan ganda ditulis serupa.',
-    prenasal: 'Pranasalisasi tidak selalu tampak pada tulisan.',
+    prenasal:
+      'Nasal yang mendahului konsonan hambat — n atau m dalam gugus seperti mp, ngk, nr, nyc. Empat gugus itu punya hurufnya sendiri; gugus nasal+hambat lainnya tidak, dan nasalnya tidak dituliskan. Sejauh mana hal ini berlaku belum terjawab — lihat halaman Ejaan.',
     glottal: "Hamzah — tanda petik pada Lontara' — tidak dituliskan.",
   },
   writer: {
@@ -468,7 +469,8 @@ const en: Copy = {
   ambiguityClassBody: {
     final: 'A syllable-final consonant is not written.',
     gemination: 'Single and doubled consonants are written alike.',
-    prenasal: 'Prenasalisation is not always visible in the writing.',
+    prenasal:
+      'A nasal before a stop — the n or m in a cluster like mp, ngk, nr, nyc. Those four have letters of their own; any other nasal+stop cluster does not, and the nasal goes unwritten. How far that reaches is unanswered — see the Ejaan page.',
     glottal: "The glottal stop — the apostrophe in Lontara' — is not written.",
   },
   writer: {
