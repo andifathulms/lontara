@@ -46,6 +46,15 @@ export default function SerupaPage({ params }: { params: { locale: string } }) {
      words apart reads as two different quantities being compared. */
   const n = (value: number) => value.toLocaleString(locale)
 
+  /* Sets are already ordered largest-first by the report, so grouping is a
+     fold rather than a re-sort — the order on screen is the report's order. */
+  const GROUPS = report.sets.reduce<{ size: number; sets: typeof report.sets }[]>((acc, set) => {
+    const last = acc[acc.length - 1]
+    if (last && last.size === set.members.length) last.sets = [...last.sets, set]
+    else acc.push({ size: set.members.length, sets: [set] })
+    return acc
+  }, [])
+
   const figures = [
     {
       value: report.forms,
@@ -190,41 +199,55 @@ export default function SerupaPage({ params }: { params: { locale: string } }) {
         </h2>
         <p className="max-w-measure text-lontar/85">
           {id
-            ? `Seluruh ${n(report.sets.length)} himpunan, terbesar dahulu. Tidak ada yang dipotong — bila suatu saat daftar ini dibatasi, batasnya akan dilaporkan di sini dan bukan diterapkan diam-diam.`
-            : `All ${n(report.sets.length)} sets, largest first. Nothing is truncated — if this list is ever capped, the cap will be reported here rather than silently applied.`}
+            ? `Seluruh ${n(report.sets.length)} himpunan, dikelompokkan menurut banyaknya bentuk. Tidak ada yang dipotong — bila suatu saat daftar ini dibatasi, batasnya akan dilaporkan di sini dan bukan diterapkan diam-diam.`
+            : `All ${n(report.sets.length)} sets, grouped by how many forms they hold. Nothing is truncated — if this list is ever capped, the cap will be reported here rather than silently applied.`}
         </p>
 
-        <ul className="space-y-px bg-gold/30">
-          {report.sets.map((set) => (
-            <li key={set.lontara} className="bg-grid px-5 py-4">
-              <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                <span className="aksara text-aksara-row text-lontar">{set.lontara}</span>
-                <span className="font-anotasi text-anotasi text-lontar/65">
-                  {set.codepoints.join(' ')}
-                </span>
-                <span className={`ml-auto ${eyebrow('quiet', 'sm')}`}>
-                  {id
-                    ? `${set.members.length} bentuk`
-                    : `${set.members.length} forms`}
-                </span>
-              </div>
+        {/*
+          Grouped rather than run together, because the distribution is itself
+          the finding and a flat list hid it: 87 of the 115 sets hold exactly
+          two forms, and the five interesting ones were buried under eighty-odd
+          near-identical rows. Grouping shows the shape for free and lets the
+          per-row count badge go, since the heading now carries it.
 
-              {/* Forms only. Never a meaning — invariant 16. */}
-              <p className="mt-2 text-lead text-lontar">
-                {set.members.map((m) => m.latin).join(' · ')}
-              </p>
+          Every set is still rendered. Nothing here is a cap.
+        */}
+        {GROUPS.map(({ size, sets }) => (
+          <section key={size} className="space-y-3">
+            <h3 className={eyebrow()}>
+              {id
+                ? `${n(size)} bentuk · ${n(sets.length)} himpunan`
+                : `${n(size)} forms · ${n(sets.length)} ${sets.length === 1 ? 'set' : 'sets'}`}
+            </h3>
 
-              <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
-                {set.classes.map((cls) => (
-                  <span key={cls} className="flex items-center gap-1.5">
-                    <Rhombus size={9} tone="daun" />
-                    <span className={eyebrow('daun', 'sm')}>{copy.ambiguityClass[cls]}</span>
-                  </span>
-                ))}
-              </p>
-            </li>
-          ))}
-        </ul>
+            <ul className="space-y-px bg-gold/30">
+              {sets.map((set) => (
+                <li key={set.lontara} className="bg-grid px-5 py-4">
+                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                    <span className="aksara text-aksara-row text-lontar">{set.lontara}</span>
+                    <span className="font-anotasi text-anotasi text-lontar/65">
+                      {set.codepoints.join(' ')}
+                    </span>
+                  </div>
+
+                  {/* Forms only. Never a meaning — invariant 16. */}
+                  <p className="mt-2 text-lead text-lontar">
+                    {set.members.map((m) => m.latin).join(' · ')}
+                  </p>
+
+                  <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
+                    {set.classes.map((cls) => (
+                      <span key={cls} className="flex items-center gap-1.5">
+                        <Rhombus size={9} tone="daun" />
+                        <span className={eyebrow('daun', 'sm')}>{copy.ambiguityClass[cls]}</span>
+                      </span>
+                    ))}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
       </section>
     </Page>
   )
