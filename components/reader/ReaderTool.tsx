@@ -18,6 +18,7 @@ import { useHashState } from '@/components/share/useHashState'
 import { ToolInput } from '@/components/tool/ToolInput'
 import { AttestedForms } from '@/components/corpus/AttestedForms'
 import { eyebrow } from '@/components/chrome/eyebrow'
+import { Announce } from '@/components/chrome/Announce'
 
 const CLASSES = ['final', 'gemination', 'prenasal', 'glottal'] as const
 
@@ -54,8 +55,18 @@ export function ReaderTool({ locale }: { locale: Locale }) {
     return [...seen].map((value) => ({ label: value, value, aksara: true }))
   }, [copy.writer.examples])
 
+  const announcement = empty
+    ? ''
+    : result.readings.length > 0
+      ? copy.reader.readingCount(result.readings.length)
+      : copy.reader.noAttested
+
   return (
     <div className="space-y-8">
+      {/* The skeleton, the tree and the reading count all change without focus
+          moving. The count is the whole answer; the tree is navigable below. */}
+      <Announce>{announcement}</Announce>
+
       <ToolInput
         id="lontara-input"
         label={copy.reader.inputLabel}

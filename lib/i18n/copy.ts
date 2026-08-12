@@ -77,6 +77,15 @@ export type Copy = {
     copied: string
     /** Worked examples. PRD §2's illustration: all three are written alike. */
     examples: readonly string[]
+    /**
+     * What the writer's live region says when the output changes.
+     *
+     * Terse on purpose. The band, the trace and the codepoint list are all on
+     * the page to be read at leisure; a status message that recited them would
+     * be unusable. This says only the thing that changed and matters — how much
+     * the script just threw away.
+     */
+    discarded: (n: number) => string
   }
   /**
    * The return trip, on the writer. Says who you are now indistinguishable
@@ -258,6 +267,10 @@ const id: Copy = {
     copy: 'Salin',
     copied: 'Tersalin',
     examples: ['mata', 'matta', 'manta'],
+    discarded: (n) =>
+      n === 0
+        ? 'Tidak ada informasi yang dibuang.'
+        : `${n} hal dibuang oleh aksara.`,
   },
   returnTrip: {
     title: 'Kalau dibaca kembali',
@@ -444,6 +457,12 @@ const en: Copy = {
     copy: 'Copy',
     copied: 'Copied',
     examples: ['mata', 'matta', 'manta'],
+    discarded: (n) =>
+      n === 0
+        ? 'Nothing was discarded.'
+        : n === 1
+          ? '1 thing was discarded by the script.'
+          : `${n} things were discarded by the script.`,
   },
   returnTrip: {
     title: 'Read back',

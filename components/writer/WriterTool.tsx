@@ -14,6 +14,7 @@ import { CopyAksara } from '@/components/share/CopyAksara'
 import { useHashState } from '@/components/share/useHashState'
 import { eyebrow } from '@/components/chrome/eyebrow'
 import { ToolInput } from '@/components/tool/ToolInput'
+import { Announce } from '@/components/chrome/Announce'
 import { ReturnTrip } from '@/components/writer/ReturnTrip'
 
 /**
@@ -51,6 +52,11 @@ export function WriterTool({ locale }: { locale: Locale }) {
 
   return (
     <div className="space-y-8">
+      {/* The band and the loss panel below change on every keystroke with no
+          focus moving, so nothing announced them. This says only what was
+          discarded; the detail stays on the page to be navigated. */}
+      <Announce>{latin === '' ? '' : copy.writer.discarded(trace.ambiguities.length)}</Announce>
+
       {/* The three examples are PRD §2's illustration, and they are the whole
           argument: press them in turn and the band below does not change. */}
       <ToolInput

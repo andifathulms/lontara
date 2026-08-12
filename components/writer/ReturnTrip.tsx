@@ -9,6 +9,7 @@ import type { Locale } from '@/lib/i18n/locales'
 import { href } from '@/lib/paths'
 import { encodeShareHash } from '@/lib/share/hash'
 import { eyebrow } from '@/components/chrome/eyebrow'
+import { Announce } from '@/components/chrome/Announce'
 
 /**
  * The return trip. What a reader would see, for the aksara you just produced.
@@ -61,12 +62,40 @@ export function ReturnTrip({
   )
   const others = result.rivals
 
+  /*
+   * `aria-busy` used to sit on the wrapper below, which did nothing: it is only
+   * meaningful on a live region or a widget container, and on a plain div it is
+   * inert decoration. The dimming it paired with had no announced equivalent
+   * either, so the rival count changed in silence.
+   *
+   * A real status message replaces it, and it is hoisted ABOVE the empty-input
+   * return: a live region has to be in the DOM before its contents change, and
+   * mounting it in the same commit that fills it is the standard way to get no
+   * announcement at all.
+   *
+   * Deliberately not marked busy while settling — the deferred value means the
+   * text arrives a beat later, and announcing "loading" for one frame is noise.
+   */
+  const announcement =
+    lontara === '' || settling
+      ? ''
+      : others.length === 0
+        ? copy.returnTrip.none
+        : copy.returnTrip.others(others.length)
+
   if (lontara === '') {
-    return <p className="text-sm text-lontar/65">{copy.writer.emptyState}</p>
+    return (
+      <>
+        <Announce>{announcement}</Announce>
+        <p className="text-sm text-lontar/65">{copy.writer.emptyState}</p>
+      </>
+    )
   }
 
   return (
-    <div className={settling ? 'opacity-50' : undefined} aria-busy={settling || undefined}>
+    <div className={settling ? 'opacity-50' : undefined}>
+      <Announce>{announcement}</Announce>
+
       {others.length === 0 ? (
         <>
           <p className="text-lontar/85">{copy.returnTrip.none}</p>
