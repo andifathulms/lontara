@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 import { enumerate } from '@/lib/engine/enumerate'
 import { interpret } from '@/lib/engine/interpret'
 import { toClusters } from '@/lib/engine/normalize'
@@ -62,7 +62,23 @@ export function ReaderTool({ locale }: { locale: Locale }) {
     ? ['U+1A04', 'U+1A06', 'U+1A18', 'U+1A12'].map(fromCodepoint).join('')
     : lontara
 
-  const result = useMemo(() => enumerate(source, LEXICON), [source])
+  /*
+   * Deferred, for the same reason the writer's return trip is.
+   *
+   * `enumerate` inverts the writer over the whole lexicon: 1,323 `interpret`
+   * calls, measured at 30ms on a laptop and several times that on the phone
+   * PRD §12 targets. It was running on the urgent render path, so every
+   * keystroke in the reader — the flagship — blocked the main thread for
+   * longer than a frame before the character appeared.
+   *
+   * This does not make the work cheaper. It moves it off the path that has to
+   * keep up with typing: React shows the previous tree until the new one is
+   * ready, and the field never waits for it.
+   */
+  const deferredSource = useDeferredValue(source)
+  const settling = deferredSource !== source
+
+  const result = useMemo(() => enumerate(deferredSource, LEXICON), [deferredSource])
   const empty = false
 
   /*
@@ -81,7 +97,7 @@ export function ReaderTool({ locale }: { locale: Locale }) {
     return [...seen].map((value) => ({ label: value, value, aksara: true }))
   }, [copy.writer.examples])
 
-  const announcement = empty
+  const announcement = settling
     ? ''
     : result.readings.length > 0
       ? copy.reader.readingCount(result.readings.length)
