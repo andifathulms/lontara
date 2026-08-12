@@ -142,6 +142,20 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    /*
+     * The delay matters as much as the duration here, and leaving it out made
+     * this block worse than useless for the reading tree.
+     *
+     * `ReadingTree` staggers its branches with an `animation-delay` of up to
+     * 420ms, and `lontara-branch` starts at `opacity: 0` with
+     * `animation-fill-mode: both` — so the *from* state is held for the whole
+     * delay. Zeroing only the duration left a reduced-motion user watching
+     * branches sit invisible for four tenths of a second and then pop in,
+     * which is nearer the thing the setting exists to prevent than the
+     * animation was.
+     */
+    animation-delay: 0ms !important;
+    transition-delay: 0ms !important;
   }
 }
 
