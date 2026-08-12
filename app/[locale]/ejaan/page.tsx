@@ -293,6 +293,26 @@ export default function EjaanPage({ params }: { params: { locale: string } }) {
                   citation carries, and validated the same way. */}
               {basis ? <p className="mt-2 text-xs text-lontar/65">{basis}</p> : null}
 
+              {/*
+                What the number is NOT, said next to the number.
+
+                A count like "565 of 1,321" provokes exactly one question —
+                so what would those 565 become? — and this repository cannot
+                answer it. Running the counterfactual needs the engine
+                parameterised by rule set, and for prenasal-coverage it would
+                need a generalisation rule the project has deliberately
+                refused to write on two attested pairs. Saying so one section
+                up, where the ordering is explained, leaves the number itself
+                looking like it promises more than it does.
+              */}
+              {sized && affected > 0 ? (
+                <p className="mt-2 text-xs text-lontar/65">
+                  {id
+                    ? 'Angka ini menyebut bentuk mana yang bergantung pada jawaban, bukan akan menjadi apa bentuk itu. Menjalankan kemungkinan yang lain menuntut aturan yang justru belum ditetapkan — jadi jumlahnya dapat dihitung, akibatnya belum.'
+                    : 'This counts which forms depend on the answer, not what they would become. Running the alternative needs the very rule that is not settled — so the size is computable and the consequence is not.'}
+                </p>
+              ) : null}
+
               <p className="mt-2 font-anotasi text-anotasi text-lontar/65">
                 {id ? 'Tanya' : 'Ask'}: {q.askWhom}
               </p>
