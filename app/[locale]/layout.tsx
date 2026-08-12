@@ -95,6 +95,31 @@ export default function LocaleLayout({
 
   return (
     <html lang={locale}>
+      <head>
+        {/*
+          The only font on the site that blocks.
+          `font-display: block` on the aksara face is deliberate (PRD §13):
+          tofu reads as a broken app, so no-text beats wrong-text. The cost is
+          that the hero's glyphs — the first characters of the script anyone
+          sees, above the fold — stay invisible until the file lands, and
+          nothing was telling the browser to want it early.
+
+          It is 2,880 bytes. The three Latin faces are `swap` and deliberately
+          not preloaded: they have a usable fallback, and preloading four fonts
+          would put 65 kB ahead of the CSS to save nothing.
+
+          `asset()` because Next does not prefix a hand-written href with
+          basePath, and /fonts/... would resolve to someone else's root on a
+          project page.
+        */}
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          href={asset('/fonts/noto-sans-buginese-subset.woff2')}
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="flex min-h-screen flex-col">
         {/* The nav is four links deep before the tool starts, and the reader's
             input is the thing a keyboard user actually came for. */}
