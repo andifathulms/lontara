@@ -186,6 +186,19 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         {/* The mata/matta/manta figure that stood here has moved into the hero.
             Showing it twice on one page would make the second one look like a
             different example that happens to read the same. */}
+
+        {/* This section asserts the property. Someone who wants it measured
+            rather than asserted should not have to find that page via the
+            script reference. */}
+        <p>
+          <Link
+            href={href(locale, 'aksara/serupa')}
+            className={`inline-block no-underline ${eyebrow()}`}
+          >
+            {copy.aksara.collisionsLink} →
+          </Link>
+        </p>
+
         <ul className="grid gap-3 sm:grid-cols-2">
           {CLASSES.map((cls) => (
             <li key={cls} className="flex gap-3">
