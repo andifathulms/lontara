@@ -20,6 +20,7 @@ import { ToolInput } from '@/components/tool/ToolInput'
 import { AttestedForms } from '@/components/corpus/AttestedForms'
 import { eyebrow } from '@/components/chrome/eyebrow'
 import { Announce } from '@/components/chrome/Announce'
+import { Settling } from '@/components/chrome/Settling'
 
 const CLASSES = ['final', 'gemination', 'prenasal', 'glottal'] as const
 
@@ -97,8 +98,13 @@ export function ReaderTool({ locale }: { locale: Locale }) {
     return [...seen].map((value) => ({ label: value, value, aksara: true }))
   }, [copy.writer.examples])
 
+  /*
+   * While settling, the live region says so (`copy.common.settling`) rather
+   * than going quiet — matches the treatment `ReturnTrip` uses for the same
+   * deferred-value lag, via the shared `Settling` component below.
+   */
   const announcement = settling
-    ? ''
+    ? copy.common.settling
     : result.readings.length > 0
       ? copy.reader.readingCount(result.readings.length)
       : copy.reader.noAttested
@@ -165,52 +171,59 @@ export function ReaderTool({ locale }: { locale: Locale }) {
       <section className="space-y-3">
         <h2 className="text-section text-lontar">{copy.reader.treeLabel}</h2>
 
-        {result.readings.length > 0 ? (
-          <>
-            <p className="font-anotasi text-xs text-lontar/65">
-              {copy.reader.readingCount(result.readings.length)}
-            </p>
-            {/* Every reading here rests on a corpus occurrence and nothing
-                stronger. Saying so above the tree, not in a tooltip. */}
-            {result.readings.every((r) => r.attestation === 'corpus') ? (
-              <p className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3 text-sm text-lontar/85">
-                {copy.attestation.corpusWarning}
+        {/* Everything below reads `result`, which lags the field by a beat
+            (see the comment on `deferredSource` above) — the same lag
+            `ReturnTrip` already dims for, now given the same treatment. */}
+        <Settling active={settling} label={copy.common.settling}>
+          <div className="space-y-3">
+            {result.readings.length > 0 ? (
+              <>
+                <p className="font-anotasi text-xs text-lontar/65">
+                  {copy.reader.readingCount(result.readings.length)}
+                </p>
+                {/* Every reading here rests on a corpus occurrence and nothing
+                    stronger. Saying so above the tree, not in a tooltip. */}
+                {result.readings.every((r) => r.attestation === 'corpus') ? (
+                  <p className="border-l-4 border-sabbe bg-sabbe/10 px-4 py-3 text-sm text-lontar/85">
+                    {copy.attestation.corpusWarning}
+                  </p>
+                ) : null}
+                <ReadingTree tree={result.tree} locale={locale} />
+              </>
+            ) : (
+              <aside
+                aria-labelledby="reader-no-attested"
+                className="border-l-4 border-gold bg-gold/10 px-4 py-3 space-y-2"
+              >
+                <p id="reader-no-attested" className={eyebrow()}>
+                  {copy.reader.noAttested}
+                </p>
+                <p className="text-sm text-lontar/85">
+                  {result.lexicon.empty ? copy.reader.lexiconEmpty : copy.reader.noAttestedBody}
+                </p>
+              </aside>
+            )}
+
+            {result.cap.applied ? (
+              <p className="font-anotasi text-xs text-sabbe-ink">
+                {copy.reader.capReported(result.cap.maxDepth)}
+                {result.cap.dropped > 0 ? ` ${copy.reader.hiddenCount(result.cap.dropped)}.` : ''}
               </p>
             ) : null}
-            <ReadingTree tree={result.tree} locale={locale} />
-          </>
-        ) : (
-          <aside
-            aria-labelledby="reader-no-attested"
-            className="border-l-4 border-gold bg-gold/10 px-4 py-3 space-y-2"
-          >
-            <p id="reader-no-attested" className={eyebrow()}>
-              {copy.reader.noAttested}
-            </p>
-            <p className="text-sm text-lontar/85">
-              {result.lexicon.empty ? copy.reader.lexiconEmpty : copy.reader.noAttestedBody}
-            </p>
-          </aside>
-        )}
 
-        {result.cap.applied ? (
-          <p className="font-anotasi text-xs text-sabbe-ink">
-            {copy.reader.capReported(result.cap.maxDepth)}
-            {result.cap.dropped > 0 ? ` ${copy.reader.hiddenCount(result.cap.dropped)}.` : ''}
-          </p>
-        ) : null}
-
-        {/*
-          PRD §6.1 asks for a "known words only" default with the unfiltered set
-          one toggle away. There is no unfiltered set to toggle to: enumeration
-          is lexicon-driven, so every reading it can produce is already a known
-          word. Saying so beats shipping a toggle that does nothing.
-        */}
-        <p className="font-anotasi text-anotasi text-lontar/65">
-          {locale === 'id'
-            ? 'Tidak ada saklar “hanya kata terdaftar” di sini: penyebutan bacaan digerakkan oleh leksikon, jadi setiap bacaan yang muncul memang kata terdaftar. Himpunan tak terfilter menuntut penyebutan struktural, yang tertahan pada openQuestions.final-inventory.'
-            : 'There is no “known words only” switch here: enumeration is lexicon-driven, so every reading shown is already a known word. An unfiltered set would need structural enumeration, which is blocked on openQuestions.final-inventory.'}
-        </p>
+            {/*
+              PRD §6.1 asks for a "known words only" default with the unfiltered set
+              one toggle away. There is no unfiltered set to toggle to: enumeration
+              is lexicon-driven, so every reading it can produce is already a known
+              word. Saying so beats shipping a toggle that does nothing.
+            */}
+            <p className="font-anotasi text-anotasi text-lontar/65">
+              {locale === 'id'
+                ? 'Tidak ada saklar “hanya kata terdaftar” di sini: penyebutan bacaan digerakkan oleh leksikon, jadi setiap bacaan yang muncul memang kata terdaftar. Himpunan tak terfilter menuntut penyebutan struktural, yang tertahan pada openQuestions.final-inventory.'
+                : 'There is no “known words only” switch here: enumeration is lexicon-driven, so every reading shown is already a known word. An unfiltered set would need structural enumeration, which is blocked on openQuestions.final-inventory.'}
+            </p>
+          </div>
+        </Settling>
       </section>
 
       <section className="space-y-3">

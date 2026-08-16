@@ -10,6 +10,7 @@ import { href } from '@/lib/paths'
 import { encodeShareHash } from '@/lib/share/hash'
 import { eyebrow } from '@/components/chrome/eyebrow'
 import { Announce } from '@/components/chrome/Announce'
+import { Settling } from '@/components/chrome/Settling'
 
 /**
  * The return trip. What a reader would see, for the aksara you just produced.
@@ -73,15 +74,18 @@ export function ReturnTrip({
    * mounting it in the same commit that fills it is the standard way to get no
    * announcement at all.
    *
-   * Deliberately not marked busy while settling — the deferred value means the
-   * text arrives a beat later, and announcing "loading" for one frame is noise.
+   * While settling, the live region says so (`copy.common.settling`) rather
+   * than going quiet — silence during that window read as "nothing changed"
+   * to a screen-reader user, which was wrong on every keystroke.
    */
   const announcement =
-    lontara === '' || settling
+    lontara === ''
       ? ''
-      : others.length === 0
-        ? copy.returnTrip.none
-        : copy.returnTrip.others(others.length)
+      : settling
+        ? copy.common.settling
+        : others.length === 0
+          ? copy.returnTrip.none
+          : copy.returnTrip.others(others.length)
 
   if (lontara === '') {
     return (
@@ -93,7 +97,7 @@ export function ReturnTrip({
   }
 
   return (
-    <div className={settling ? 'opacity-50' : undefined}>
+    <Settling active={settling} label={copy.common.settling}>
       <Announce>{announcement}</Announce>
 
       {others.length === 0 ? (
@@ -134,6 +138,6 @@ export function ReturnTrip({
           {copy.returnTrip.openInReader} →
         </Link>
       </p>
-    </div>
+    </Settling>
   )
 }

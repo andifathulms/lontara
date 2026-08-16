@@ -4,6 +4,7 @@ import { pageMetadata } from '@/lib/metadata'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { NotTranslatorNotice, ReviewerGateNotice } from '@/components/chrome/Notice'
 import { Page, PageHeader } from '@/components/chrome/Page'
+import { ToolErrorBoundary } from '@/components/chrome/ToolErrorBoundary'
 import { WriterTool } from '@/components/writer/WriterTool'
 
 export function generateStaticParams() {
@@ -28,7 +29,9 @@ export default function TulisPage({ params }: { params: { locale: string } }) {
         <ReviewerGateNotice locale={locale} />
       </PageHeader>
 
-      <WriterTool locale={locale} />
+      <ToolErrorBoundary locale={locale}>
+        <WriterTool locale={locale} />
+      </ToolErrorBoundary>
     </Page>
   )
 }

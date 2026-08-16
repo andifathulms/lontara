@@ -247,6 +247,21 @@ export type Copy = {
     currentPage: string
     opensInNewTab: string
     builtBy: string
+    /**
+     * `interpret()`/`enumerate()` throwing inside a tool's render. Not a
+     * supported outcome — the engine failing is the loudest possible silent
+     * failure, since the user gets nothing instead of a declared limitation.
+     * Kept in the same plain register as the rest of the app's notices, not
+     * dramatized and not apologised for at length.
+     */
+    engineError: { title: string; body: string; reset: string }
+    /**
+     * Both tools recompute behind a deferred value so typing stays responsive
+     * (ReturnTrip, the reader's tree). While the result is catching up this
+     * says so, visibly and to the live region — going silent during that
+     * window is indistinguishable from "nothing changed."
+     */
+    settling: string
   }
 }
 
@@ -459,6 +474,13 @@ const id: Copy = {
     currentPage: 'halaman ini',
     opensInNewTab: 'membuka tab baru',
     builtBy: 'Dirancang & dibangun oleh',
+    engineError: {
+      title: 'Mesin gagal memproses ini',
+      body:
+        'Ini bukan ketidaktentuan yang dinyatakan — mesinnya sendiri yang gagal. Ini kemungkinan besar kutu (bug) pada alat ini, bukan kesalahan pada masukan Anda. Masukan yang menyebabkannya ditampilkan di bawah, beserta titik kodenya, yang tidak bergantung pada mesin.',
+      reset: 'Kosongkan masukan dan coba lagi',
+    },
+    settling: 'Menghitung ulang…',
   },
 }
 
@@ -673,6 +695,13 @@ const en: Copy = {
     currentPage: 'current page',
     opensInNewTab: 'opens in a new tab',
     builtBy: 'Designed & built by',
+    engineError: {
+      title: 'The engine could not process this',
+      body:
+        'This is not a declared uncertainty — the engine itself failed. This is most likely a bug in this tool, not a mistake in your input. The input that caused it is shown below, along with its codepoints, which do not depend on the engine.',
+      reset: 'Clear the input and try again',
+    },
+    settling: 'Recalculating…',
   },
 }
 

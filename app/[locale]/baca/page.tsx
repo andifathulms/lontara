@@ -4,6 +4,7 @@ import { pageMetadata } from '@/lib/metadata'
 import { isLocale, localeParams, type Locale } from '@/lib/i18n/locales'
 import { NotTranslatorNotice, ReviewerGateNotice } from '@/components/chrome/Notice'
 import { Page, PageHeader } from '@/components/chrome/Page'
+import { ToolErrorBoundary } from '@/components/chrome/ToolErrorBoundary'
 import { ReaderTool } from '@/components/reader/ReaderTool'
 
 export function generateStaticParams() {
@@ -34,7 +35,9 @@ export default function BacaPage({ params }: { params: { locale: string } }) {
         <ReviewerGateNotice locale={locale} strong />
       </PageHeader>
 
-      <ReaderTool locale={locale} />
+      <ToolErrorBoundary locale={locale}>
+        <ReaderTool locale={locale} />
+      </ToolErrorBoundary>
     </Page>
   )
 }
