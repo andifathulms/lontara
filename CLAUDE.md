@@ -156,6 +156,8 @@ The site states plainly that it is a personal project, not an authority, and can
 
 ## Current state
 
-M0 — not yet scaffolded. Next: static export deploying to Pages, Noto Sans Buginese subset with licence recorded, rendering conformance page green on real devices. No engine work until rendering is proven.
+Past M0. Every planned route exists and works against a real, if lexicon-thin, engine: `/`, `/baca` (reader), `/tulis` (writer), `/aksara` (script reference, plus `/aksara/serupa` and `/aksara/konformansi`), and `/ejaan` (orthography disclosure), in both `id` and `en`. The static export builds and deploys, the Noto Sans Buginese subset is licence-recorded, and `rules:validate` / `lexicon:validate` gate the build as designed.
 
-**Long-lead item: start looking for a Bugis reviewer now, during M0/M1 — not at M3.** It gates the launch and it is the one thing that cannot be hurried.
+**M3 has not shipped publicly.** `data/rules/reviewers.md` names no Bugis reviewer yet, so `ReviewerGateNotice` renders on every route and the reader stays gated per invariant 12 — nothing about the code being further along changes that.
+
+**Long-lead item: the Bugis reviewer search is still open.** It gates the launch and it is the one thing that cannot be hurried.
